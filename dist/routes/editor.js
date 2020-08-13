@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
@@ -13,4 +17,4 @@ router.post('/editoraccess', function (req, res) {
     // set and return access token for a user in editor server
 });
 
-module.exports = router;
+exports.default = router;

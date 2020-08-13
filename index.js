@@ -3,6 +3,7 @@ import { checkPermissions } from './acl/publisher-acl.js';
 import { authorizeToken } from './acl/authorization.js';
 import { unlessRoute } from './utils/utils.js';
 import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 
 import payment from './routes/payment.js';
@@ -13,8 +14,6 @@ import transaction from './routes/transaction.js';
 import plan from './routes/plan.js';
 import server from './routes/server.js';
 import middle from './routes/middle.js';
-
-dotenv.config();
 
 let app = express();
 

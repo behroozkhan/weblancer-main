@@ -21,7 +21,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var acl = new _acl2.default(new _aclSequelize2.default(_models.sequelize, { prefix: 'acl_' }));
 
-acl.addRoleParents('weblancer', 'admin', 'user');
+// acl.addRoleParents('weblancer', 'admin', 'user');
 
 acl.allow([{
     roles: ['publisher'],

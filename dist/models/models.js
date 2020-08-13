@@ -54,6 +54,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var DataTypes = _sequelize2.default.DataTypes;
 
 
+console.log("DATABASE_USER", process.env.DATABASE_USER);
 var sequelize = new _sequelize2.default(process.env.DATABASE, process.env.DATABASE_USER, process.env.DATABASE_PASSWORD, {
     dialect: 'postgres'
 });
