@@ -9,7 +9,7 @@ const sequelize = new Sequelize(
     },
 );
 
-console.log("Here");
+console.log("Here1");
 
 const models = {
     Publisher: sequelize.import('./publisher.js'),
@@ -23,6 +23,7 @@ const models = {
     PublisherWebSite: sequelize.import('./publisher-webSite.js'),
     PaymentSource: sequelize.import('./payment-source.js'),
 };
+console.log("Here2");
 
 models.Publisher.hasMany(models.PaymentTransaction);
 models.Publisher.hasMany(models.CreditTransaction);
