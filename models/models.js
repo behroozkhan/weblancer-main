@@ -12,7 +12,7 @@ import PaymentSource from './payment-source.js';
 
 const {DataTypes} = Sequelize;
  
-console.log("DATABASE_USER", DATABASE_USER)
+console.log("DATABASE_USER", process.env.DATABASE_USER)
 const sequelize = new Sequelize(
     process.env.DATABASE,
     process.env.DATABASE_USER,
