@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
 );
 
 const models = {
-    Publisher: sequelize.import(__dirname + '/publisher.js'),
+    Publisher: sequelize.import(__dirname + '/models/publisher.js'),
     PaymentTransaction: sequelize.import('./payment-transaction.js'),
     Plan: sequelize.import('./plan.js'),
     Server: sequelize.import('./server.js'),
