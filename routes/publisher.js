@@ -178,7 +178,7 @@ router.post('/paymentverify', async (req, res) => {
     }
 
     paymentVerfiy(paymentResponse,
-        (paymentTransaction) => { // onSuccess
+        async (paymentTransaction) => { // onSuccess
             let transaction;
             try {
                 if (paymentTransaction.sourceType === 'weblancer') 
