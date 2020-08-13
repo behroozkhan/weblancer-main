@@ -25,6 +25,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "sequelize-cli": "^6.2.0"
   }
 }
