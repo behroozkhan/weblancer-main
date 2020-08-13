@@ -1,4 +1,4 @@
-import {} from 'dotenv/config';
+import {} from 'dotenv/config.js';
 import { sequelize } from './models/models.js';
 import { checkPermissions } from './acl/publisher-acl.js';
 import { authorizeToken } from './acl/authorization.js';
