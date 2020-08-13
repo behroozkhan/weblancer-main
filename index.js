@@ -38,6 +38,7 @@ app.use('/middle', middle);
  
 console.log("index.js", 8)
 sequelize.sync().then(() => {
+    console.log("index.js", 9)
     app.listen(process.env.PORT, () => {
         console.log(`Weblancer main express server now listening on port ${process.env.PORT}!`);
     });
