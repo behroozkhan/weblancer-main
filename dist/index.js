@@ -8,32 +8,64 @@ var _authorization = require('./acl/authorization.js');
 
 var _utils = require('./utils/utils.js');
 
-require('dotenv').config();
+var _dotenv = require('dotenv');
 
-var express = require('express');
-var app = express();
+var _dotenv2 = _interopRequireDefault(_dotenv);
 
-app.use(express.json());
+var _express = require('express');
+
+var _express2 = _interopRequireDefault(_express);
+
+var _payment = require('./routes/payment.js');
+
+var _payment2 = _interopRequireDefault(_payment);
+
+var _editor = require('./routes/editor.js');
+
+var _editor2 = _interopRequireDefault(_editor);
+
+var _hosting = require('./routes/hosting.js');
+
+var _hosting2 = _interopRequireDefault(_hosting);
+
+var _publisher = require('./routes/publisher.js');
+
+var _publisher2 = _interopRequireDefault(_publisher);
+
+var _transaction = require('./routes/transaction.js');
+
+var _transaction2 = _interopRequireDefault(_transaction);
+
+var _plan = require('./routes/plan.js');
+
+var _plan2 = _interopRequireDefault(_plan);
+
+var _server = require('./routes/server.js');
+
+var _server2 = _interopRequireDefault(_server);
+
+var _middle = require('./routes/middle.js');
+
+var _middle2 = _interopRequireDefault(_middle);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_dotenv2.default.config();
+
+var app = (0, _express2.default)();
+
+app.use(_express2.default.json());
 app.use((0, _utils.unlessRoute)(['/publisher/login', '/publisher/register'], _authorization.authorizeToken));
 app.use((0, _utils.unlessRoute)(['/publisher/login', '/publisher/register'], _publisherAcl.checkPermissions));
 
-var payment = require('./routes/payment.js');
-var editor = require('./routes/editor.js');
-var hosting = require('./routes/hosting.js');
-var publisher = require('./routes/publisher.js');
-var transaction = require('./routes/transaction.js');
-var plan = require('./routes/plan.js');
-var server = require('./routes/server.js');
-var middle = require('./routes/middle.js');
-
-app.use('/payment', payment);
-app.use('/editor', editor);
-app.use('/hosting', hosting);
-app.use('/publisher', publisher);
-app.use('/transaction', transaction);
-app.use('/plan', plan);
-app.use('/server', server);
-app.use('/middle', middle);
+app.use('/payment', _payment2.default);
+app.use('/editor', _editor2.default);
+app.use('/hosting', _hosting2.default);
+app.use('/publisher', _publisher2.default);
+app.use('/transaction', _transaction2.default);
+app.use('/plan', _plan2.default);
+app.use('/server', _server2.default);
+app.use('/middle', _middle2.default);
 
 _models.sequelize.sync().then(function () {
     app.listen(process.env.PORT, function () {

@@ -9,12 +9,17 @@ var _models = require('../models/models.js');
 
 var _models2 = _interopRequireDefault(_models);
 
+var _acl = require('acl');
+
+var _acl2 = _interopRequireDefault(_acl);
+
+var _aclSequelize = require('acl-sequelize');
+
+var _aclSequelize2 = _interopRequireDefault(_aclSequelize);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Acl = require('acl');
-var AclSeq = require('acl-sequelize');
-
-var acl = new Acl(new AclSeq(_models.sequelize, { prefix: 'acl_' }));
+var acl = new _acl2.default(new _aclSequelize2.default(_models.sequelize, { prefix: 'acl_' }));
 
 acl.addRoleParents('weblancer', 'admin', 'user');
 

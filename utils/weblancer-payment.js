@@ -1,7 +1,7 @@
 import getConfig from '../models/config.js';
+import models from '../models/models.js';
+import axios from 'axios';
 
-var models = require('models');
-const axios = require('axios');
 export async function paymentInit (publisherId, amount, gateway, resNum, additionalData1, initData, onSuccess, onError) {
     // TODO sep payment setup
     // TODO move all type of payments to another library

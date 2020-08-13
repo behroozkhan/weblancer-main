@@ -3,24 +3,24 @@ import { checkPermissions } from './acl/publisher-acl.js';
 import { authorizeToken } from './acl/authorization.js';
 import { unlessRoute } from './utils/utils.js';
 import dotenv from 'dotenv';
+import express from 'express';
+
+import payment from './routes/payment.js';
+import editor from './routes/editor.js';
+import hosting from './routes/hosting.js';
+import publisher from './routes/publisher.js';
+import transaction from './routes/transaction.js';
+import plan from './routes/plan.js';
+import server from './routes/server.js';
+import middle from './routes/middle.js';
 
 dotenv.config();
 
-let express = require('express');
 let app = express();
 
 app.use(express.json());
 app.use(unlessRoute(['/publisher/login', '/publisher/register'], authorizeToken));
 app.use(unlessRoute(['/publisher/login', '/publisher/register'], checkPermissions));
-
-var payment = require('./routes/payment.js');
-var editor = require('./routes/editor.js');
-var hosting = require('./routes/hosting.js');
-var publisher = require('./routes/publisher.js');
-var transaction = require('./routes/transaction.js');
-var plan = require('./routes/plan.js');
-var server = require('./routes/server.js');
-var middle = require('./routes/middle.js');
 
 app.use('/payment', payment);
 app.use('/editor', editor);

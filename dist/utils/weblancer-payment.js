@@ -21,7 +21,7 @@ var paymentInit = exports.paymentInit = function () {
                         gateway ? paymentSourceWhere.gateway = gateway : paymentSourceWhere.isDefault = true;
                         _context2.prev = 3;
                         _context2.next = 6;
-                        return models.PaymentSource.find({
+                        return _models2.default.PaymentSource.find({
                             where: paymentSourceWhere
                         });
 
@@ -64,7 +64,7 @@ var paymentInit = exports.paymentInit = function () {
                         paymentTransaction = void 0;
                         _context2.prev = 21;
                         _context2.next = 24;
-                        return models.PaymentTransaction.create({
+                        return _models2.default.PaymentTransaction.create({
                             gateway: gateway,
                             resNum: resNum,
                             amount: amount,
@@ -91,11 +91,11 @@ var paymentInit = exports.paymentInit = function () {
                         publisher = void 0;
                         _context2.prev = 32;
                         _context2.next = 35;
-                        return models.Publisher.find({
+                        return _models2.default.Publisher.find({
                             where: {
                                 id: publisherId
                             },
-                            include: [models.PaymentTransaction]
+                            include: [_models2.default.PaymentTransaction]
                         });
 
                     case 35:
@@ -119,7 +119,7 @@ var paymentInit = exports.paymentInit = function () {
 
                     case 45:
 
-                        axios.post(paymentServiceUrl + '/initpayment', {
+                        _axios2.default.post(paymentServiceUrl + '/initpayment', {
                             sourceData: sourceData, amount: amount, resNum: resNum
                         }).then(function (token) {
                             paymentTransaction.weblancerState = 'userPayment';
@@ -182,7 +182,7 @@ var paymentVerfiy = exports.paymentVerfiy = function () {
                         paymentTransaction = void 0;
                         _context5.prev = 3;
                         _context5.next = 6;
-                        return models.PaymentTransaction.find({
+                        return _models2.default.PaymentTransaction.find({
                             where: {
                                 resNum: resNum
                             }
@@ -236,7 +236,7 @@ var paymentVerfiy = exports.paymentVerfiy = function () {
 
                     case 30:
 
-                        axios.post(paymentServiceUrl + '/verifypayment', {
+                        _axios2.default.post(paymentServiceUrl + '/verifypayment', {
                             refNum: refNum, MID: MID, amount: paymentTransaction.amount, gateway: paymentTransaction.gateway
                         }).then(function () {
                             var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(message) {
@@ -325,9 +325,14 @@ var _config = require('../models/config.js');
 
 var _config2 = _interopRequireDefault(_config);
 
+var _models = require('../models/models.js');
+
+var _models2 = _interopRequireDefault(_models);
+
+var _axios = require('axios');
+
+var _axios2 = _interopRequireDefault(_axios);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-var models = require('models');
-var axios = require('axios');

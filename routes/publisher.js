@@ -2,14 +2,13 @@ import getRandomInt from '../utils/utils.js';
 import makeResNum from '../utils/utils.js';
 import { paymentInit, paymentVerfiy } from '../utils/weblancer-payment.js';
 import WeblancerUtils from '../utils/weblancerUtils.js';
-import { sequelize } from '../models/models.js';
+import models, { sequelize } from '../models/models.js';
 
-let moment = require('moment');
-let models = require('models');
-let express = require('express');
+import moment from 'moment';
+import express from 'express';
+import jwt from 'jsonwebtoken';
 let router = express.Router();
 
-let jwt = require('jsonwebtoken');
 
 router.get('/publisher', function (req, res) {
     // return all publishers

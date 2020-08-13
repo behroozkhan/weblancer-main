@@ -6,13 +6,19 @@ var _weblancerUtils = require('../utils/weblancerUtils.js');
 
 var _weblancerUtils2 = _interopRequireDefault(_weblancerUtils);
 
+var _moment = require('moment');
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _express = require('express');
+
+var _express2 = _interopRequireDefault(_express);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-var express = require('express');
-var router = express.Router();
-var moment = require('moment');
+var router = _express2.default.Router();
 
 router.post('/publishrequest', function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
@@ -114,7 +120,7 @@ router.post('/editorrequest', function () {
 
                     case 25:
 
-                        if (publisherWebsite.expireTime <= moment.utc()) {
+                        if (publisherWebsite.expireTime <= _moment2.default.utc()) {
                             res.status(402).json(new Response(false, {}, "Plan expired").json());
                         }
 
