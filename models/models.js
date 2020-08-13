@@ -41,7 +41,7 @@ models.PublisherPlan.belongsTo(models.Publisher);
 models.PublisherPlan.belongsTo (models.Plan);
 models.Publisher.hasMany(models.PublisherWebSite);
 models.PublisherWebSite.hasMany(models.Website);
-models.Server.hasOne(models.Publisher, {as: 'mainServer', foreignKey: 'mainServerId'});
+models.Publisher.hasOne(models.Server, {as: 'mainServer', foreignKey: 'mainServerId'});
 models.Publisher.hasMany(models.Server, {as: 'hostServers'});
 
 models.Publisher.hasMany(models.PaymentSource);
