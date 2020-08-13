@@ -2,8 +2,9 @@ import { sequelize } from './models/models.js';
 import { checkPermissions } from './acl/publisher-acl.js';
 import { authorizeToken } from './acl/authorization.js';
 import { unlessRoute } from './utils/utils.js';
+import dotenv from 'dotenv';
 
-require('dotenv').config();
+dotenv.config();
 
 let express = require('express');
 let app = express();
