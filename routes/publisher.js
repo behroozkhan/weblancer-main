@@ -8,7 +8,6 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 let router = express.Router();
 
-
 router.get('/publisher', function (req, res) {
     // return all publishers
     findAndCountAll(req, res, models.Publisher);
@@ -541,7 +540,7 @@ router.post('/login', async (req, res) => {
                 username: req.body.username,
                 password: req.body.password,
             },
-            attributes: ['id']
+            attributes: ['id', 'role']
         });
     } catch (e) {
         res.status(401).json(

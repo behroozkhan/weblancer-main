@@ -37,6 +37,11 @@ const Publisher = (sequelize, DataTypes) => {
         minCredit: {
             type: DataTypes.FLOAT,
         },
+        role: {
+            type:   DataTypes.ENUM,
+            values: ['weblancer', 'publisher', 'admin'],
+            defaultValue: 'publisher'
+        },
         paymentSource: {
             type:   DataTypes.ENUM,
             values: ['weblancer', 'publisher'],

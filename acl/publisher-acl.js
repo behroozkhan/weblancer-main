@@ -1,7 +1,7 @@
 import models, { sequelize } from '../models/models.js';
 import Acl from 'acl';
 // import AclSeq from 'acl-sequelize';
-import SequelizeBackend from 'acl-sequelize-backend';
+// import SequelizeBackend from 'acl-sequelize-backend';
 
 // let acl = new Acl(new AclSeq(sequelize, { prefix: 'acl_' }));
 
@@ -63,6 +63,17 @@ export function checkPermissions(req, res, next) {
         );
     } else {
         res.send({ message: 'User not authenticated' })
+    }
+}
+
+export function authRole(role) {
+    return (req, res, next) => {
+        if (req.user.role !== role) {
+            res.status(401);
+            return res.send('Not Allowed');
+        }
+
+        next();
     }
 }
 
