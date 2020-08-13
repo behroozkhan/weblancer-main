@@ -1,6 +1,6 @@
-import dotenv from 'dotenv';
-console.log("configing");
-dotenv.config();
+// import dotenv from 'dotenv';
+// console.log("configing");
+// dotenv.config();
 import { sequelize } from './models/models.js';
 import { checkPermissions } from './acl/publisher-acl.js';
 import { authorizeToken } from './acl/authorization.js';
