@@ -1,5 +1,4 @@
 import Sequelize from 'sequelize';
-import {DataTypes} from Sequelize;
 import Publisher from './publisher.js';
 import PaymentTransaction from './payment-transaction.js';
 import Plan from './plan.js';
@@ -10,6 +9,8 @@ import CreditTransaction from './credit-transaction.js';
 import Website from './website.js';
 import PublisherWebsite from './publisher-website.js';
 import PaymentSource from './payment-source.js';
+
+const {DataTypes} = Sequelize;
  
 const sequelize = new Sequelize(
     process.env.DATABASE,
