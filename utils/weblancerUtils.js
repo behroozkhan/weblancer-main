@@ -1,8 +1,8 @@
 import models from '../models/models.js';
 import Sequelize from 'sequelize';
+import moment from 'moment';
 
 const Op = Sequelize.Op;
-let moment = require('moment');
 
 let WeblancerUtils = {};
 

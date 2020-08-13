@@ -12,6 +12,20 @@ var _weblancerUtils2 = _interopRequireDefault(_weblancerUtils);
 
 var _models = require('../models/models.js');
 
+var _models2 = _interopRequireDefault(_models);
+
+var _moment = require('moment');
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _express = require('express');
+
+var _express2 = _interopRequireDefault(_express);
+
+var _jsonwebtoken = require('jsonwebtoken');
+
+var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -20,16 +34,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-var moment = require('moment');
-var models = require('models');
-var express = require('express');
-var router = express.Router();
-
-var jwt = require('jsonwebtoken');
+var router = _express2.default.Router();
 
 router.get('/publisher', function (req, res) {
     // return all publishers
-    findAndCountAll(req, res, models.Publisher);
+    findAndCountAll(req, res, _models2.default.Publisher);
 });
 
 router.get('/:id', function () {
@@ -42,7 +51,7 @@ router.get('/:id', function () {
                         // return publisher by id
                         id = req.params.id;
 
-                        models.Publisher.find({
+                        _models2.default.Publisher.find({
                             where: {
                                 id: id
                             }
@@ -85,7 +94,7 @@ router.post('/', function () {
                         subDomain = req.body.username + (0, _utils2.default)(10, 99);
 
 
-                        models.Publisher.create({
+                        _models2.default.Publisher.create({
                             username: username,
                             password: password,
                             subDomain: subDomain
@@ -124,7 +133,7 @@ router.put('/:id', function () {
                         publisher = void 0;
                         _context3.prev = 2;
                         _context3.next = 5;
-                        return models.publisher.find({
+                        return _models2.default.publisher.find({
                             where: {
                                 id: id
                             }
@@ -262,7 +271,7 @@ router.post('/paymentverify', function () {
                         publisher = void 0;
                         _context7.prev = 2;
                         _context7.next = 5;
-                        return models.Publisher.find({
+                        return _models2.default.Publisher.find({
                             where: {
                                 id: req.user.id
                             }
@@ -322,7 +331,7 @@ router.post('/paymentverify', function () {
                                             case 5:
                                                 transaction = _context6.sent;
                                                 _context6.next = 8;
-                                                return models.CreditTransaction.create({
+                                                return _models2.default.CreditTransaction.create({
                                                     amount: paymentTransaction.amount,
                                                     useType: paymentTransaction.initData.endUserId ? 'userPayment' : 'publisherPayment',
                                                     description: { publisherId: publisher.id, endUserId: paymentTransaction.initData.endUserId },
@@ -409,11 +418,11 @@ router.post('/plan/:id', function () {
                         publisher = void 0;
                         _context8.prev = 2;
                         _context8.next = 5;
-                        return models.Publisher.find({
+                        return _models2.default.Publisher.find({
                             where: {
                                 id: req.user.id
                             },
-                            include: [models.PublisherPlan, models.CreditTransaction]
+                            include: [_models2.default.PublisherPlan, _models2.default.CreditTransaction]
                         });
 
                     case 5:
@@ -432,7 +441,7 @@ router.post('/plan/:id', function () {
                         plan = void 0;
                         _context8.prev = 13;
                         _context8.next = 16;
-                        return models.Plan.find({
+                        return _models2.default.Plan.find({
                             where: {
                                 id: planId
                             }
@@ -481,8 +490,8 @@ router.post('/plan/:id', function () {
 
                         publisher.credit -= creditNeed;
 
-                        boughtDate = moment.utc();
-                        expireDate = planTime === 'monthly' ? moment.utc().add(1, 'M') : moment.utc().add(1, 'y');
+                        boughtDate = _moment2.default.utc();
+                        expireDate = planTime === 'monthly' ? _moment2.default.utc().add(1, 'M') : _moment2.default.utc().add(1, 'y');
                         totalPayForPlan = creditNeed + backMoney;
                         transaction = void 0;
                         _context8.prev = 38;
@@ -492,17 +501,17 @@ router.post('/plan/:id', function () {
                     case 41:
                         transaction = _context8.sent;
                         _context8.next = 44;
-                        return models.PublisherPlan.create({
+                        return _models2.default.PublisherPlan.create({
                             boughtDate: boughtDate, expireDate: expireDate, totalPriceOfPlan: totalPriceOfPlan, totalPayForPlan: totalPayForPlan, plan: plan
                         }, {
-                            include: [models.Plan],
+                            include: [_models2.default.Plan],
                             transaction: transaction
                         });
 
                     case 44:
                         publisherPlan = _context8.sent;
                         _context8.next = 47;
-                        return models.CreditTransaction.create({
+                        return _models2.default.CreditTransaction.create({
                             amount: creditNeed,
                             useType: 'plan',
                             description: { planName: plan.name }
@@ -516,13 +525,13 @@ router.post('/plan/:id', function () {
 
                         oldPublisherPlan = publisher.publisherPlan;
 
-                        if (!(oldPublisherPlan && oldPublisherPlan.expireTime > moment.utc())) {
+                        if (!(oldPublisherPlan && oldPublisherPlan.expireTime > _moment2.default.utc())) {
                             _context8.next = 55;
                             break;
                         }
 
                         oldPublisherPlan.upgradedToUpperPlan = true;
-                        oldPublisherPlan.expireTime = moment.utc();
+                        oldPublisherPlan.expireTime = _moment2.default.utc();
                         _context8.next = 55;
                         return oldPublisherPlan.save({ fields: ['upgradedToUpperPlan', 'expireTime'], transaction: transaction });
 
@@ -594,11 +603,11 @@ router.post('/createwebsite', function () {
                         publisher = void 0;
                         _context9.prev = 9;
                         _context9.next = 12;
-                        return models.Publisher.find({
+                        return _models2.default.Publisher.find({
                             where: {
                                 id: req.user.id
                             },
-                            include: [models.PublisherWebsite, models.CreditTransaction]
+                            include: [_models2.default.PublisherWebsite, _models2.default.CreditTransaction]
                         });
 
                     case 12:
@@ -638,7 +647,7 @@ router.post('/createwebsite', function () {
                         currentPublisherWebsite = void 0;
                         _context9.prev = 27;
                         _context9.next = 30;
-                        return models.PublisherWebsite.find({
+                        return _models2.default.PublisherWebsite.find({
                             where: {
                                 endWebsiteId: publisher.id + '_' + websiteId
                             }
@@ -684,8 +693,8 @@ router.post('/createwebsite', function () {
 
                         publisher.credit -= creditNeed;
 
-                        boughtDate = moment.utc();
-                        expireDate = planTime === 'monthly' ? moment.utc().add(1, 'M') : moment.utc().add(1, 'y');
+                        boughtDate = _moment2.default.utc();
+                        expireDate = planTime === 'monthly' ? _moment2.default.utc().add(1, 'M') : _moment2.default.utc().add(1, 'y');
                         totalPayForPlan = creditNeed + backMoney;
                         transaction = void 0;
                         _context9.prev = 47;
@@ -695,7 +704,7 @@ router.post('/createwebsite', function () {
                     case 50:
                         transaction = _context9.sent;
                         _context9.next = 53;
-                        return models.PublisherWebsite.create({
+                        return _models2.default.PublisherWebsite.create({
                             boughtDate: boughtDate, expireDate: expireDate, totalPriceOfPlan: totalPriceOfPlan, totalPayForPlan: totalPayForPlan, planOrder: planOrder,
                             metadata: currentPublisherWebsite ? currentPublisherWebsite.metadata : metadata,
                             type: websiteType,
@@ -703,7 +712,7 @@ router.post('/createwebsite', function () {
                             endWebsiteId: publisher.id + '_' + websiteId,
                             websites: [resourcePlan].concat(_toConsumableArray(permissionPlans))
                         }, {
-                            include: [models.Website],
+                            include: [_models2.default.Website],
                             transaction: transaction
                         });
 
@@ -715,7 +724,7 @@ router.post('/createwebsite', function () {
                             }).join('_')
                         };
                         _context9.next = 57;
-                        return models.CreditTransaction.create({
+                        return _models2.default.CreditTransaction.create({
                             amount: creditNeed,
                             useType: 'website',
                             description: description
@@ -734,13 +743,13 @@ router.post('/createwebsite', function () {
 
                         currentPublisherWebsite.extended = true;
 
-                        if (!(currentPublisherWebsite.expireTime > moment.utc())) {
+                        if (!(currentPublisherWebsite.expireTime > _moment2.default.utc())) {
                             _context9.next = 66;
                             break;
                         }
 
                         currentPublisherWebsite.upgradedToUpperPlan = true;
-                        currentPublisherWebsite.expireTime = moment.utc();
+                        currentPublisherWebsite.expireTime = _moment2.default.utc();
                         _context9.next = 66;
                         return currentPublisherWebsite.save({ fields: ['upgradedToUpperPlan', 'expireTime'], transaction: transaction });
 
@@ -832,7 +841,7 @@ router.get('/transactions/:type', function () {
                         }
 
                         _context11.next = 6;
-                        return models.PaymentTransaction.find({
+                        return _models2.default.PaymentTransaction.find({
                             where: {
                                 publisherId: req.user.id
                             }
@@ -845,7 +854,7 @@ router.get('/transactions/:type', function () {
 
                     case 9:
                         _context11.next = 11;
-                        return models.CreditTransaction.find({
+                        return _models2.default.CreditTransaction.find({
                             where: {
                                 publisherId: req.user.id
                             }
@@ -896,7 +905,7 @@ router.post('/login', function () {
                         publisher = void 0;
                         _context12.prev = 1;
                         _context12.next = 4;
-                        return models.Publisher.find({
+                        return _models2.default.Publisher.find({
                             where: {
                                 username: req.body.username,
                                 password: req.body.password
@@ -917,7 +926,7 @@ router.post('/login', function () {
                         return _context12.abrupt('return');
 
                     case 11:
-                        accessToken = jwt.sign(publisher, process.env.JWT_ACCESS_TOKEN_SECRET);
+                        accessToken = _jsonwebtoken2.default.sign(publisher, process.env.JWT_ACCESS_TOKEN_SECRET);
 
                         res.json(new Response(true, { accessToken: accessToken }).json());
 
@@ -967,7 +976,7 @@ router.post('/register', function () {
 
                         _context13.prev = 11;
                         _context13.next = 14;
-                        return models.Publisher.create({
+                        return _models2.default.Publisher.create({
                             username: username,
                             password: password,
                             subDomain: subDomain

@@ -1,9 +1,9 @@
 import {getConfig} from '../models/config.js';
 import WeblancerUtils from '../utils/weblancerUtils.js';
+import moment from 'moment';
+import express from 'express';
 
-let express = require('express');
 let router = express.Router();
-let moment = require('moment');
 
 router.post('/publishrequest', async (req, res) => {
     // send a publish request to publisher server

@@ -12,6 +12,10 @@ var _sequelize = require('sequelize');
 
 var _sequelize2 = _interopRequireDefault(_sequelize);
 
+var _moment = require('moment');
+
+var _moment2 = _interopRequireDefault(_moment);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -19,15 +23,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var Op = _sequelize2.default.Op;
-var moment = require('moment');
 
 var WeblancerUtils = {};
 
 WeblancerUtils.getBackMoney = function (oldPlan) {
     if (!oldPlan) return 0;
 
-    var totalDays = moment.utc(oldPlan.boughtDate).diff(moment.utc(oldPlan.expireTime), 'days');
-    var remainDays = moment.utc().diff(moment.utc(oldPlan.expireTime), 'days');
+    var totalDays = _moment2.default.utc(oldPlan.boughtDate).diff(_moment2.default.utc(oldPlan.expireTime), 'days');
+    var remainDays = _moment2.default.utc().diff(_moment2.default.utc(oldPlan.expireTime), 'days');
 
     if (remainDays < 0) remainDays = 0;
 
