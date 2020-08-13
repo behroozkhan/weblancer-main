@@ -27,7 +27,7 @@ export async function getConfig (key) {
                 key: key
             }
         });
-    } catch {
+    } catch (e) {
     }
 }
 
