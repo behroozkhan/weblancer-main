@@ -1,8 +1,10 @@
 'use strict';
 
-var _utils = require('../utils/utils.js');
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
-var _utils2 = _interopRequireDefault(_utils);
+var _utils = require('../utils/utils.js');
 
 var _weblancerPayment = require('../utils/weblancer-payment.js');
 
@@ -91,7 +93,7 @@ router.post('/', function () {
                         // add new publisher
                         username = req.body.username;
                         password = req.body.password;
-                        subDomain = req.body.username + (0, _utils2.default)(10, 99);
+                        subDomain = req.body.username + (0, _utils.getRandomInt)(10, 99);
 
 
                         _models2.default.Publisher.create({
@@ -218,7 +220,7 @@ router.post('/paymentinit', function () {
                         publisherId = req.user.id || req.body.publisherId;
                         amount = req.body.amount;
                         gateway = req.body.gateway;
-                        resNum = req.body.resNum || (0, _utils2.default)(50);
+                        resNum = req.body.resNum || (0, _utils.makeResNum)(50);
                         endUserId = req.body.endUserId;
                         paymentData = req.body.paymentData;
                         additionalData1 = req.user.id;
@@ -1108,4 +1110,4 @@ router.put('/stop', function () {
 // stop publisher server
 );
 
-module.exports = router;
+exports.default = router;

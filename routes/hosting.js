@@ -1,4 +1,4 @@
-var express = require('express');
+import express from 'express';
 var router = express.Router();
 
 router.post('/publish', function (req, res) {
@@ -9,4 +9,4 @@ router.post('/domain', function (req, res) {
     // set requested domain for website
 })
 
-module.exports = router;
+export default router;

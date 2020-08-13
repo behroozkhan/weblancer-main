@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _config = require('../models/config.js');
 
 var _weblancerUtils = require('../utils/weblancerUtils.js');
@@ -167,4 +171,4 @@ router.post('/editorrequest', function () {
     };
 }());
 
-module.exports = router;
+exports.default = router;

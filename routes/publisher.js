@@ -622,4 +622,4 @@ router.put('/stop', async (req, res) => {
     // stop publisher server
 })
 
-module.exports = router;
+export default router;

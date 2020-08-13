@@ -1,4 +1,5 @@
-var express = require('express');
+import express from 'express';
+
 var router = express.Router();
 
 router.post('/', function (req, res) {
@@ -6,4 +7,4 @@ router.post('/', function (req, res) {
     // setup payment url and redirect user
 })
 
-module.exports = router;
+export default router;

@@ -1,4 +1,5 @@
-var express = require('express');
+import express from 'express';
+
 var router = express.Router();
 
 router.get('/', function (req, res) {
@@ -25,4 +26,4 @@ router.delete('/', function (req, res) {
     // delete transaction
 })
 
-module.exports = router;
+export default router;

@@ -26,4 +26,4 @@ router.delete('/', function (req, res) {
     // delete paymentSource
 })
 
-module.exports = router;
+export default router;

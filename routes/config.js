@@ -21,4 +21,4 @@ router.delete('/', function (req, res) {
     // delete config
 })
 
-module.exports = router;
+export default router;
