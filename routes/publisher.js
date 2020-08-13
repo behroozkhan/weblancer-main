@@ -1,5 +1,4 @@
-import getRandomInt from '../utils/utils.js';
-import makeResNum from '../utils/utils.js';
+import {getRandomInt, makeResNum} from '../utils/utils.js';
 import { paymentInit, paymentVerfiy } from '../utils/weblancer-payment.js';
 import WeblancerUtils from '../utils/weblancerUtils.js';
 import models, { sequelize } from '../models/models.js';
