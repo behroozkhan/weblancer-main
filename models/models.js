@@ -38,10 +38,10 @@ const models = {
 models.Publisher.hasMany(models.PaymentTransaction);
 models.Publisher.hasMany(models.CreditTransaction);
 models.PublisherPlan.belongsTo(models.Publisher);
-models.Plan.belongsTo(models.PublisherPlan);
+models.PublisherPlan.belongsTo (models.Plan);
 models.Publisher.hasMany(models.PublisherWebSite);
 models.PublisherWebSite.hasMany(models.Website);
-models.Server.belongsTo(models.Publisher, {as: 'mainServer', foreignKey: 'mainServerId'});
+models.Publisher.belongsTo(models.Server, {as: 'mainServer', foreignKey: 'mainServerId'});
 models.Publisher.hasMany(models.Server, {as: 'hostServers'});
 
 models.Publisher.hasMany(models.PaymentSource);
