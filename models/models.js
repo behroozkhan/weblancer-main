@@ -1,7 +1,14 @@
-import Sequelize from 'sequelize';
-import path  from 'path';
-
-const __dirname = path.resolve();
+import Sequelize, { DataTypes } from 'sequelize';
+import Publisher from './publisher.js';
+import PaymentTransaction from './payment-transaction.js';
+import Plan from './plan.js';
+import Server from './server.js';
+import Config from './config.js';
+import PublisherPlan from './publisher-plan.js';
+import CreditTransaction from './credit-transaction.js';
+import Website from './website.js';
+import PublisherWebsite from './publisher-website.js';
+import PaymentSource from './payment-source.js';
  
 const sequelize = new Sequelize(
     process.env.DATABASE,
@@ -13,16 +20,16 @@ const sequelize = new Sequelize(
 );
 
 const models = {
-    Publisher: sequelize.import(__dirname + '/models/publisher.js'),
-    PaymentTransaction: sequelize.import('./payment-transaction.js'),
-    Plan: sequelize.import('./plan.js'),
-    Server: sequelize.import('./server.js'),
-    Config: sequelize.import('./config.js'),
-    PublisherPlan: sequelize.import('./publisher-plan.js'),
-    CreditTransaction: sequelize.import('./credit-transaction.js'),
-    Website: sequelize.import('./website.js'),
-    PublisherWebSite: sequelize.import('./publisher-webSite.js'),
-    PaymentSource: sequelize.import('./payment-source.js'),
+    Publisher: Publisher(sequelize, DataTypes),
+    PaymentTransaction: PaymentTransaction(sequelize, DataTypes),
+    Plan: Plan(sequelize, DataTypes),
+    Server: Server(sequelize, DataTypes),
+    Config: Config(sequelize, DataTypes),
+    PublisherPlan: PublisherPlan(sequelize, DataTypes),
+    CreditTransaction: CreditTransaction(sequelize, DataTypes),
+    Website: Website(sequelize, DataTypes),
+    PublisherWebSite: PublisherWebsite(sequelize, DataTypes),
+    PaymentSource: PaymentSource(sequelize, DataTypes),
 };
 
 models.Publisher.hasMany(models.PaymentTransaction);
