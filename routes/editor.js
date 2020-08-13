@@ -6,4 +6,4 @@ router.post('/editoraccess', function (req, res) {
     // set and return access token for a user in editor server
 })
 
-module.exports = router;
+export default router;
