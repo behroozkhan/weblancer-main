@@ -28,7 +28,7 @@ router.post('/editorrequest', async (req, res) => {
             },
             include: [models.PublisherWebsite, models.CreditTransaction]
         });
-    } catch {
+    } catch (e) {
         res.status(404).json(
             new Response(false, {}, "Publisher not found").json()
         );
