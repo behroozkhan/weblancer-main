@@ -1,4 +1,7 @@
 import Sequelize from 'sequelize';
+import path  from 'path';
+
+const __dirname = path.resolve();
  
 const sequelize = new Sequelize(
     process.env.DATABASE,
