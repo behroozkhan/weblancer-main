@@ -31,7 +31,7 @@ WeblancerUtils.resolveWebsitePlans = (resourcePlanId, permissionPlansId) => {
                 id: resourcePlanId
             }
         });
-    } catch {
+    } catch (e) {
         return;
     }
 
@@ -45,7 +45,7 @@ WeblancerUtils.resolveWebsitePlans = (resourcePlanId, permissionPlansId) => {
                 id: permissionPlansId
             }
         });
-    } catch {
+    } catch (e) {
         return;
     }
         

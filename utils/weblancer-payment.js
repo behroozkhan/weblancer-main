@@ -13,7 +13,7 @@ export async function paymentInit (publisherId, amount, gateway, resNum, additio
         publisherPaymentSource = await models.PaymentSource.find({
             where: paymentSourceWhere
         });
-    } catch {
+    } catch (e) {
     }
 
     let sourceData;
@@ -45,7 +45,7 @@ export async function paymentInit (publisherId, amount, gateway, resNum, additio
             sourceType: publisherPaymentSource? 'publisher': 'weblancer',
             weblancerState: 'init',
         });
-    } catch {
+    } catch (e) {
         onError(500, new Response(false, {}, "Can't create paymentTransaction").json());
         return;
     }
@@ -61,7 +61,7 @@ export async function paymentInit (publisherId, amount, gateway, resNum, additio
 
         publisher.paymentTransactions.push(paymentTransaction);
         await publisher.save({ fields: ['paymentTransactions']});
-    } catch {
+    } catch (e) {
         onError(500, new Response(false, {}, "Can't get or update publisher").json());
         return;
     }
@@ -99,7 +99,7 @@ export async function paymentVerfiy (paymentResponse, onSuccess, onError) {
                 resNum: resNum
             }
         });
-    } catch {
+    } catch (e) {
         onError(404, new Response(false, {}, "Can't find paymentTransaction").json());
         return;
     }
@@ -108,7 +108,7 @@ export async function paymentVerfiy (paymentResponse, onSuccess, onError) {
     paymentTransaction.paymentResponse = paymentResponse;
     try {
         await paymentTransaction.save({ fields: ['weblancerState', 'paymentResponse']});
-    } catch {
+    } catch (e) {
         onError(500, new Response(false, {}, "Can't save paymentTransaction").json());
         return;
     }

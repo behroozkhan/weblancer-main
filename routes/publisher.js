@@ -79,7 +79,7 @@ router.put('/:id', async (req, res) => {
                 id: id
             }
         });
-    } catch {
+    } catch (e) {
         res.status(404).json(
             new Response(false, {}, "Publisher not found").json()
         );
@@ -161,7 +161,7 @@ router.post('/paymentverify', async (req, res) => {
                 id: req.user.id
             }
         });
-    } catch {
+    } catch (e) {
         res.status(500).json(
             new Response(false, {}, "Can't get publisher").json()
         );
@@ -232,7 +232,7 @@ router.post('/plan/:id', async (req, res) => {
             },
             include: [models.PublisherPlan, models.CreditTransaction]
         });
-    } catch {
+    } catch (e) {
         res.status(404).json(
             new Response(false, {}, "Publisher not found").json()
         );
@@ -246,7 +246,7 @@ router.post('/plan/:id', async (req, res) => {
                 id: planId
             }
         });
-    } catch {
+    } catch (e) {
         res.status(404).json(
             new Response(false, {}, "Plan not found").json()
         );
@@ -360,7 +360,7 @@ router.post('/createwebsite', async (req, res) => {
             },
             include: [models.PublisherWebsite, models.CreditTransaction]
         });
-    } catch {
+    } catch (e) {
         res.status(404).json(
             new Response(false, {}, "Publisher not found").json()
         );
@@ -397,7 +397,7 @@ router.post('/createwebsite', async (req, res) => {
                 endWebsiteId: `${publisher.id}_${websiteId}`
             },
         });
-    } catch {
+    } catch (e) {
     }
     if (currentPublisherWebsite) {
 
@@ -519,7 +519,7 @@ router.get('/transactions/:type', async (req, res) => {
                     publisherId: req.user.id
                 }
             });
-    } catch {
+    } catch (e) {
         res.status(404).json(
             new Response(false, {}, "Publisher not found").json()
         );
@@ -545,7 +545,7 @@ router.post('/login', async (req, res) => {
             },
             attributes: ['id']
         });
-    } catch {
+    } catch (e) {
         res.status(401).json(
             new Response(false, {}, "Username or password is wrong").json()
         );
@@ -588,7 +588,7 @@ router.post('/register', async (req, res) => {
         res.status(201).json(
             new Response(true, {}).json()
         );
-    } catch {
+    } catch (e) {
         res.status(500).json(
             new Response(false, {}, "Username or subdomain is in use").json()
         );

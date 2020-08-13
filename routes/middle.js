@@ -44,7 +44,7 @@ router.post('/editorrequest', async (req, res) => {
             includes: [models.Website],
             order: [['expireTime', 'DESC']]
         });
-    } catch {
+    } catch (e) {
         res.status(404).json(
             new Response(false, {}, "Publisher website not found").json()
         );
