@@ -80,7 +80,7 @@ export async function paymentInit (publisherId, amount, gateway, resNum, additio
             onError(500, new Response(false, {}, "Can't save paymentTransaction").json());
         });
     })
-    .catch(function (error) {
+    .catch(async function (error) {
         paymentTransaction.weblancerState = 'error';
         paymentTransaction.message = `Got error from payment service at /initpayment: ${error.message}`;
         await paymentTransaction.save({ fields: ['weblancerState', 'message']});
@@ -123,13 +123,13 @@ export async function paymentVerfiy (paymentResponse, onSuccess, onError) {
     axios.post(`${paymentServiceUrl}/verifypayment`, {
         refNum, MID, amount: paymentTransaction.amount, gateway: paymentTransaction.gateway
     })
-    .then(function (message) {
+    .then(async function (message) {
         paymentTransaction.weblancerState = 'complete';
         paymentTransaction.message = message;
         await paymentTransaction.save({ fields: ['weblancerState', 'message']});
         onSuccess(paymentTransaction);
     })
-    .catch(function (error) {
+    .catch(async function (error) {
         paymentTransaction.weblancerState = 'error';
         paymentTransaction.message = `Got error from payment service at /verfiypayment: ${error.message}`;
         await paymentTransaction.save({ fields: ['weblancerState', 'message']});

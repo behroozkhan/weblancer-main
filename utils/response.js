@@ -3,13 +3,13 @@ export default class Response {
         this.success = success;
         this.message = message;
         this.data = data;
-    }
 
-    json = () => {
-        return {
-            success: this.success,
-            message: this.message,
-            data: this.data
+        this.json = () => {
+            return {
+                success: this.success,
+                message: this.message,
+                data: this.data
+            };
         };
-    };
+    }
 }

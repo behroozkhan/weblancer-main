@@ -23,7 +23,7 @@ WeblancerUtils.getBackMoney = (oldPlan) => {
     return Math.max(0, backMoney);
 }
 
-WeblancerUtils.resolveWebsitePlans = (resourcePlanId, permissionPlansId) => {
+WeblancerUtils.resolveWebsitePlans = async (resourcePlanId, permissionPlansId) => {
     let resourcePlan;
     try {
         resourcePlan = await models.Website.find({
