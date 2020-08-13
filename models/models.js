@@ -9,6 +9,8 @@ const sequelize = new Sequelize(
     },
 );
 
+console.log("Here");
+
 const models = {
     Publisher: sequelize.import('./publisher.js'),
     PaymentTransaction: sequelize.import('./payment-transaction.js'),
