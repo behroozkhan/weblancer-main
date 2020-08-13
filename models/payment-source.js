@@ -1,5 +1,5 @@
 const PaymentSource = (sequelize, DataTypes) => {
-    const PaymentSource = sequelize.define('PaymentSource', {
+    const PaymentSource = sequelize.define('payment_source', {
         id: {
             type: DataTypes.BIGINT,
             unique: true,

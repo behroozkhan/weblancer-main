@@ -1,5 +1,5 @@
 const Server = (sequelize, DataTypes) => {
-    const Server = sequelize.define('Server', {
+    const Server = sequelize.define('server', {
         id: {
             type: DataTypes.INTEGER,
             unique: true,

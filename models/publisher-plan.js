@@ -1,5 +1,5 @@
 const PublisherPlan = (sequelize, DataTypes) => {
-    const PublisherPlan = sequelize.define('PublisherPlan', {
+    const PublisherPlan = sequelize.define('publisher_plan', {
         id: {
             type: DataTypes.BIGINT,
             unique: true,

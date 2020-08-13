@@ -1,5 +1,5 @@
 const PaymentTransaction = (sequelize, DataTypes) => {
-    const PaymentTransaction = sequelize.define('PaymentTransaction', {
+    const PaymentTransaction = sequelize.define('payment_transaction', {
         gateway: {
             type:   DataTypes.STRING
         },

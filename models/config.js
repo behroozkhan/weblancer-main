@@ -1,7 +1,7 @@
 import models from './models.js';
 
 const Config = (sequelize, DataTypes) => {
-    const Config = sequelize.define('Config', {
+    const Config = sequelize.define('config', {
         id: {
             type: DataTypes.INTEGER,
             unique: true,

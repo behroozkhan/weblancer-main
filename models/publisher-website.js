@@ -1,5 +1,5 @@
 const PublisherWebsite = (sequelize, DataTypes) => {
-    const PublisherWebsite = sequelize.define('PublisherWebsite', {
+    const PublisherWebsite = sequelize.define('publisher_website', {
         id: {
             type: DataTypes.BIGINT,
             unique: true,

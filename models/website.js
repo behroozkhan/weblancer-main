@@ -1,5 +1,5 @@
 const Website = (sequelize, DataTypes) => {
-    const Website = sequelize.define('Website', {
+    const Website = sequelize.define('website', {
         id: {
             type: DataTypes.INTEGER,
             unique: true,
