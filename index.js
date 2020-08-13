@@ -2,7 +2,7 @@ import dotenv from './utils/loadDotEnv.js';
 console.log("index.js", 1)
 import { sequelize } from './models/models.js';
 console.log("index.js", 2)
-// import { checkPermissions } from './acl/publisher-acl.js';
+import { checkPermissions } from './acl/publisher-acl.js';
 console.log("index.js", 3)
 import { authorizeToken } from './acl/authorization.js';
 console.log("index.js", 4)
@@ -25,7 +25,7 @@ let app = express();
 
 app.use(express.json());
 app.use(unlessRoute(['/publisher/login', '/publisher/register'], authorizeToken));
-//app.use(unlessRoute(['/publisher/login', '/publisher/register'], checkPermissions));
+app.use(unlessRoute(['/publisher/login', '/publisher/register'], checkPermissions));
 
 app.use('/payment', payment);
 app.use('/editor', editor);

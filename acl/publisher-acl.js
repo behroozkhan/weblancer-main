@@ -1,10 +1,13 @@
 import models, { sequelize } from '../models/models.js';
 import Acl from 'acl';
-import AclSeq from 'acl-sequelize';
+// import AclSeq from 'acl-sequelize';
+import SequelizeBackend from 'acl-sequelize-backend';
 
-let acl = new Acl(new AclSeq(sequelize, { prefix: 'acl_' }));
+// let acl = new Acl(new AclSeq(sequelize, { prefix: 'acl_' }));
 
-// acl.addRoleParents('weblancer', 'admin', 'user');
+let aclOptions = {};
+let tablePrefix = 'acl_';
+let acl = new Acl(new SequelizeBackend(sequelize, tablePrefix, aclOptions));
 
 acl.allow([
     {
