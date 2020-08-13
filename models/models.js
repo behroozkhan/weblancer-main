@@ -1,4 +1,5 @@
-import Sequelize, { DataTypes } from 'sequelize';
+import Sequelize from 'sequelize';
+import {DataTypes} from Sequelize;
 import Publisher from './publisher.js';
 import PaymentTransaction from './payment-transaction.js';
 import Plan from './plan.js';
