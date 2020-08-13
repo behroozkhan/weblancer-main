@@ -1,9 +1,9 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import { sequelize } from './models/models.js';
 import { checkPermissions } from './acl/publisher-acl.js';
 import { authorizeToken } from './acl/authorization.js';
 import { unlessRoute } from './utils/utils.js';
-import dotenv from 'dotenv';
-dotenv.config();
 import express from 'express';
 
 import payment from './routes/payment.js';
