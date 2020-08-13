@@ -4,7 +4,7 @@ import AclSeq from 'acl-sequelize';
 
 let acl = new Acl(new AclSeq(sequelize, { prefix: 'acl_' }));
 
-acl.addRoleParents('weblancer', 'admin', 'user');
+// acl.addRoleParents('weblancer', 'admin', 'user');
 
 acl.allow([
     {
