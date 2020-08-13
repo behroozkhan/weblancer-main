@@ -71,7 +71,7 @@ router.post('/editorrequest', async (req, res) => {
 
     let editorRequestQuery = await getConfig('EditorRequestQuery');
 
-    axios.post(`${editorServer.url}${editorRequestQuery}`, {
+    axios.post(`${editorServer.url}${editorRequestQuery.value}`, {
         publisherId, websiteId, publisherWebsite
     })
     .then(function (response) {
