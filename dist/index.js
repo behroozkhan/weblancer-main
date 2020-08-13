@@ -1,5 +1,7 @@
 'use strict';
 
+require('dotenv/config');
+
 var _models = require('./models/models.js');
 
 var _publisherAcl = require('./acl/publisher-acl.js');
@@ -7,10 +9,6 @@ var _publisherAcl = require('./acl/publisher-acl.js');
 var _authorization = require('./acl/authorization.js');
 
 var _utils = require('./utils/utils.js');
-
-var _dotenv = require('dotenv');
-
-var _dotenv2 = _interopRequireDefault(_dotenv);
 
 var _express = require('express');
 
@@ -49,9 +47,6 @@ var _middle = require('./routes/middle.js');
 var _middle2 = _interopRequireDefault(_middle);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_dotenv2.default.config();
-
 
 var app = (0, _express2.default)();
 
