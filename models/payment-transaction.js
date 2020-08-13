@@ -41,7 +41,7 @@ const PaymentTransaction = (sequelize, DataTypes) => {
             type:   DataTypes.STRING,
         },
         message: {
-            type:   DataTypes.MESSAGE,
+            type:   DataTypes.STRING,
         },
         initData: {
             type:   DataTypes.JSON,
