@@ -1,6 +1,6 @@
 import models, { sequelize } from '../models/models.js';
-
-let Acl       = require('acl');
+import Acl from 'acl';
+// let Acl       = require('acl');
 let AclSeq    = require('acl-sequelize');
 
 let acl = new Acl(new AclSeq(sequelize, { prefix: 'acl_' }));
