@@ -1,8 +1,8 @@
-import getRandomInt from '../utils/utils';
-import makeResNum from '../utils/utils';
-import { paymentInit, paymentVerfiy } from '../utils/weblancer-payment';
-import WeblancerUtils from '../utils/weblancerUtils';
-import { sequelize } from '../models/models';
+import getRandomInt from '../utils/utils.js';
+import makeResNum from '../utils/utils.js';
+import { paymentInit, paymentVerfiy } from '../utils/weblancer-payment.js';
+import WeblancerUtils from '../utils/weblancerUtils.js';
+import { sequelize } from '../models/models.js';
 
 let moment = require('moment');
 let models = require('models');

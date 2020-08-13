@@ -1,4 +1,4 @@
-import getConfig from '../models/config';
+import getConfig from '../models/config.js';
 
 var models = require('models');
 const axios = require('axios');

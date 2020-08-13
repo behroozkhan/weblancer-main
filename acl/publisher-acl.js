@@ -1,4 +1,4 @@
-import models, { sequelize } from '../models/models';
+import models, { sequelize } from '../models/models.js';
 
 let Acl       = require('acl');
 let AclSeq    = require('acl-sequelize');

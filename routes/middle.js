@@ -1,5 +1,5 @@
-import {getConfig} from '../models/config';
-import WeblancerUtils from '../utils/weblancerUtils';
+import {getConfig} from '../models/config.js';
+import WeblancerUtils from '../utils/weblancerUtils.js';
 
 let express = require('express');
 let router = express.Router();

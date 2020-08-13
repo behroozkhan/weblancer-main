@@ -1,4 +1,4 @@
-import models from './models';
+import models from './models.js';
 
 const Config = (sequelize, DataTypes) => {
     const Config = sequelize.define('Config', {

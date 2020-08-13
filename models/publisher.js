@@ -1,4 +1,4 @@
-import PaymentTransaction from "./transaction";
+import PaymentTransaction from "./transaction.js";
 
 const Publisher = (sequelize, DataTypes) => {
     const Publisher = sequelize.define('Publisher', {

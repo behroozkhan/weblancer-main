@@ -1,7 +1,7 @@
-import { sequelize } from './models/models';
-import { checkPermissions } from './acl/publisher-acl';
-import { authorizeToken } from './acl/authorization';
-import { unlessRoute } from './utils/utils';
+import { sequelize } from './models/models.js';
+import { checkPermissions } from './acl/publisher-acl.js';
+import { authorizeToken } from './acl/authorization.js';
+import { unlessRoute } from './utils/utils.js';
 
 require('dotenv').config();
 
