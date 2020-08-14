@@ -44,10 +44,6 @@ app.get(appBaseRoute + '/test', function (req, res) {
         ).json()
     );
 })
-
-app.get(appBaseRoute + '/', function (req, res) {
-    console.log("WhiteLabel", req);
-})
  
 sequelize.sync({logging: true}).then(() => {
     app.listen(process.env.PORT, () => {
