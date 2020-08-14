@@ -12,6 +12,7 @@ import transaction from './routes/transaction.js';
 import plan from './routes/plan.js';
 import server from './routes/server.js';
 import middle from './routes/middle.js';
+import Response from './utils/response';
 
 const appBaseRoute = '/whitelabel';
 
@@ -48,9 +49,7 @@ app.get(appBaseRoute + '/', function (req, res) {
     console.log("WhiteLabel", req);
 })
  
-console.log("index.js", 8)
 sequelize.sync({logging: true}).then(() => {
-    console.log("index.js", 9)
     app.listen(process.env.PORT, () => {
         console.log(`Weblancer main express server now listening on port ${process.env.PORT}!`);
     });
