@@ -27,6 +27,14 @@ app.use('/transaction', transaction);
 app.use('/plan', plan);
 app.use('/server', server);
 app.use('/middle', middle);
+
+app.get('/test', function (req, res) {
+    res.json(
+        new Response(true, {}, 
+            "Tested Successfully"
+        ).json()
+    );
+})
  
 console.log("index.js", 8)
 sequelize.sync({logging: true}).then(() => {
