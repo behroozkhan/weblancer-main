@@ -1,7 +1,6 @@
 export function unlessRoute (path, middleware) {
     return function(req, res, next) {
-        console.log("req.baseUrl", req.baseUrl, req.url, req);
-        if (path.includes(req.baseUrl)) {
+        if (path.includes(req.url)) {
             return next();
         } else {
             return middleware(req, res, next);
