@@ -35,6 +35,10 @@ app.get('/test', function (req, res) {
         ).json()
     );
 })
+
+app.get('/', function (req, res) {
+    console.log("WhiteLabel", req);
+})
  
 console.log("index.js", 8)
 sequelize.sync({logging: true}).then(() => {
