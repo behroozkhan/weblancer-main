@@ -12,7 +12,7 @@ import transaction from './routes/transaction.js';
 import plan from './routes/plan.js';
 import server from './routes/server.js';
 import middle from './routes/middle.js';
-import Response from './utils/response';
+import Response from './utils/response.js';
 
 const appBaseRoute = '/whitelabel';
 
