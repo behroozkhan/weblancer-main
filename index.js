@@ -17,7 +17,7 @@ console.log("index.js", 7)
 let app = express();
 
 app.use(express.json());
-app.use(unlessRoute(['/publisher/login', '/publisher/register'], authorizeToken));
+app.use(unlessRoute(['/test', '/', '/publisher/login', '/publisher/register'], authorizeToken));
 
 app.use('/payment', payment);
 app.use('/editor', editor);
