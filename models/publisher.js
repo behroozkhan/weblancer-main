@@ -39,7 +39,7 @@ const Publisher = (sequelize, DataTypes) => {
         },
         role: {
             type:   DataTypes.ENUM,
-            values: ['weblancer', 'publisher', 'admin'],
+            values: ['weblancer', 'publisher', 'admin', 'user'],
             defaultValue: 'publisher'
         },
         paymentSource: {

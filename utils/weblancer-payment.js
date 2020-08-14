@@ -25,7 +25,7 @@ export async function paymentInit (publisherId, amount, gateway, resNum, additio
     
     if (!sourceData) 
     {
-        sourceData = await getConfig("WeblancerSourceData");
+        sourceData = await getConfig("WeblancerSourceData").value;
     
         if (!sourceData){
             onError(404, new Response(false, {}, "Can't get configs from db").json());
@@ -113,7 +113,7 @@ export async function paymentVerfiy (paymentResponse, onSuccess, onError) {
         return;
     }
     
-    let paymentServiceUrl = await getConfig("PaymentServiceUrl");
+    let paymentServiceUrl = await getConfig("PaymentServiceUrl").value;
 
     if (!paymentServiceUrl){
         onError(404, new Response(false, {}, "Can't get configs from db").json());

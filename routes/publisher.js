@@ -6,6 +6,7 @@ import models, { sequelize } from '../models/models.js';
 import moment from 'moment';
 import express from 'express';
 import jwt from 'jsonwebtoken';
+import { getConfig } from '../models/config.js';
 let router = express.Router();
 
 router.get('/publisher', function (req, res) {
@@ -615,6 +616,69 @@ router.post('/usernameavailable', async (req, res) => {
 
 router.put('/start', async (req, res) => {
     // start publisher server
+    let publisherId = req.user.id;
+
+    let publisher;
+    try {
+        publisher = await models.publisher.find({
+            where: {
+                id: publisherId
+            }
+        });
+    } catch (e) {
+        res.status(404).json(
+            new Response(false, {}, "Publisher not found").json()
+        );
+        return;
+    }
+
+    let server;
+    try {
+        server = await models.publisher.find({
+            where: {
+                publisherId: publisherId,
+                ownerType: 'publisher',
+                type: 'publisher'
+            }
+        });
+    } catch (e) {
+        try {
+            server = await models.publisher.find({
+                where: {
+                    ownerType: 'weblancer',
+                    type: 'publisher'
+                }
+            });
+        } catch (e) {
+            res.status(404).json(
+                new Response(false, {}, "Server not found").json()
+            );
+            return;
+        }
+    }
+
+    let input = {
+        publisherId: publisherId, 
+        publisherDomain: publisher.customDomains.lenght > 0 ? publisher.customDomains :
+            publisher.subDomain ? [`${publisher.subDomain}.${getConfig('PublisherBaseDomain').value}`] : 
+            [`${getConfig('PublisherBaseDomain').value}/${publisherId}`], 
+        sudoPassword: server.sudoPassword,
+        postgresHost: getConfig('WhiteLabelPotgresHost').value
+    };
+
+    axios.post(`${server.url}/worker/start`, input).then(res => {
+        if (res.data.success) {
+            res.json(
+                new Response(false, {}, "Server started successfully").json()
+            );
+        } else {
+            res.status(502).json(res.data);
+        }
+    }).catch(error => {
+        res.status(502).json(
+            new Response(false, {}, "Can not connect to server").json()
+        );
+    })
 })
 
 router.put('/stop', async (req, res) => {

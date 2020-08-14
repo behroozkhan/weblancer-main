@@ -13,6 +13,9 @@ const Server = (sequelize, DataTypes) => {
         ipAddress: {
             type: DataTypes.STRING
         },
+        sudoPassword: {
+            type: DataTypes.STRING
+        },
         url: {
             type: DataTypes.STRING
         },
