@@ -1,4 +1,4 @@
-let { sequelize } = require('./models/models.js');
+let { sequelize } = require('./model-manager/models.js');
 let { authorizeToken } = require('./acl/authorization.js');
 let { unlessRoute } = require('./utils/utils.js');
 let express = require('express');

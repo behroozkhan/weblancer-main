@@ -1,4 +1,4 @@
-let models = require('./models.js');
+let models = require('../model-manager/models.js');
 
 const Config = (sequelize, DataTypes) => {
     const Config = sequelize.define('config', {

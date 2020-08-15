@@ -1,4 +1,4 @@
-let { models } = require('../models/models.js');
+let { models } = require('../model-manager/models.js');
 let Sequelize = require('sequelize');
 let moment = require('moment');
 

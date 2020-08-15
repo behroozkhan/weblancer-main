@@ -1,7 +1,7 @@
 let { getRandomInt, makeResNum } = require('../utils/utils.js');
 let { paymentInit, paymentVerfiy } = require('../utils/weblancer-payment.js');
 let WeblancerUtils = require('../utils/weblancerUtils.js');
-let { sequelize, models } = require('../models/models.js');
+let { sequelize, models } = require('../model-manager/models.js');
 let moment = require('moment');
 let express = require('express');
 let jwt = require('jsonwebtoken');
