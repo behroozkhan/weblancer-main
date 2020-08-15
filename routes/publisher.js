@@ -665,7 +665,6 @@ router.put('/stop', async (req, res) => {
     // stop publisher server
 })
 
-<<<<<<< HEAD
 router.put('/:id', async (req, res) => {
     // update publisher data
     let id = req.params.id;
