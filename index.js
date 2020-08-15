@@ -48,7 +48,7 @@ app.get(appBaseRoute + '/test', function (req, res) {
     );
 })
  
-sequelize.sync({logging: true}).then(() => {
+sequelize.sync({alter: true, logging: false}).then(() => {
     app.listen(process.env.PORT, () => {
         console.log(`Weblancer main express server now listening on port ${process.env.PORT}!`);
     });
