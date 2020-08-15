@@ -30,7 +30,7 @@ WeblancerUtils.resolveWebsitePlans = async (resourcePlanId, permissionPlansId) =
             where: {
                 id: resourcePlanId
             }
-        }).toJSON();
+        });
     } catch (e) {
         return;
     }
@@ -81,7 +81,7 @@ WeblancerUtils.isUserNameUnique = (username) => {
 WeblancerUtils.getPaymentTransactionExist = (resnum) => {
     return models.PaymentTransaction.findOne({ where: { resnum: resnum } })
       .then(paymentTransaction => {
-        paymentTransaction = paymentTransaction.toJSON();
+        paymentTransaction = paymentTransaction;
         if (!paymentTransaction) {
           return paymentTransaction;
         }
@@ -126,7 +126,7 @@ WeblancerUtils.getLowUsageServer = async (type, ownerType, publisherId, whereNot
     return models.Server.findOne({
         where: where
     }).then(server => {
-        return server.toJSON();
+        return server;
     }).catch(error => {
         return;
     });

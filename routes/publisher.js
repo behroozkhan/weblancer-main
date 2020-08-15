@@ -32,7 +32,7 @@ router.get('/:id', async (req, res) => {
             return;
         }
 
-        publisher = publisher.toJSON();
+        publisher = publisher;
 
         res.json(
             new Response(true, {
@@ -79,7 +79,7 @@ router.put('/:id', async (req, res) => {
             where: {
                 id: id
             }
-        }).toJSON();
+        });
     } catch (e) {
         res.status(404).json(
             new Response(false, {}, "Publisher not found").json()
@@ -161,7 +161,7 @@ router.post('/paymentverify', async (req, res) => {
             where: {
                 id: req.user.id
             }
-        }).toJSON();
+        });
     } catch (e) {
         res.status(500).json(
             new Response(false, {}, "Can't get publisher").json()
@@ -232,7 +232,7 @@ router.post('/plan/:id', async (req, res) => {
                 id: req.user.id
             },
             include: [models.PublisherPlan, models.CreditTransaction]
-        }).toJSON();
+        });
     } catch (e) {
         res.status(404).json(
             new Response(false, {}, "Publisher not found").json()
@@ -246,7 +246,7 @@ router.post('/plan/:id', async (req, res) => {
             where: {
                 id: planId
             }
-        }).toJSON();
+        });
     } catch (e) {
         res.status(404).json(
             new Response(false, {}, "Plan not found").json()
@@ -360,7 +360,7 @@ router.post('/createwebsite', async (req, res) => {
                 id: req.user.id
             },
             include: [models.PublisherWebsite, models.CreditTransaction]
-        }).toJSON();
+        });
     } catch (e) {
         res.status(404).json(
             new Response(false, {}, "Publisher not found").json()
@@ -397,7 +397,7 @@ router.post('/createwebsite', async (req, res) => {
             where: {
                 endWebsiteId: `${publisher.id}_${websiteId}`
             },
-        }).toJSON();
+        });
     } catch (e) {
     }
     if (currentPublisherWebsite) {
@@ -513,13 +513,13 @@ router.get('/transactions/:type', async (req, res) => {
                 where: {
                     publisherId: req.user.id
                 }
-            }).toJSON();
+            });
         else
             transactions = await models.CreditTransaction.findOne({
                 where: {
                     publisherId: req.user.id
                 }
-            }).toJSON();
+            });
     } catch (e) {
         res.status(404).json(
             new Response(false, {}, "Publisher not found").json()
@@ -545,7 +545,7 @@ router.post('/login', async (req, res) => {
                 password: req.body.password,
             },
             attributes: ['id', 'role']
-        }).toJSON();
+        });
         console.log("publisher", publisher);
     } catch (e) {
         console.log("error", e);
@@ -555,7 +555,7 @@ router.post('/login', async (req, res) => {
         return;
     }
 
-    const accessToken = jwt.sign(publisher, process.env.JWT_ACCESS_TOKEN_SECRET);
+    const accessToken = jwt.sign(publisher.toJSON(), process.env.JWT_ACCESS_TOKEN_SECRET);
     res.json(
         new Response(true, {accessToken: accessToken}).json()
     );
@@ -629,7 +629,7 @@ router.put('/start', async (req, res) => {
             where: {
                 id: publisherId
             }
-        }).toJSON();
+        });
     } catch (e) {
         res.status(404).json(
             new Response(false, {}, "Publisher not found").json()
@@ -645,7 +645,7 @@ router.put('/start', async (req, res) => {
                 ownerType: 'publisher',
                 type: 'publisher'
             }
-        }).toJSON();
+        });
     } catch (e) {
         try {
             server = await models.publisher.findOne({
@@ -653,7 +653,7 @@ router.put('/start', async (req, res) => {
                     ownerType: 'weblancer',
                     type: 'publisher'
                 }
-            }).toJSON();
+            });
         } catch (e) {
             res.status(404).json(
                 new Response(false, {}, "Server not found").json()

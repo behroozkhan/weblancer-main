@@ -13,7 +13,7 @@ export async function paymentInit (publisherId, amount, gateway, resNum, additio
     try {
         publisherPaymentSource = await models.PaymentSource.findOne({
             where: paymentSourceWhere
-        }).toJSON();
+        });
     } catch (e) {
     }
 
@@ -58,7 +58,7 @@ export async function paymentInit (publisherId, amount, gateway, resNum, additio
                 id: publisherId
             },
             include: [models.PaymentTransaction]
-        }).toJSON();
+        });
 
         publisher.paymentTransactions.push(paymentTransaction);
         await publisher.save({ fields: ['paymentTransactions']});
@@ -99,7 +99,7 @@ export async function paymentVerfiy (paymentResponse, onSuccess, onError) {
             where: {
                 resNum: resNum
             }
-        }).toJSON();
+        });
     } catch (e) {
         onError(404, new Response(false, {}, "Can't find paymentTransaction").json());
         return;
