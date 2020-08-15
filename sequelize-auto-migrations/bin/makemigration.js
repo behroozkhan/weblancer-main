@@ -40,9 +40,13 @@ if(!process.env.PWD){
     process.env.PWD = process.cwd()
 }
 
-const {
+let {
     migrationsDir, 
 } = pathConfig(options);
+
+const __dirname = path.resolve();
+
+migrationsDir = __dirname + "/migrations";
 
 if (!fs.existsSync(migrationsDir)) {
     console.log(migrationsDir);
