@@ -1,8 +1,8 @@
 import Sequelize        from "sequelize";
-import hash              from "./node_modules/object-hash";
-import _                 from "./node_modules/lodash";
-import diffPkg              from './node_modules/deep-diff';
-import beautifyPkg          from './node_modules/js-beautify';
+import hash              from "object-hash";
+import _                 from "lodash";
+import diffPkg              from 'deep-diff';
+import beautifyPkg          from 'js-beautify';
 
 import fs                from "fs";
 import path              from "path";
