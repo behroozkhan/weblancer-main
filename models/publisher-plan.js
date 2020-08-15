@@ -22,6 +22,10 @@ const PublisherPlan = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
         }
     });
+
+    PublisherPlan.associate = function(models) {
+        models.publisher_plan.belongsTo (models.plan);
+    };
      
     return PublisherPlan;
 };

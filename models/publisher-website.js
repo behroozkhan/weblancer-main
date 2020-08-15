@@ -44,6 +44,10 @@ const PublisherWebsite = (sequelize, DataTypes) => {
             values: ['website', 'service', 'app', 'component'],
         },
     });
+
+    PublisherWebsite.associate = function(models) {
+        models.publisher_website.hasMany(models.website);
+    };
      
     return PublisherWebsite;
 };

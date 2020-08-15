@@ -2,8 +2,8 @@ let Sequelize = require('sequelize');
 let Publisher = require('../models/publisher.js');
 let PaymentTransaction = require('../models/payment-transaction.js');
 let Plan = require('../models/plan.js');
-let Server = require('../models/server.js');
 let Config = require('../models/config.js');
+let Server = require('../models/server.js');
 let PublisherPlan = require('../models/publisher-plan.js');
 let CreditTransaction = require('../models/credit-transaction.js');
 let Website = require('../models/website.js');
@@ -12,7 +12,7 @@ let PaymentSource = require('../models/payment-source.js');
 const Response = require('../utils/response.js');
 
 const {DataTypes} = Sequelize;
- 
+
 const sequelize = new Sequelize(
     process.env.DATABASE,
     process.env.DATABASE_USER,
@@ -20,6 +20,7 @@ const sequelize = new Sequelize(
     {
         dialect: 'postgres',
         logging: (...msg) => console.log(msg),
+        host: "185.239.107.18"
     },
 );
 
@@ -36,17 +37,16 @@ const models = {
     PaymentSource: PaymentSource(sequelize, DataTypes),
 };
 
-models.Publisher.hasMany(models.PaymentTransaction);
-models.Publisher.hasMany(models.CreditTransaction);
-models.PublisherPlan.belongsTo(models.Publisher);
-models.PublisherPlan.belongsTo (models.Plan);
-models.Publisher.hasMany(models.PublisherWebSite);
-models.PublisherWebSite.hasMany(models.Website);
-models.Publisher.hasOne(models.Server, {as: 'mainServer', foreignKey: 'mainServerId'});
-models.Publisher.hasMany(models.Server, {as: 'hostServers'});
-
-models.Publisher.hasMany(models.PaymentSource);
-models.PaymentSource.belongsTo(models.Publisher);
+// models.Publisher.hasMany(models.PaymentTransaction);
+// models.Publisher.hasMany(models.CreditTransaction);
+// models.PublisherPlan.belongsTo(models.Publisher);
+// models.PublisherPlan.belongsTo (models.Plan);
+// models.Publisher.hasMany(models.PublisherWebSite);
+// models.PublisherWebSite.hasMany(models.Website);
+// models.Publisher.hasOne(models.Server, {as: 'mainServer', foreignKey: 'mainServerId'});
+// models.Publisher.hasMany(models.Server, {as: 'hostServers'});
+// models.Publisher.hasMany(models.PaymentSource);
+// models.PaymentSource.belongsTo(models.Publisher);
 
 let findAndCountAll = (req, res, model) => {
     let pageNumber = req.query.pageNumber || 1;
@@ -76,3 +76,16 @@ let findAndCountAll = (req, res, model) => {
 module.exports.models = models;
 module.exports.sequelize = sequelize;
 module.exports.findAndCountAll = findAndCountAll;
+module.exports.getConfig = async function getConfig (key) {
+    try {
+        return await models.Config.findOne({
+            where: {
+                key: key
+            }
+        });
+    } catch (e) {
+    }
+}
+module.exports.getLowerServer = function getLowerServer (type) {
+    // TODO return lower server uage by type
+}

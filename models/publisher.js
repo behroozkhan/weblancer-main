@@ -79,6 +79,17 @@ const Publisher = (sequelize, DataTypes) => {
     }, {
         timestamps: true
     });
+
+    Publisher.associate = function(models) {
+        models.publisher.hasMany(models.payment_transaction);
+        models.publisher.hasMany(models.credit_transaction);
+        models.publisher_plan.belongsTo(models.publisher);
+        models.publisher.hasMany(models.publisher_website);
+        models.publisher.hasOne(models.server, {as: 'mainServer', foreignKey: 'mainServerId'});
+        models.publisher.hasMany(models.server, {as: 'hostServers'});
+        models.publisher.hasMany(models.payment_source);
+        models.payment_source.belongsTo(models.publisher);
+    };
     
     return Publisher;
 };
