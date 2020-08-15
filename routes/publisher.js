@@ -628,7 +628,7 @@ router.put('/start', async (req, res) => {
     // start publisher server
     let publisherId = req.user.id;
 
-    console.log(req.user)
+    console.log("/start", req.user)
 
     let publisher;
     try {
