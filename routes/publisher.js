@@ -586,7 +586,7 @@ router.put('/start', async (req, res) => {
 
     let publisher;
     try {
-        publisher = await models.publisher.findOne({
+        publisher = await models.Publisher.findOne({
             where: {
                 id: publisherId
             }
@@ -599,7 +599,6 @@ router.put('/start', async (req, res) => {
             return;
         }
     } catch (e) {
-        console.log(e);
         res.status(404).json(
             new Response(false, {}, "Publisher not found 2").json()
         );
@@ -608,27 +607,35 @@ router.put('/start', async (req, res) => {
 
     let server;
     try {
-        server = await models.publisher.findOne({
+        server = await models.Server.findOne({
             where: {
                 publisherId: publisherId,
                 ownerType: 'publisher',
                 type: 'publisher'
             }
         });
-    } catch (e) {
-        try {
-            server = await models.publisher.findOne({
+
+        if (!server) {
+            server = await models.Server.findOne({
                 where: {
                     ownerType: 'weblancer',
                     type: 'publisher'
                 }
             });
-        } catch (e) {
-            res.status(404).json(
-                new Response(false, {}, "Server not found").json()
-            );
-            return;
+
+            if (!server) {
+                res.status(404).json(
+                    new Response(false, {}, "Server not found").json()
+                );
+                return;
+            }
         }
+    } catch (e) {
+        console.log(e);
+        res.status(404).json(
+            new Response(false, {}, "Server not found").json()
+        );
+        return;
     }
 
     let input = {
