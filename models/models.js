@@ -73,6 +73,6 @@ let findAndCountAll = (req, res, model) => {
     });
 }
 
-module.exports = models;
+module.exports.models = models;
 module.exports.sequelize = sequelize;
 module.exports.findAndCountAll = findAndCountAll;
