@@ -16,13 +16,7 @@
     "acl-sequelize-backend": "0.0.7",
     "async": "^3.2.0",
     "axios": "^0.19.2",
-<<<<<<< HEAD
-    "command-line-args": "^5.1.1",
     "cors": "^2.8.5",
-    "deep-diff": "^1.0.2",
-=======
-    "cors": "^2.8.5",
->>>>>>> a833008c613929c62b59e620b708864b9f21bb00
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "js-beautify": "^1.12.0",
