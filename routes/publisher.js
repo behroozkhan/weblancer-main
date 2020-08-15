@@ -70,52 +70,6 @@ router.post('/', async (req, res) => {
     });
 })
 
-router.put('/:id', async (req, res) => {
-    // update publisher data
-    let id = req.params.id;
-    let publisher;
-    try {
-        publisher = await models.publisher.findOne({
-            where: {
-                id: id
-            }
-        });
-    } catch (e) {
-        res.status(404).json(
-            new Response(false, {}, "Publisher not found").json()
-        );
-        return;
-    }
-
-    let firstName = req.body.firstName || publisher.firstName;
-    let lastName = req.body.lastName || publisher.lastName;
-    let nationalCode = req.body.nationalCode || publisher.nationalCode;
-    let email = req.body.email || publisher.email;
-    let mobile = req.body.mobile || publisher.mobile;
-    let webhookUrls = req.body.webhookUrls || publisher.webhookUrls;
-    let personalStyle = req.body.personalStyle || publisher.personalStyle;
-    let customDomains = req.body.customDomains || publisher.customDomains;
-    let subDomain = req.body.subDomain || publisher.subDomain;
-
-    publisher.update({
-        firstName,
-        lastName,
-        nationalCode,
-        email,
-        email,
-        mobile,
-        webhookUrls,
-        personalStyle,
-        customDomains,
-        subDomain,
-    })
-    .success(result => {
-        res.json(
-            new Response(true, publisher).json()
-        );
-    })
-})
-
 router.delete('/:id', async (req, res) => {
     // delete publisher
     // TODO comming soon
@@ -702,6 +656,52 @@ router.put('/start', async (req, res) => {
 
 router.put('/stop', async (req, res) => {
     // stop publisher server
+})
+
+router.put('/:id', async (req, res) => {
+    // update publisher data
+    let id = req.params.id;
+    let publisher;
+    try {
+        publisher = await models.publisher.findOne({
+            where: {
+                id: id
+            }
+        });
+    } catch (e) {
+        res.status(404).json(
+            new Response(false, {}, "Publisher not found").json()
+        );
+        return;
+    }
+
+    let firstName = req.body.firstName || publisher.firstName;
+    let lastName = req.body.lastName || publisher.lastName;
+    let nationalCode = req.body.nationalCode || publisher.nationalCode;
+    let email = req.body.email || publisher.email;
+    let mobile = req.body.mobile || publisher.mobile;
+    let webhookUrls = req.body.webhookUrls || publisher.webhookUrls;
+    let personalStyle = req.body.personalStyle || publisher.personalStyle;
+    let customDomains = req.body.customDomains || publisher.customDomains;
+    let subDomain = req.body.subDomain || publisher.subDomain;
+
+    publisher.update({
+        firstName,
+        lastName,
+        nationalCode,
+        email,
+        email,
+        mobile,
+        webhookUrls,
+        personalStyle,
+        customDomains,
+        subDomain,
+    })
+    .success(result => {
+        res.json(
+            new Response(true, publisher).json()
+        );
+    })
 })
 
 export default router;
