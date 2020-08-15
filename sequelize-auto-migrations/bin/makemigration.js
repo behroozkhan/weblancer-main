@@ -42,17 +42,11 @@ if(!process.env.PWD){
 
 const {
     migrationsDir, 
-    modelsDir
 } = pathConfig(options);
 
-if (!fs.existsSync(modelsDir)) {
-    console.log("Can't find models directory. Use `sequelize init` to create it")
-    return
-}
-
 if (!fs.existsSync(migrationsDir)) {
-    console.log("Can't find migrations directory. Use `sequelize init` to create it")
-    return
+    console.log("Can't find migrations directory. Use `sequelize init` to create it");
+    return;
 }
 
 // current state
