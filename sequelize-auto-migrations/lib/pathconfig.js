@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 
-module.exports = async function(options){
+export default async function(options){
     let sequelizercConfigs = [],
         sequelizercPath = path.join(process.env.PWD, '.sequelizerc');
 
