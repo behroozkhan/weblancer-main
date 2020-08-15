@@ -13,11 +13,14 @@ import plan from './routes/plan.js';
 import server from './routes/server.js';
 import middle from './routes/middle.js';
 import Response from './utils/response.js';
+import cors from 'cors';
 
 const appBaseRoute = '/whitelabel';
 
 console.log("index.js", 7)
 let app = express();
+app.use(cors());
+app.options('*', cors());
 
 app.use(express.json());
 app.use(unlessRoute([
