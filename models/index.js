@@ -1,8 +1,10 @@
 import Sequelize from 'sequelize';
 import models from './models.js';
+import configJson from '../config/config.json';
 
 const env = process.env.NODE_ENV || 'development';
-const config = require('../config/config.json')[env];
+// const config = require('../config/config.json')[env];
+const config = configJson[env];
 const db = {};
 
 let sequelize;
