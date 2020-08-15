@@ -1,5 +1,4 @@
-
-let getConfig = require('../models/config.js');
+let { getConfig } = require('../model-manager/models.js');
 let { models } = require('../model-manager/models.js');
 let axios = require('axios');
 const Response = require('./response.js');
