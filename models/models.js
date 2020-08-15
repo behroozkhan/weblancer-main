@@ -11,8 +11,10 @@ import PublisherWebsite from './publisher-website.js';
 import PaymentSource from './payment-source.js';
 import Response from './../utils/response.js';
 import umzugPkg from 'umzug';
+import storagePkg from 'umzug/lib/storages/sequelize.js';
 
-const { Umzug, SequelizeStorage } = umzugPkg;
+const { SequelizeStorage } = storagePkg;
+const { Umzug } = umzugPkg;
 
 const {DataTypes} = Sequelize;
  
