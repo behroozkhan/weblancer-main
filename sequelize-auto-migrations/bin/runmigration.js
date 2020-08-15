@@ -2,13 +2,13 @@
 
 import { sequelize } from '../../models/models.js';
 
-const path              = require("path");
-const commandLineArgs   = require('./node_modules/command-line-args');
-const fs                = require("fs");
-const Async             = require("./node_modules/async");
+import path              from "path";
+import commandLineArgs from 'command-line-args';
+import fs              from "fs";
+import Async          from "async";
 
-const migrate           = require("../lib/migrate");
-const pathConfig = require('../lib/pathconfig');
+import migrate          from "../lib/migrate.js";
+import pathConfig from '../lib/pathconfig.js';
 
 const optionDefinitions = [
     { name: 'rev', alias: 'r', type: Number, description: 'Set migration revision (default: 0)', defaultValue: 0 },
