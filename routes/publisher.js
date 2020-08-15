@@ -631,7 +631,7 @@ router.put('/start', async (req, res) => {
             }
         }
     } catch (e) {
-        console.log(e);
+        console.log("error", e);
         res.status(404).json(
             new Response(false, {}, "Server not found").json()
         );
