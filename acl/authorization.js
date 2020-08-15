@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
+let jwt = require('jsonwebtoken');
 
-export function authorizeToken(req, res, next) {
+module.exports.authorizeToken = function authorizeToken(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
@@ -13,6 +13,6 @@ export function authorizeToken(req, res, next) {
     });
 }
 
-export function generateAccessToken(user, expireTime = '30d') {
+module.exports.generateAccessToken = function generateAccessToken(user, expireTime = '30d') {
     return jwt.sign(user, process.env.JWT_ACCESS_TOKEN_SECRET, {expiresIn: expireTime});
 }

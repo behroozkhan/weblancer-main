@@ -4,4 +4,4 @@ PaymentUtils.sepInitPayment = (MID, redirectUrl) => {
     
 }
 
-export default PaymentUtils;
+module.exports = PaymentUtils;

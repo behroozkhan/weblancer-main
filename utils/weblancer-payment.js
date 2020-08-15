@@ -1,9 +1,16 @@
+<<<<<<< HEAD
 import getConfig from '../models/config.js';
 import models from '../models/models.js';
 import axios from 'axios';
 import Response from './response.js';
+=======
+let getConfig = require('../models/config.js');
+let models = require('../models/models.js');
+let axios = require('axios');
+const Response = require('./response.js');
+>>>>>>> a833008c613929c62b59e620b708864b9f21bb00
 
-export async function paymentInit (publisherId, amount, gateway, resNum, additionalData1, initData, onSuccess, onError) {
+module.exports.paymentInit = async function paymentInit (publisherId, amount, gateway, resNum, additionalData1, initData, onSuccess, onError) {
     // TODO sep payment setup
     // TODO move all type of payments to another library
     
@@ -89,7 +96,7 @@ export async function paymentInit (publisherId, amount, gateway, resNum, additio
     });
 }
 
-export async function paymentVerfiy (paymentResponse, onSuccess, onError) {
+module.exports.paymentVerfiy = async function paymentVerfiy (paymentResponse, onSuccess, onError) {
     let resNum = paymentResponse.resNum;
     let refNum = paymentResponse.refNum;
 
@@ -138,6 +145,6 @@ export async function paymentVerfiy (paymentResponse, onSuccess, onError) {
     });
 }
 
-export async function paymentReverse () {
+module.exports.paymentReverse = async function paymentReverse () {
     // TODO comming soon
 }

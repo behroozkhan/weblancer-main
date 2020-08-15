@@ -1,0 +1,45 @@
+{
+    "tables": {
+        "publishers": {
+            "tableName": "publishers",
+            "indexes": []
+        },
+        "payment_transactions": {
+            "tableName": "payment_transactions",
+            "indexes": []
+        },
+        "plans": {
+            "tableName": "plans",
+            "indexes": []
+        },
+        "servers": {
+            "tableName": "servers",
+            "indexes": []
+        },
+        "configs": {
+            "tableName": "configs",
+            "indexes": []
+        },
+        "publisher_plans": {
+            "tableName": "publisher_plans",
+            "indexes": []
+        },
+        "credit_transactions": {
+            "tableName": "credit_transactions",
+            "indexes": []
+        },
+        "websites": {
+            "tableName": "websites",
+            "indexes": []
+        },
+        "publisher_websites": {
+            "tableName": "publisher_websites",
+            "indexes": []
+        },
+        "payment_sources": {
+            "tableName": "payment_sources",
+            "indexes": []
+        }
+    },
+    "revision": 1
+}

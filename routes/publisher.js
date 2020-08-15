@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {getRandomInt, makeResNum} from '../utils/utils.js';
 import { paymentInit, paymentVerfiy } from '../utils/weblancer-payment.js';
 import WeblancerUtils from '../utils/weblancerUtils.js';
@@ -8,6 +9,17 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import { getConfig } from '../models/config.js';
 import Response from './../utils/response.js';
+=======
+let { getRandomInt, makeResNum } = require('../utils/utils.js');
+let { paymentInit, paymentVerfiy } = require('../utils/weblancer-payment.js');
+let WeblancerUtils = require('../utils/weblancerUtils.js');
+let models, { sequelize } = require('../models/models.js');
+let moment = require('moment');
+let express = require('express');
+let jwt = require('jsonwebtoken');
+let { getConfig } = require('../models/config.js');
+const Response = require('../utils/response.js');
+>>>>>>> a833008c613929c62b59e620b708864b9f21bb00
 let router = express.Router();
 
 router.get('/publisher', function (req, res) {
@@ -666,6 +678,7 @@ router.put('/stop', async (req, res) => {
     // stop publisher server
 })
 
+<<<<<<< HEAD
 router.put('/:id', async (req, res) => {
     // update publisher data
     let id = req.params.id;
@@ -713,3 +726,6 @@ router.put('/:id', async (req, res) => {
 })
 
 export default router;
+=======
+module.exports = router;
+>>>>>>> a833008c613929c62b59e620b708864b9f21bb00

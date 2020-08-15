@@ -26,4 +26,4 @@ const PaymentSource = (sequelize, DataTypes) => {
     return PaymentSource;
 };
 
-export default PaymentSource;
+module.exports = PaymentSource;

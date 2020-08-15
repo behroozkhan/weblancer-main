@@ -1,6 +1,6 @@
-import models from '../models/models.js';
-import Sequelize from 'sequelize';
-import moment from 'moment';
+let models = require('../models/models.js');
+let Sequelize = require('sequelize');
+let moment = require('moment');
 
 const Op = Sequelize.Op;
 
@@ -132,4 +132,4 @@ WeblancerUtils.getLowUsageServer = async (type, ownerType, publisherId, whereNot
     });
 }
 
-export default WeblancerUtils;
+module.exports = WeblancerUtils;

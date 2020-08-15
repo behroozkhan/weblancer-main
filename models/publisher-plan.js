@@ -26,4 +26,4 @@ const PublisherPlan = (sequelize, DataTypes) => {
     return PublisherPlan;
 };
 
-export default PublisherPlan;
+module.exports = PublisherPlan;

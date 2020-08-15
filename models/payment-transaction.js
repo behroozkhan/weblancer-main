@@ -54,4 +54,4 @@ const PaymentTransaction = (sequelize, DataTypes) => {
     return PaymentTransaction;
 };
 
-export default PaymentTransaction;
+module.exports = PaymentTransaction;

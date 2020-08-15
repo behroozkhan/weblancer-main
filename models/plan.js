@@ -39,4 +39,4 @@ const Plan = (sequelize, DataTypes) => {
     return Plan;
 };
 
-export default Plan;
+module.exports = Plan;
