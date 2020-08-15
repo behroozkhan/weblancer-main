@@ -594,11 +594,12 @@ router.put('/start', async (req, res) => {
 
         if (!publisher) {
             res.status(404).json(
-                new Response(false, {}, "Publisher not found 2").json()
+                new Response(false, {}, "Publisher not found 1").json()
             );
             return;
         }
     } catch (e) {
+        console.log(e);
         res.status(404).json(
             new Response(false, {}, "Publisher not found 2").json()
         );
