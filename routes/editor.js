@@ -1,9 +1,9 @@
-import express from 'express';
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
 router.post('/editoraccess', function (req, res) {
     // from publisher server to editor servers
     // set and return access token for a user in editor server
 })
 
-export default router;
+module.exports = router;

@@ -1,20 +1,21 @@
-import dotenv from './utils/loadDotEnv.js';
-import { sequelize } from './models/models.js';
-import { authorizeToken } from './acl/authorization.js';
-import { unlessRoute } from './utils/utils.js';
-import express from 'express';
+let { sequelize } = require('./models/models.js');
+let { authorizeToken } = require('./acl/authorization.js');
+let { unlessRoute } = require('./utils/utils.js');
+let express = require('express');
+let cors = require('cors');
 
-import payment from './routes/payment.js';
-import editor from './routes/editor.js';
-import hosting from './routes/hosting.js';
-import publisher from './routes/publisher.js';
-import transaction from './routes/transaction.js';
-import plan from './routes/plan.js';
-import server from './routes/server.js';
-import middle from './routes/middle.js';
+let payment = require('./routes/payment.js');
+let editor = require('./routes/editor.js');
+let hosting = require('./routes/hosting.js');
+let publisher = require('./routes/publisher.js');
+let transaction = require('./routes/transaction.js');
+let plan = require('./routes/plan.js');
+let server = require('./routes/server.js');
+let middle = require('./routes/middle.js');
+const Response = require('./utils/response.js');
 
-console.log("index.js", 7)
 let app = express();
+app.use(cors());
 
 app.use(express.json());
 app.use(unlessRoute(['/test', '/', '/publisher/login', '/publisher/register'], authorizeToken));
@@ -35,14 +36,8 @@ app.get('/test', function (req, res) {
         ).json()
     );
 })
-
-app.get('/', function (req, res) {
-    console.log("WhiteLabel", req);
-})
  
-console.log("index.js", 8)
 sequelize.sync({logging: true}).then(() => {
-    console.log("index.js", 9)
     app.listen(process.env.PORT, () => {
         console.log(`Weblancer main express server now listening on port ${process.env.PORT}!`);
     });

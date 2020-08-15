@@ -48,4 +48,4 @@ const PublisherWebsite = (sequelize, DataTypes) => {
     return PublisherWebsite;
 };
 
-export default PublisherWebsite;
+module.exports = PublisherWebsite;

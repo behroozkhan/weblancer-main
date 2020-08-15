@@ -1,14 +1,15 @@
-import Sequelize from 'sequelize';
-import Publisher from './publisher.js';
-import PaymentTransaction from './payment-transaction.js';
-import Plan from './plan.js';
-import Server from './server.js';
-import Config from './config.js';
-import PublisherPlan from './publisher-plan.js';
-import CreditTransaction from './credit-transaction.js';
-import Website from './website.js';
-import PublisherWebsite from './publisher-website.js';
-import PaymentSource from './payment-source.js';
+let Sequelize = require('sequelize');
+let Publisher = require('./publisher.js');
+let PaymentTransaction = require('./payment-transaction.js');
+let Plan = require('./plan.js');
+let Server = require('./server.js');
+let Config = require('./config.js');
+let PublisherPlan = require('./publisher-plan.js');
+let CreditTransaction = require('./credit-transaction.js');
+let Website = require('./website.js');
+let PublisherWebsite = require('./publisher-website.js');
+let PaymentSource = require('./payment-source.js');
+const Response = require('../utils/response.js');
 
 const {DataTypes} = Sequelize;
  
@@ -72,7 +73,6 @@ let findAndCountAll = (req, res, model) => {
     });
 }
 
-export { sequelize };
-export { findAndCountAll };
-
-export default models;
+module.exports = models;
+module.exports.sequelize = sequelize;
+module.exports.findAndCountAll = findAndCountAll;

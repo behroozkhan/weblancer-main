@@ -55,4 +55,4 @@ const Website = (sequelize, DataTypes) => {
     return Website;
 };
 
-export default Website;
+module.exports = Website;

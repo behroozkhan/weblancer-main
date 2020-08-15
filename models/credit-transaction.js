@@ -24,4 +24,4 @@ const CreditTransaction = (sequelize, DataTypes) => {
     return CreditTransaction;
 };
 
-export default CreditTransaction;
+module.exports = CreditTransaction;

@@ -1,4 +1,4 @@
-import models from './models.js';
+let models = require('./models.js');
 
 const Config = (sequelize, DataTypes) => {
     const Config = sequelize.define('config', {
@@ -20,7 +20,9 @@ const Config = (sequelize, DataTypes) => {
     return Config;
 };
 
-export async function getConfig (key) {
+module.exports = Config;
+
+module.exports.getConfig = async function getConfig (key) {
     try {
         return await models.Config.find({
             where: {
@@ -30,5 +32,3 @@ export async function getConfig (key) {
     } catch (e) {
     }
 }
-
-export default Config;

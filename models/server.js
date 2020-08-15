@@ -47,8 +47,8 @@ const Server = (sequelize, DataTypes) => {
     return Server;
 };
 
-export function getLowerServer (type) {
+module.exports = Server;
+
+module.exports.getLowerServer = function getLowerServer (type) {
     // TODO return lower server uage by type
 }
-
-export default Server;

@@ -1,8 +1,7 @@
-import {getConfig} from '../models/config.js';
-import WeblancerUtils from '../utils/weblancerUtils.js';
-import moment from 'moment';
-import express from 'express';
-
+let {getConfig} = require('../models/config.js');
+let moment = require('moment');
+let express = require('express');
+const Response = require('../utils/response.js');
 let router = express.Router();
 
 router.post('/publishrequest', async (req, res) => {
@@ -86,4 +85,4 @@ router.post('/editorrequest', async (req, res) => {
     });
 })
 
-export default router;
+module.exports = router;

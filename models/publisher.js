@@ -83,4 +83,4 @@ const Publisher = (sequelize, DataTypes) => {
     return Publisher;
 };
 
-export default Publisher;
+module.exports = Publisher;

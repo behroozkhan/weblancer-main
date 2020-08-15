@@ -1,6 +1,5 @@
-import express from 'express';
-
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
 router.get('/', function (req, res) {
     // return all servers
@@ -30,4 +29,4 @@ router.get('/lower/:type', function (req, res) {
     // return lower usage server by type
 })
 
-export default router;
+module.exports = router;

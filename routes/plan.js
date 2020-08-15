@@ -1,6 +1,5 @@
-import express from 'express';
-
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 
 router.get('/', function (req, res) {
     // return all available plans
@@ -22,4 +21,4 @@ router.delete('/', function (req, res) {
     // delete plan
 })
 
-export default router;
+module.exports = router;
