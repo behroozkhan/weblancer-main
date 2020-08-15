@@ -551,8 +551,8 @@ router.post('/login', async (req, res) => {
         return;
     }
 
-    console.log("publisher", publisher)
-    const accessToken = jwt.sign(publisher, process.env.JWT_ACCESS_TOKEN_SECRET);
+    console.log("publisher", publisher.toJSON())
+    const accessToken = jwt.sign(publisher.toJSON(), process.env.JWT_ACCESS_TOKEN_SECRET);
     res.json(
         new Response(true, {accessToken: accessToken}).json()
     );
