@@ -10,12 +10,10 @@ import Website from './website.js';
 import PublisherWebsite from './publisher-website.js';
 import PaymentSource from './payment-source.js';
 import Response from './../utils/response.js';
-import umzugPkg from 'umzug';
+import Umzug from 'umzug';
 import path from 'path';
 
 const __dirname = path.resolve();
-
-const { Umzug } = umzugPkg;
 
 const {DataTypes} = Sequelize;
  
