@@ -10,9 +10,9 @@ import Website from './website.js';
 import PublisherWebsite from './publisher-website.js';
 import PaymentSource from './payment-source.js';
 import Response from './../utils/response.js';
-import umzug from 'umzug';
+import umzugPkg from 'umzug';
 
-const { Umzug, SequelizeStorage } = umzug;
+const { Umzug, SequelizeStorage } = umzugPkg;
 
 const {DataTypes} = Sequelize;
  
