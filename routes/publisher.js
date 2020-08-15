@@ -18,7 +18,7 @@ router.get('/publisher', function (req, res) {
 router.get('/:id', async (req, res) => {
     // return publisher by id
     let id = req.params.id;
-    models.Publisher.find({
+    models.Publisher.findOne({
         where: {
            id: id
         }
@@ -73,7 +73,7 @@ router.put('/:id', async (req, res) => {
     let id = req.params.id;
     let publisher;
     try {
-        publisher = await models.publisher.find({
+        publisher = await models.publisher.findOne({
             where: {
                 id: id
             }
@@ -155,7 +155,7 @@ router.post('/paymentverify', async (req, res) => {
 
     let publisher;
     try {
-        publisher = await models.Publisher.find({
+        publisher = await models.Publisher.findOne({
             where: {
                 id: req.user.id
             }
@@ -225,7 +225,7 @@ router.post('/plan/:id', async (req, res) => {
 
     let publisher;
     try {
-        publisher = await models.Publisher.find({
+        publisher = await models.Publisher.findOne({
             where: {
                 id: req.user.id
             },
@@ -240,7 +240,7 @@ router.post('/plan/:id', async (req, res) => {
 
     let plan;
     try {
-        plan = await models.Plan.find({
+        plan = await models.Plan.findOne({
             where: {
                 id: planId
             }
@@ -353,7 +353,7 @@ router.post('/createwebsite', async (req, res) => {
 
     let publisher;
     try {
-        publisher = await models.Publisher.find({
+        publisher = await models.Publisher.findOne({
             where: {
                 id: req.user.id
             },
@@ -391,7 +391,7 @@ router.post('/createwebsite', async (req, res) => {
 
     let currentPublisherWebsite;
     try {
-        currentPublisherWebsite = await models.PublisherWebsite.find({
+        currentPublisherWebsite = await models.PublisherWebsite.findOne({
             where: {
                 endWebsiteId: `${publisher.id}_${websiteId}`
             },
@@ -507,13 +507,13 @@ router.get('/transactions/:type', async (req, res) => {
     let transactions;
     try {
         if (type === 'payment') 
-            transactions = await models.PaymentTransaction.find({
+            transactions = await models.PaymentTransaction.findOne({
                 where: {
                     publisherId: req.user.id
                 }
             });
         else
-            transactions = await models.CreditTransaction.find({
+            transactions = await models.CreditTransaction.findOne({
                 where: {
                     publisherId: req.user.id
                 }
@@ -538,7 +538,7 @@ router.post('/login', async (req, res) => {
     console.log("/login", req.body)
     let publisher;
     try {
-        publisher = await models.Publisher.find({
+        publisher = await models.Publisher.findOne({
             where: {
                 username: req.body.username,
                 password: req.body.password,
@@ -623,7 +623,7 @@ router.put('/start', async (req, res) => {
 
     let publisher;
     try {
-        publisher = await models.publisher.find({
+        publisher = await models.publisher.findOne({
             where: {
                 id: publisherId
             }
@@ -637,7 +637,7 @@ router.put('/start', async (req, res) => {
 
     let server;
     try {
-        server = await models.publisher.find({
+        server = await models.publisher.findOne({
             where: {
                 publisherId: publisherId,
                 ownerType: 'publisher',
@@ -646,7 +646,7 @@ router.put('/start', async (req, res) => {
         });
     } catch (e) {
         try {
-            server = await models.publisher.find({
+            server = await models.publisher.findOne({
                 where: {
                     ownerType: 'weblancer',
                     type: 'publisher'

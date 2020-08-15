@@ -22,7 +22,7 @@ const Config = (sequelize, DataTypes) => {
 
 export async function getConfig (key) {
     try {
-        return await models.Config.find({
+        return await models.Config.findOne({
             where: {
                 key: key
             }

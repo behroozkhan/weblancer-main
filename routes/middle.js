@@ -22,7 +22,7 @@ router.post('/editorrequest', async (req, res) => {
 
     let publisher;
     try {
-        publisher = await models.Publisher.find({
+        publisher = await models.Publisher.findOne({
             where: {
                 id: publisherId,
                 publisherApiKey: publisherApiKey
@@ -58,7 +58,7 @@ router.post('/editorrequest', async (req, res) => {
         );
     }
 
-    let editorServer = await models.Server.find({
+    let editorServer = await models.Server.findOne({
         where: {
             type: 'editor'
         }

@@ -11,7 +11,7 @@ export async function paymentInit (publisherId, amount, gateway, resNum, additio
     let paymentSourceWhere = {publisherId: publisherId};
     gateway? paymentSourceWhere.gateway = gateway : paymentSourceWhere.isDefault = true;
     try {
-        publisherPaymentSource = await models.PaymentSource.find({
+        publisherPaymentSource = await models.PaymentSource.findOne({
             where: paymentSourceWhere
         });
     } catch (e) {
@@ -53,7 +53,7 @@ export async function paymentInit (publisherId, amount, gateway, resNum, additio
             
     let publisher;
     try {
-        publisher = await models.Publisher.find({
+        publisher = await models.Publisher.findOne({
             where: {
                 id: publisherId
             },
@@ -95,7 +95,7 @@ export async function paymentVerfiy (paymentResponse, onSuccess, onError) {
 
     let paymentTransaction;
     try {
-        paymentTransaction = await models.PaymentTransaction.find({
+        paymentTransaction = await models.PaymentTransaction.findOne({
             where: {
                 resNum: resNum
             }

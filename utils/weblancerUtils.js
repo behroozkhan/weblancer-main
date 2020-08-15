@@ -26,7 +26,7 @@ WeblancerUtils.getBackMoney = (oldPlan) => {
 WeblancerUtils.resolveWebsitePlans = async (resourcePlanId, permissionPlansId) => {
     let resourcePlan;
     try {
-        resourcePlan = await models.Website.find({
+        resourcePlan = await models.Website.findOne({
             where: {
                 id: resourcePlanId
             }
@@ -122,7 +122,7 @@ WeblancerUtils.getLowUsageServer = async (type, ownerType, publisherId, whereNot
     if (ownerType === 'publisher')
         where.publisherId = publisherId;
 
-    return models.Server.find({
+    return models.Server.findOne({
         where: where
     }).then(server => {
         return server;
