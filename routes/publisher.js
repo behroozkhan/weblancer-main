@@ -546,14 +546,14 @@ router.post('/login', async (req, res) => {
             },
             attributes: ['id', 'role']
         });
-    } catch (e) {
-        res.status(401).json(
-            new Response(false, {}, "Username or password is wrong").json()
-        );
-        return;
-    }
 
-    if (!publisher) {
+        if (!publisher) {
+            res.status(401).json(
+                new Response(false, {}, "Username or password is wrong").json()
+            );
+            return;
+        }
+    } catch (e) {
         res.status(401).json(
             new Response(false, {}, "Username or password is wrong").json()
         );
@@ -628,6 +628,8 @@ router.put('/start', async (req, res) => {
     // start publisher server
     let publisherId = req.user.id;
 
+    console.log(req.user)
+
     let publisher;
     try {
         publisher = await models.publisher.findOne({
@@ -635,6 +637,13 @@ router.put('/start', async (req, res) => {
                 id: publisherId
             }
         });
+
+        if (!publisher) {
+            res.status(404).json(
+                new Response(false, {}, "Publisher not found").json()
+            );
+            return;
+        }
     } catch (e) {
         res.status(404).json(
             new Response(false, {}, "Publisher not found").json()
