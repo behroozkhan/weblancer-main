@@ -45,6 +45,7 @@ const {
 } = pathConfig(options);
 
 if (!fs.existsSync(migrationsDir)) {
+    console.log(migrationsDir);
     console.log("Can't find migrations directory. Use `sequelize init` to create it");
     process.exit(0);
 }
