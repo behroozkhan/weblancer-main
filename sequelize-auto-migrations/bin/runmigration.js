@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import { sequelize } from '../../models/models.js';
+
 const path              = require("path");
 const commandLineArgs   = require('./node_modules/command-line-args');
 const fs                = require("fs");
@@ -26,18 +28,16 @@ if(!process.env.PWD){
 }
 
 let {
-    migrationsDir, 
-    modelsDir
+    migrationsDir
 } = pathConfig(options);
 
-if (!fs.existsSync(modelsDir)) {
-    console.log("Can't find models directory. Use `sequelize init` to create it")
-    return
-}
+const __dirname = path.resolve();
+
+migrationsDir = __dirname + "/migrations";
 
 if (!fs.existsSync(migrationsDir)) {
     console.log("Can't find migrations directory. Use `sequelize init` to create it")
-    return
+    process.exit(0);
 }
 
 if (options.help)
@@ -50,7 +50,6 @@ if (options.help)
     process.exit(0);
 }
 
-const sequelize = require(modelsDir).sequelize;
 const queryInterface = sequelize.getQueryInterface();
 
 // execute all migration from
