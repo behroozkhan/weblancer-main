@@ -11,7 +11,9 @@ import PublisherWebsite from './publisher-website.js';
 import PaymentSource from './payment-source.js';
 import Response from './../utils/response.js';
 import umzugPkg from 'umzug';
-import SequelizeStorage from 'umzug/lib/storages/SequelizeStorage.js';
+import path from 'path';
+
+const __dirname = path.resolve();
 
 const { Umzug } = umzugPkg;
 
@@ -54,20 +56,27 @@ models.PaymentSource.belongsTo(models.Publisher);
 
 const umzug = new Umzug({
     migrations: {
-        path: './migrations',
-        params: [
-            sequelize.getQueryInterface()
-        ]
+      // indicates the folder containing the migration .js files
+      path: path.join(__dirname, './migrations'),
+      // inject sequelize's QueryInterface in the migrations
+      params: [
+        sequelize.getQueryInterface()
+      ]
     },
-    storage: new SequelizeStorage({ sequelize })
-});
-
-(async () => {
-    // Checks migrations and run them if they are not already applied. To keep
-    // track of the executed migrations, a table (and sequelize model) called SequelizeMeta
-    // will be automatically created (if it doesn't exist already) and parsed.
-    await umzug.up();
-})();
+    // indicates that the migration data should be store in the database
+    // itself through sequelize. The default configuration creates a table
+    // named `SequelizeMeta`.
+    storage: 'sequelize',
+    storageOptions: {
+      sequelize: sequelize
+    }
+  })
+   
+  ;(async () => {
+    // checks migrations and run them if they are not already applied
+    await umzug.up()
+    console.log('All migrations performed successfully')
+  })()
 
 let findAndCountAll = (req, res, model) => {
     let pageNumber = req.query.pageNumber || 1;
