@@ -789,5 +789,5 @@ const executeMigration = async function(queryInterface, filename, pos, cb)
     );
 };
 
-module.exports.default = { writeMigration, getMigration, sortActions, parseDifference, reverseModels, executeMigration };
+export default { writeMigration, getMigration, sortActions, parseDifference, reverseModels, executeMigration };
 
