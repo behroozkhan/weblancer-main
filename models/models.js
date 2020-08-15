@@ -10,6 +10,9 @@ import Website from './website.js';
 import PublisherWebsite from './publisher-website.js';
 import PaymentSource from './payment-source.js';
 import Response from './../utils/response.js';
+import umzug from 'umzug';
+
+const { Umzug, SequelizeStorage } = umzug;
 
 const {DataTypes} = Sequelize;
  
@@ -47,6 +50,23 @@ models.Publisher.hasMany(models.Server, {as: 'hostServers'});
 
 models.Publisher.hasMany(models.PaymentSource);
 models.PaymentSource.belongsTo(models.Publisher);
+
+const umzug = new Umzug({
+    migrations: {
+        path: './migrations',
+        params: [
+            sequelize.getQueryInterface()
+        ]
+    },
+    storage: new SequelizeStorage({ sequelize })
+});
+
+(async () => {
+    // Checks migrations and run them if they are not already applied. To keep
+    // track of the executed migrations, a table (and sequelize model) called SequelizeMeta
+    // will be automatically created (if it doesn't exist already) and parsed.
+    await umzug.up();
+})();
 
 let findAndCountAll = (req, res, model) => {
     let pageNumber = req.query.pageNumber || 1;
