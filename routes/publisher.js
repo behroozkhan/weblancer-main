@@ -535,6 +535,7 @@ router.get('/transactions/:type', async (req, res) => {
 router.post('/login', async (req, res) => {
     // login publisher
     // check userName and password sent by user and authenticate him
+    console.log("/login", req.body)
     let publisher;
     try {
         publisher = await models.Publisher.find({
