@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-import Sequelize from 'sequelize';
-import Publisher from './publisher.js';
-import PaymentTransaction from './payment-transaction.js';
-import Plan from './plan.js';
-import Server from './server.js';
-import Config from './config.js';
-import PublisherPlan from './publisher-plan.js';
-import CreditTransaction from './credit-transaction.js';
-import Website from './website.js';
-import PublisherWebsite from './publisher-website.js';
-import PaymentSource from './payment-source.js';
-import Response from './../utils/response.js';
-=======
 let Sequelize = require('sequelize');
 let Publisher = require('./publisher.js');
 let PaymentTransaction = require('./payment-transaction.js');
@@ -24,7 +10,6 @@ let Website = require('./website.js');
 let PublisherWebsite = require('./publisher-website.js');
 let PaymentSource = require('./payment-source.js');
 const Response = require('../utils/response.js');
->>>>>>> a833008c613929c62b59e620b708864b9f21bb00
 
 const {DataTypes} = Sequelize;
  
