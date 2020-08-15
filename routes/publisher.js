@@ -640,13 +640,13 @@ router.put('/start', async (req, res) => {
 
         if (!publisher) {
             res.status(404).json(
-                new Response(false, {}, "Publisher not found").json()
+                new Response(false, {}, "Publisher not found 2").json()
             );
             return;
         }
     } catch (e) {
         res.status(404).json(
-            new Response(false, {}, "Publisher not found").json()
+            new Response(false, {}, "Publisher not found 2").json()
         );
         return;
     }
