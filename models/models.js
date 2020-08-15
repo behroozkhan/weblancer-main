@@ -9,6 +9,7 @@ import CreditTransaction from './credit-transaction.js';
 import Website from './website.js';
 import PublisherWebsite from './publisher-website.js';
 import PaymentSource from './payment-source.js';
+import Response from './../utils/response.js';
 
 const {DataTypes} = Sequelize;
  
