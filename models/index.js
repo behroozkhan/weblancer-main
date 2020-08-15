@@ -1,10 +1,17 @@
 import Sequelize from 'sequelize';
 import models from './models.js';
-import configJson from '../config/config.json';
+// import configJson from '../config/config.json';
 
 const env = process.env.NODE_ENV || 'development';
 // const config = require('../config/config.json')[env];
-const config = configJson[env];
+// const config = configJson[env];
+const config = {
+  "username": "postgres",
+  "password": "Kian880414",
+  "database": "WeblancerMain",
+  "host": "185.239.107.18:5432",
+  "dialect": "postgres"
+}
 const db = {};
 
 let sequelize;
