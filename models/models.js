@@ -10,7 +10,7 @@ import Website from './website.js';
 import PublisherWebsite from './publisher-website.js';
 import PaymentSource from './payment-source.js';
 import Response from './../utils/response.js';
-import Umzug from 'umzug';
+// import Umzug from 'umzug';
 import path from 'path';
 
 const __dirname = path.resolve();
@@ -52,29 +52,29 @@ models.Publisher.hasMany(models.Server, {as: 'hostServers'});
 models.Publisher.hasMany(models.PaymentSource);
 models.PaymentSource.belongsTo(models.Publisher);
 
-const umzug = new Umzug({
-    migrations: {
-      // indicates the folder containing the migration .js files
-      path: path.join(__dirname, './migrations'),
-      // inject sequelize's QueryInterface in the migrations
-      params: [
-        sequelize.getQueryInterface()
-      ]
-    },
-    // indicates that the migration data should be store in the database
-    // itself through sequelize. The default configuration creates a table
-    // named `SequelizeMeta`.
-    storage: 'sequelize',
-    storageOptions: {
-      sequelize: sequelize
-    }
-  })
+// const umzug = new Umzug({
+//     migrations: {
+//       // indicates the folder containing the migration .js files
+//       path: path.join(__dirname, './migrations'),
+//       // inject sequelize's QueryInterface in the migrations
+//       params: [
+//         sequelize.getQueryInterface()
+//       ]
+//     },
+//     // indicates that the migration data should be store in the database
+//     // itself through sequelize. The default configuration creates a table
+//     // named `SequelizeMeta`.
+//     storage: 'sequelize',
+//     storageOptions: {
+//       sequelize: sequelize
+//     }
+//   })
    
-  ;(async () => {
-    // checks migrations and run them if they are not already applied
-    await umzug.up()
-    console.log('All migrations performed successfully')
-  })()
+//   ;(async () => {
+//     // checks migrations and run them if they are not already applied
+//     await umzug.up()
+//     console.log('All migrations performed successfully')
+//   })()
 
 let findAndCountAll = (req, res, model) => {
     let pageNumber = req.query.pageNumber || 1;

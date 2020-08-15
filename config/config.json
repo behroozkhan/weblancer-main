@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "Kian880414",
+    "database": "WeblancerMain",
+    "host": "185.239.107.18:5432",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "Kian880414",
+    "database": "WeblancerMain",
+    "host": "185.239.107.18:5432",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "Kian880414",
+    "database": "WeblancerMain",
+    "host": "185.239.107.18:5432",
+    "dialect": "postgres"
+  }
+}
