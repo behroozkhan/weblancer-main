@@ -507,6 +507,7 @@ router.post('/login', async (req, res) => {
             return;
         }
     } catch (e) {
+        console.log(e);
         res.status(401).json(
             new Response(false, {}, "Username or password is wrong").json()
         );
