@@ -74,6 +74,7 @@ try {
 
 let models = sequelize.models;
 
+console.log(models)
 currentState.tables = migrate.reverseModels(sequelize, models);
     
 console.log(previousState.tables, currentState.tables)
