@@ -28,7 +28,7 @@ router.post('/editorrequest', async (req, res) => {
                 publisherApiKey: publisherApiKey
             },
             include: [models.PublisherWebsite, models.CreditTransaction]
-        });
+        }).toJSON();
     } catch (e) {
         res.status(404).json(
             new Response(false, {}, "Publisher not found").json()
@@ -44,7 +44,7 @@ router.post('/editorrequest', async (req, res) => {
             },
             includes: [models.Website],
             order: [['expireTime', 'DESC']]
-        });
+        }).toJSON();
     } catch (e) {
         res.status(404).json(
             new Response(false, {}, "Publisher website not found").json()
@@ -62,7 +62,7 @@ router.post('/editorrequest', async (req, res) => {
         where: {
             type: 'editor'
         }
-    });
+    }).toJSON();
 
     if (!editorServer) {
         res.status(404).json(

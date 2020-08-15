@@ -26,7 +26,7 @@ export async function getConfig (key) {
             where: {
                 key: key
             }
-        });
+        }).toJSON();
     } catch (e) {
     }
 }
