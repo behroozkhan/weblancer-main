@@ -76,6 +76,7 @@ let models = sequelize.models;
 
 currentState.tables = migrate.reverseModels(sequelize, models);
     
+console.log(previousState.tables, currentState.tables)
 let actions = migrate.parseDifference(previousState.tables, currentState.tables);
 
 // sort actions    
