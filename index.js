@@ -13,7 +13,7 @@ let plan = require('./routes/plan.js');
 let server = require('./routes/server.js');
 let middle = require('./routes/middle.js');
 const Response = require('./utils/response.js');
-const appBaseRoute = '/whitelabel';
+const appBaseRoute = '/api';
 
 let app = express();
 app.use(cors());
