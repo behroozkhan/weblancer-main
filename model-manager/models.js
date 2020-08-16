@@ -19,7 +19,6 @@ const sequelize = new Sequelize(
     process.env.DATABASE_PASSWORD,
     {
         dialect: 'postgres',
-        logging: (...msg) => console.log(msg),
         host: "185.239.107.18"
     },
 );
@@ -36,17 +35,6 @@ const models = {
     PublisherWebSite: PublisherWebsite(sequelize, DataTypes),
     PaymentSource: PaymentSource(sequelize, DataTypes),
 };
-
-// models.Publisher.hasMany(models.PaymentTransaction);
-// models.Publisher.hasMany(models.CreditTransaction);
-// models.PublisherPlan.belongsTo(models.Publisher);
-// models.PublisherPlan.belongsTo (models.Plan);
-// models.Publisher.hasMany(models.PublisherWebSite);
-// models.PublisherWebSite.hasMany(models.Website);
-// models.Publisher.hasOne(models.Server, {as: 'mainServer', foreignKey: 'mainServerId'});
-// models.Publisher.hasMany(models.Server, {as: 'hostServers'});
-// models.Publisher.hasMany(models.PaymentSource);
-// models.PaymentSource.belongsTo(models.Publisher);
 
 let findAndCountAll = (req, res, model) => {
     let pageNumber = req.query.pageNumber || 1;
