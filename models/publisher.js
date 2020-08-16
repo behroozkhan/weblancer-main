@@ -11,6 +11,9 @@ const Publisher = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true,
         },
+        brandName: {
+            type: DataTypes.STRING,
+        },
         firstName: {
             type: DataTypes.STRING,
         },
@@ -64,10 +67,6 @@ const Publisher = (sequelize, DataTypes) => {
         customDomains: {
             type: DataTypes.JSON,
             defaultValue: []
-        },
-        subDomain: {
-            type: DataTypes.STRING,
-            unique: true,
         },
         hasOwnHostServer: {
             type: DataTypes.BOOLEAN,

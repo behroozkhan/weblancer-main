@@ -446,6 +446,10 @@
                     "field": "username",
                     "seqType": "Sequelize.STRING"
                 },
+                "brandName": {
+                    "field": "brandName",
+                    "seqType": "Sequelize.STRING"
+                },
                 "firstName": {
                     "field": "firstName",
                     "seqType": "Sequelize.STRING"
@@ -737,5 +741,5 @@
             "indexes": []
         }
     },
-    "revision": 2
+    "revision": 3
 }

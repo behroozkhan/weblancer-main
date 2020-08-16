@@ -50,12 +50,10 @@ router.post('/', async (req, res) => {
     // add new publisher
     let username = req.body.username;
     let password = req.body.password;
-    let subDomain = req.body.username + getRandomInt(10, 99);
 
     models.Publisher.create({
         username,
-        password,
-        subDomain
+        password
     })
     .then(newPublisher => {
         res.json(
@@ -525,14 +523,6 @@ router.post('/register', async (req, res) => {
     // register publisher
     let username = req.body.username;
     let password = req.body.password;
-    let subDomain = req.body.subDomain;
-
-    let isUnique = await WeblancerUtils.isSubDomainUnique(subDomain);
-    if (!isUnique) {
-        res.status(409).json(
-            new Response(false, {}, "Subdomain is in use").json()
-        );
-    }
 
     isUnique = await WeblancerUtils.isUserNameUnique(username);
     if (!isUnique) {
@@ -544,8 +534,7 @@ router.post('/register', async (req, res) => {
     try {
         await models.Publisher.create({
             username,
-            password,
-            subDomain
+            password
         });
 
         res.status(201).json(
@@ -557,16 +546,6 @@ router.post('/register', async (req, res) => {
         );
         return;
     }
-})
-
-router.post('/subdomainavailable', async (req, res) => {
-    // register publisher
-    let subDomain = req.body.subDomain;
-
-    let isAvailable = await WeblancerUtils.isSubDomainUnique(subDomain);
-    res.json(
-        new Response(true, {isAvailable, subDomain}).json()
-    );
 })
 
 router.post('/usernameavailable', async (req, res) => {
@@ -641,11 +620,11 @@ router.put('/start', async (req, res) => {
 
     let input = {
         publisherId: publisherId, 
-        publisherDomain: publisher.customDomains.lenght > 0 ? publisher.customDomains :
-            publisher.subDomain ? [`${publisher.subDomain}.${getConfig('PublisherBaseDomain').value}`] : 
-            [`${getConfig('PublisherBaseDomain').value}/${publisherId}`], 
+        publisherDomains: publisher.customDomains, 
         sudoPassword: server.sudoPassword,
-        postgresHost: getConfig('WhiteLabelPotgresHost').value
+        postgresHost: getConfig('WhiteLabelPotgresHost').value,
+        publisherBrandName: publisher.brandName || publisher.name,
+        hasPrivateDomain: publisher.customDomains.lenght > 0
     };
 
     axios.post(`${server.url}/worker/start`, input).then(res => {
@@ -658,7 +637,7 @@ router.put('/start', async (req, res) => {
         }
     }).catch(error => {
         res.status(502).json(
-            new Response(false, {}, "Can not connect to server").json()
+            new Response(false, {}, "Can not connect to publisher server, maybe publisher server is not running or publisher server node app is not running or configing").json()
         );
     })
 })
@@ -692,7 +671,6 @@ router.put('/:id', async (req, res) => {
     let webhookUrls = req.body.webhookUrls || publisher.webhookUrls;
     let personalStyle = req.body.personalStyle || publisher.personalStyle;
     let customDomains = req.body.customDomains || publisher.customDomains;
-    let subDomain = req.body.subDomain || publisher.subDomain;
 
     publisher.update({
         firstName,
@@ -704,7 +682,6 @@ router.put('/:id', async (req, res) => {
         webhookUrls,
         personalStyle,
         customDomains,
-        subDomain,
     })
     .success(result => {
         res.json(

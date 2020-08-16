@@ -58,16 +58,6 @@ WeblancerUtils.resolveWebsitePlans = async (resourcePlanId, permissionPlansId) =
     return {resourcePlan, permissionPlans};
 }
 
-WeblancerUtils.isSubDomainUnique = (subDomain) => {
-    return models.Publisher.count({ where: { subDomain: subDomain } })
-      .then(count => {
-        if (count != 0) {
-          return false;
-        }
-        return true;
-    });
-}
-
 WeblancerUtils.isUserNameUnique = (username) => {
     return models.Publisher.count({ where: { username: username } })
       .then(count => {

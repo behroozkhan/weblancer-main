@@ -574,6 +574,10 @@
                     "field": "ipAddress",
                     "seqType": "Sequelize.STRING"
                 },
+                "sudoPassword": {
+                    "field": "sudoPassword",
+                    "seqType": "Sequelize.STRING"
+                },
                 "url": {
                     "field": "url",
                     "seqType": "Sequelize.STRING"
@@ -733,5 +737,5 @@
             "indexes": []
         }
     },
-    "revision": 1
+    "revision": 2
 }
