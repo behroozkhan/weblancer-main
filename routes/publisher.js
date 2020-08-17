@@ -631,10 +631,10 @@ router.put('/start', async (req, res) => {
     console.log("calling publisher server: ", `${server.url}/worker/start`, input);
     let config = {
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            'Content-Type': 'application/json'
         }
     };
-    axios.post(`${server.url}/worker/start`, input).then(res => {
+    axios.post(`${server.url}/worker/start`, input, config).then(res => {
         if (res.data.success) {
             res.json(
                 new Response(true, {}, "Server started successfully").json()
