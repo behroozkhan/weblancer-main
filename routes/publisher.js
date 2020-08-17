@@ -490,7 +490,8 @@ router.post('/login', async (req, res) => {
     // login publisher
     // check userName and password sent by user and authenticate him
 
-    console.log("/login", getConfig('WhiteLabelPotgresHost'), getConfig('WhiteLabelPotgresHost').value)
+    console.log("/login", (await getConfig('WhiteLabelPotgresHost')), 
+        (await getConfig('WhiteLabelPotgresHost')).value)
 
     let publisher;
     try {
@@ -625,7 +626,7 @@ router.put('/start', async (req, res) => {
         publisherId: publisherId, 
         publisherDomains: publisher.customDomains, 
         sudoPassword: server.sudoPassword,
-        postgresHost: getConfig('WhiteLabelPotgresHost').value,
+        postgresHost: (await getConfig('WhiteLabelPotgresHost')).value,
         publisherBrandName: publisher.brandName || publisher.name,
         hasPrivateDomain: publisher.customDomains.lenght > 0,
         publisherVersion: publisher.publisherVersion
