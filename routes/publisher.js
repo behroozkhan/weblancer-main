@@ -645,7 +645,7 @@ router.put('/start', async (req, res) => {
     }).catch(error => {
         console.log("calling publisher server error: ", error);
         res.status(502).json(
-            error.Response.data || 
+            error.response.data || 
             new Response(false, {}, 
                 "Can not connect to publisher server, maybe publisher server is not running or publisher server node app is not running or configing").json()
         );
