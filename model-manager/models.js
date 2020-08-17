@@ -66,11 +66,17 @@ module.exports.sequelize = sequelize;
 module.exports.findAndCountAll = findAndCountAll;
 module.exports.getConfig = async function getConfig (key) {
     try {
-        return await models.Config.findOne({
+        let data = await models.Config.findOne({
             where: {
                 key: key
             }
         });
+
+        if (data) {
+            return data.toJSON();
+        } else {
+            return {};
+        }
     } catch (e) {
     }
 }
