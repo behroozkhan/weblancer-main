@@ -628,15 +628,17 @@ router.put('/start', async (req, res) => {
         publisherVersion: publisher.publisherVersion
     };
 
+    console.log("calling publisher server: ", `${server.url}/worker/start`, input)
     axios.post(`${server.url}/worker/start`, input).then(res => {
         if (res.data.success) {
             res.json(
-                new Response(false, {}, "Server started successfully").json()
+                new Response(true, {}, "Server started successfully").json()
             );
         } else {
             res.status(502).json(res.data);
         }
     }).catch(error => {
+        console.log("calling publisher server error: ", error);
         res.status(502).json(
             new Response(false, {}, "Can not connect to publisher server, maybe publisher server is not running or publisher server node app is not running or configing").json()
         );
