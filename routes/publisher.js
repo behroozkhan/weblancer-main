@@ -628,7 +628,12 @@ router.put('/start', async (req, res) => {
         publisherVersion: publisher.publisherVersion
     };
 
-    console.log("calling publisher server: ", `${server.url}/worker/start`, input)
+    console.log("calling publisher server: ", `${server.url}/worker/start`, input);
+    let config = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        }
+    };
     axios.post(`${server.url}/worker/start`, input).then(res => {
         if (res.data.success) {
             res.json(
