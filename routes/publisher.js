@@ -624,7 +624,8 @@ router.put('/start', async (req, res) => {
         sudoPassword: server.sudoPassword,
         postgresHost: getConfig('WhiteLabelPotgresHost').value,
         publisherBrandName: publisher.brandName || publisher.name,
-        hasPrivateDomain: publisher.customDomains.lenght > 0
+        hasPrivateDomain: publisher.customDomains.lenght > 0,
+        publisherVersion: publisher.publisherVersion
     };
 
     axios.post(`${server.url}/worker/start`, input).then(res => {

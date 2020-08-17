@@ -532,11 +532,6 @@
                     "field": "customDomains",
                     "seqType": "Sequelize.JSON"
                 },
-                "subDomain": {
-                    "unique": true,
-                    "field": "subDomain",
-                    "seqType": "Sequelize.STRING"
-                },
                 "hasOwnHostServer": {
                     "field": "hasOwnHostServer",
                     "seqType": "Sequelize.BOOLEAN"
@@ -545,6 +540,10 @@
                     "unique": true,
                     "field": "publisherApiKey",
                     "seqType": "Sequelize.STRING"
+                },
+                "publisherVersion": {
+                    "field": "publisherVersion",
+                    "seqType": "Sequelize.FLOAT"
                 },
                 "createdAt": {
                     "allowNull": false,
@@ -741,5 +740,5 @@
             "indexes": []
         }
     },
-    "revision": 3
+    "revision": 4
 }

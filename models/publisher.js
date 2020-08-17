@@ -74,7 +74,10 @@ const Publisher = (sequelize, DataTypes) => {
         publisherApiKey: {
             type: DataTypes.STRING,
             unique: true,
-        }
+        },
+        publisherVersion: {
+            type: DataTypes.FLOAT,
+        },
     }, {
         timestamps: true
     });
