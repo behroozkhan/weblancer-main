@@ -38,6 +38,10 @@ router.post('/update', async function (req, res) {
     });
 
     await longProcess.save();
+    
+    res.json(
+        new Response(true).json()
+    );
 })
 
 router.get('/getlaststartprocess', async function (req, res) {
