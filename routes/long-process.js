@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 let moment = require('moment');
 const Response = require('../utils/response');
+const { models } = require('../model-manager/models');
 
 router.post('/update', async function (req, res) {
     console.log("long process update", req.body)
