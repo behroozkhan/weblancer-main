@@ -22,7 +22,7 @@ const sequelize = new Sequelize(
         dialect: 'postgres',
         host: "185.239.107.18",
         dialectOptions: {
-          supportBigNumbers: true
+            supportBigNumbers: true
         }
     },
 );
