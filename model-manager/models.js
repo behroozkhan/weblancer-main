@@ -24,7 +24,8 @@ const sequelize = new Sequelize(
         host: "185.239.107.18",
         dialectOptions: {
             supportBigNumbers: true
-        }
+        },
+        logging: false
     },
 );
 
