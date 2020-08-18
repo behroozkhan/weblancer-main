@@ -10,6 +10,7 @@ const LongProcess = (sequelize, DataTypes) => {
         },
         metaData: {
             type: DataTypes.JSON,
+            defaultValue: {}
         },
         name: {
             type: DataTypes.STRING,

@@ -12,6 +12,7 @@ let transaction = require('./routes/transaction.js');
 let plan = require('./routes/plan.js');
 let server = require('./routes/server.js');
 let middle = require('./routes/middle.js');
+let longProcess = require('./routes/long-process.js');
 const Response = require('./utils/response.js');
 const appBaseRoute = '/api';
 
@@ -28,6 +29,7 @@ app.use(unlessRoute([
     appBaseRoute + '/publisher/register'
 ], authorizeToken));
 
+app.use(appBaseRoute + '/long-process', longProcess);
 app.use(appBaseRoute + '/payment', payment);
 app.use(appBaseRoute + '/editor', editor);
 app.use(appBaseRoute + '/hosting', hosting);

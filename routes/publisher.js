@@ -1,4 +1,4 @@
-let { getRandomInt, makeResNum } = require('../utils/utils.js');
+let { makeResNum } = require('../utils/utils.js');
 let { paymentInit, paymentVerfiy } = require('../utils/weblancer-payment.js');
 let WeblancerUtils = require('../utils/weblancerUtils.js');
 let { sequelize, models } = require('../model-manager/models.js');
@@ -9,6 +9,7 @@ let jwt = require('jsonwebtoken');
 let { getConfig } = require('../model-manager/models.js');
 const Response = require('../utils/response.js');
 let router = express.Router();
+const { Op } = require("sequelize");
 
 router.get('/publisher', function (req, res) {
     // return all publishers
@@ -562,8 +563,6 @@ router.put('/start', async (req, res) => {
     // start publisher server
     let publisherId = req.user.id;
 
-    console.log("/start", req.user)
-
     let publisher;
     try {
         publisher = await models.Publisher.findOne({
@@ -618,6 +617,14 @@ router.put('/start', async (req, res) => {
         return;
     }
 
+    let longProcess = await models.LongProcess.create({
+        name: 'Starting Publisher',
+        refId: publisherId.toString(),
+        status: 'Calling worker server by address: `${server.url}/worker/start`',
+        state: 'called',
+        timeout: 15 * 60
+    });
+
     let input = {
         publisherId: publisherId, 
         publisherDomains: publisher.customDomains, 
@@ -626,7 +633,9 @@ router.put('/start', async (req, res) => {
         publisherBrandName: publisher.brandName || publisher.name,
         hasPrivateDomain: publisher.customDomains.lenght > 0,
         publisherVersion: publisher.publisherVersion,
-        expressPort: publisher.expressPort
+        expressPort: publisher.expressPort,
+        longProcessId: longProcess.id,
+        longProcessUrl: "https://whitelabel.weblancer.ir/api/long-process/update"
     };
 
     console.log("calling publisher server: ", `${server.url}/worker/start`, input);
@@ -636,31 +645,51 @@ router.put('/start', async (req, res) => {
         }
     };
 
-    // let longProcess = await models.LongProcess.create({
-    //     name: 'Starting Publisher',
-    //     refId: publisherId.toString(),
-    //     status: 'Calling worker server by address: `${server.url}/worker/start`',
-    //     state: 'called',
-    //     timeout: 15 * 60
-    // });
-
     axios.post(`${server.url}/worker/start`, input, config).then(res => {
         if (res.data.success) {
             console.log("calling publisher server success");
             res.json(
-                new Response(true, {}, "Server started successfully").json()
+                new Response(true, {}, "Server starting successfully").json()
             );
         } else {
             res.status(502).json(res.data);
         }
     }).catch(error => {
         console.log("calling publisher server error: ", error);
+
+        longProcess.message += '\n' + longProcess.status;
+        longProcess.status = `calling publisher server error`;
+        longProcess.state = 'failed';
+        longProcess.metaData.error = error;
+        longProcess.endDate = moment().toDate();
+
+        await longProcess.save();
+
         res.status(502).json(
             error.response.data || 
             new Response(false, {}, 
                 "Can not connect to publisher server, maybe publisher server is not running or publisher server node app is not running or configing").json()
         );
     })
+
+    let maxTime = 15 * 60 * 1000;
+    let updateLongProcessIntervall = setInterval(async () => 
+    {
+        maxTime -= 1000;
+
+        if (maxTime <= 0) clearInterval(updateLongProcessIntervall);
+
+        await longProcess.reload();
+        if (longProcess.state === 'failed'){
+            clearInterval(updateLongProcessIntervall);
+            return;
+        }
+        if (longProcess.state === complete) {
+            publisher.expressPort = longProcess.metaData.expressPort;
+            await publisher.save();
+            return;
+        }
+    }, 1000);
 })
 
 router.put('/stop', async (req, res) => {
