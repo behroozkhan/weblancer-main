@@ -93,6 +93,10 @@
                     "seqType": "Sequelize.BIGINT"
                 },
                 "metaData": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.Object"
+                    },
                     "field": "metaData",
                     "seqType": "Sequelize.JSON"
                 },
@@ -105,6 +109,10 @@
                     "seqType": "Sequelize.STRING"
                 },
                 "startDate": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.NOW"
+                    },
                     "field": "startDate",
                     "seqType": "Sequelize.DATE"
                 },
@@ -113,10 +121,16 @@
                     "seqType": "Sequelize.DATE"
                 },
                 "status": {
+                    "defaultValue": {
+                        "value": ""
+                    },
                     "field": "status",
                     "seqType": "Sequelize.STRING"
                 },
                 "message": {
+                    "defaultValue": {
+                        "value": ""
+                    },
                     "field": "message",
                     "seqType": "Sequelize.STRING"
                 },
@@ -125,6 +139,9 @@
                     "seqType": "Sequelize.ENUM('called', 'running', 'complete', 'failed')"
                 },
                 "timeout": {
+                    "defaultValue": {
+                        "value": 3600
+                    },
                     "field": "timeout",
                     "seqType": "Sequelize.FLOAT"
                 },
@@ -814,5 +831,5 @@
             "indexes": []
         }
     },
-    "revision": 6
+    "revision": 7
 }

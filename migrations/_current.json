@@ -132,7 +132,7 @@
                         "value": ""
                     },
                     "field": "message",
-                    "seqType": "Sequelize.STRING"
+                    "seqType": "Sequelize.TEXT"
                 },
                 "state": {
                     "field": "state",
@@ -831,5 +831,5 @@
             "indexes": []
         }
     },
-    "revision": 7
+    "revision": 8
 }

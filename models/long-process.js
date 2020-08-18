@@ -30,7 +30,7 @@ const LongProcess = (sequelize, DataTypes) => {
             defaultValue: ""
         },
         message: { // All status appended
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             defaultValue: ""
         },
         state: {
