@@ -4,6 +4,7 @@ let moment = require('moment');
 const Response = require('../utils/response');
 
 router.post('/update', async function (req, res) {
+    console.log("long process update", req.body)
     let {
         longProcessId, status, state, metaData
     } = req.body;
