@@ -692,6 +692,7 @@ router.put('/start', async (req, res) => {
         if (longProcess.state === 'complete') {
             publisher.expressPort = longProcess.metaData.expressPort;
             await publisher.save();
+            clearInterval(updateLongProcessIntervall);
             return;
         }
     }, 1000);
