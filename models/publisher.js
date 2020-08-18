@@ -94,6 +94,11 @@ const Publisher = (sequelize, DataTypes) => {
         models.publisher.hasMany(models.server, {as: 'hostServers'});
         models.publisher.hasMany(models.payment_source);
         models.payment_source.belongsTo(models.publisher);
+        models.publisher.hasMany(models.long_process, { as: "longProcesses" });
+        models.long_process.belongsTo(models.publisher, {
+            foreignKey: "publisherId",
+            as: "publisher",
+        });
     };
     
     return Publisher;

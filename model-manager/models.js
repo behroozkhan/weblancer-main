@@ -10,6 +10,7 @@ let Website = require('../models/website.js');
 let PublisherWebsite = require('../models/publisher-website.js');
 let PaymentSource = require('../models/payment-source.js');
 const Response = require('../utils/response.js');
+const LongProcess = require('../models/long-process.js');
 
 const {DataTypes} = Sequelize;
 
@@ -34,6 +35,7 @@ const models = {
     Website: Website(sequelize, DataTypes),
     PublisherWebSite: PublisherWebsite(sequelize, DataTypes),
     PaymentSource: PaymentSource(sequelize, DataTypes),
+    LongProcess: LongProcess(sequelize, DataTypes),
 };
 
 let findAndCountAll = (req, res, model) => {
