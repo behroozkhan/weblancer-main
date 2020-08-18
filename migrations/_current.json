@@ -545,6 +545,10 @@
                     "field": "publisherVersion",
                     "seqType": "Sequelize.FLOAT"
                 },
+                "expressPort": {
+                    "field": "expressPort",
+                    "seqType": "Sequelize.INTEGER"
+                },
                 "createdAt": {
                     "allowNull": false,
                     "field": "createdAt",
@@ -740,5 +744,5 @@
             "indexes": []
         }
     },
-    "revision": 4
+    "revision": 5
 }

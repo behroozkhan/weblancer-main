@@ -78,6 +78,9 @@ const Publisher = (sequelize, DataTypes) => {
         publisherVersion: {
             type: DataTypes.FLOAT,
         },
+        expressPort: {
+            type: DataTypes.INTEGER,
+        },
     }, {
         timestamps: true
     });
