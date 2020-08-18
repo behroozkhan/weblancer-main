@@ -4,6 +4,8 @@ module.exports.authorizeToken = function authorizeToken(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
+    console.log("Auth: ", req);
+
     if (token == null) res.sendStatus(401);
 
     jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET, (err, user) => {
