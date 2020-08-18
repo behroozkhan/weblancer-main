@@ -645,14 +645,14 @@ router.put('/start', async (req, res) => {
         }
     };
 
-    axios.post(`${server.url}/worker/start`, input, config).then(res => {
-        if (res.data.success) {
+    axios.post(`${server.url}/worker/start`, input, config).then(axiosRes => {
+        if (axiosRes.data.success) {
             console.log("calling publisher server success");
             res.json(
                 new Response(true, {}, "Server starting successfully").json()
             );
         } else {
-            res.status(502).json(res.data);
+            res.status(502).json(axiosRes.data);
         }
     }).catch(async error => {
         console.log("calling publisher server error: ", error);
