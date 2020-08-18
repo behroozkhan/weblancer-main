@@ -1,3 +1,4 @@
+require('pg').defaults.parseInt8 = true
 let Sequelize = require('sequelize');
 let Publisher = require('../models/publisher.js');
 let PaymentTransaction = require('../models/payment-transaction.js');
