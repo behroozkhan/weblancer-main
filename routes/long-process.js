@@ -35,9 +35,12 @@ router.post('/update', async function (req, res) {
     if (state === 'complete' || state === 'failed')
         longProcess.endDate = moment().toDate();
 
-    Object.keys(metaData).forEach(key => {
+    Object.keys(metaData || {}).forEach(key => {
         longProcess.metaData[key] = metaData[key];
     });
+
+    if (metaData)
+        longProcess.metaData = {...longProcess.metaData};
 
     await longProcess.save();
     
