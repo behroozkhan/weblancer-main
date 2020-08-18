@@ -2,7 +2,7 @@ let express = require('express');
 let router = express.Router();
 let moment = require('moment');
 
-router.get('/update', async function (req, res) {
+router.post('/update', async function (req, res) {
     let {
         longProcessId, status, state, metaData
     } = req.body;
