@@ -82,6 +82,76 @@
             },
             "indexes": []
         },
+        "long_processes": {
+            "tableName": "long_processes",
+            "schema": {
+                "id": {
+                    "unique": true,
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "field": "id",
+                    "seqType": "Sequelize.BIGINT"
+                },
+                "metaData": {
+                    "field": "metaData",
+                    "seqType": "Sequelize.JSON"
+                },
+                "name": {
+                    "field": "name",
+                    "seqType": "Sequelize.STRING"
+                },
+                "refId": {
+                    "field": "refId",
+                    "seqType": "Sequelize.STRING"
+                },
+                "startDate": {
+                    "field": "startDate",
+                    "seqType": "Sequelize.DATE"
+                },
+                "endDate": {
+                    "field": "endDate",
+                    "seqType": "Sequelize.DATE"
+                },
+                "status": {
+                    "field": "status",
+                    "seqType": "Sequelize.STRING"
+                },
+                "message": {
+                    "field": "message",
+                    "seqType": "Sequelize.STRING"
+                },
+                "state": {
+                    "field": "state",
+                    "seqType": "Sequelize.ENUM('called', 'running', 'complete', 'failed')"
+                },
+                "timeout": {
+                    "field": "timeout",
+                    "seqType": "Sequelize.FLOAT"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "publisherId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "publishers",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "publisherId",
+                    "seqType": "Sequelize.BIGINT"
+                }
+            },
+            "indexes": []
+        },
         "payment_sources": {
             "tableName": "payment_sources",
             "schema": {
@@ -744,5 +814,5 @@
             "indexes": []
         }
     },
-    "revision": 5
+    "revision": 6
 }
