@@ -654,7 +654,7 @@ router.put('/start', async (req, res) => {
         } else {
             res.status(502).json(res.data);
         }
-    }).catch(error => {
+    }).catch(async error => {
         console.log("calling publisher server error: ", error);
 
         longProcess.message += '\n' + longProcess.status;
