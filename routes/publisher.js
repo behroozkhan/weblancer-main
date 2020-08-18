@@ -489,10 +489,6 @@ router.get('/transactions/:type', async (req, res) => {
 router.post('/login', async (req, res) => {
     // login publisher
     // check userName and password sent by user and authenticate him
-
-    console.log("/login", (await getConfig('WhiteLabelPotgresHost')), 
-        (await getConfig('WhiteLabelPotgresHost')).value)
-
     let publisher;
     try {
         publisher = await models.Publisher.findOne({
@@ -629,7 +625,8 @@ router.put('/start', async (req, res) => {
         postgresHost: (await getConfig('WhiteLabelPotgresHost')).value,
         publisherBrandName: publisher.brandName || publisher.name,
         hasPrivateDomain: publisher.customDomains.lenght > 0,
-        publisherVersion: publisher.publisherVersion
+        publisherVersion: publisher.publisherVersion,
+        expressPort: publisher.expressPort
     };
 
     console.log("calling publisher server: ", `${server.url}/worker/start`, input);
@@ -638,8 +635,18 @@ router.put('/start', async (req, res) => {
             'Content-Type': 'application/json'
         }
     };
+
+    // let longProcess = await models.LongProcess.create({
+    //     name: 'Starting Publisher',
+    //     refId: publisherId.toString(),
+    //     status: 'Calling worker server by address: `${server.url}/worker/start`',
+    //     state: 'called',
+    //     timeout: 15 * 60
+    // });
+
     axios.post(`${server.url}/worker/start`, input, config).then(res => {
         if (res.data.success) {
+            console.log("calling publisher server success");
             res.json(
                 new Response(true, {}, "Server started successfully").json()
             );

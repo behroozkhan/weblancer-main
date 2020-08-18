@@ -1,5 +1,4 @@
-
-let {getConfig} = require('../models/config.js');
+let { getConfig } = require('../model-manager/models.js');
 let moment = require('moment');
 let express = require('express');
 const Response = require('../utils/response.js');
@@ -69,7 +68,7 @@ router.post('/editorrequest', async (req, res) => {
         );
     }
 
-    let editorRequestQuery = await getConfig('EditorRequestQuery').value;
+    let editorRequestQuery = (await getConfig('EditorRequestQuery')).value;
 
     axios.post(`${editorServer.url}${editorRequestQuery.value}`, {
         publisherId, websiteId, publisherWebsite

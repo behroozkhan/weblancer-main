@@ -1,3 +1,5 @@
+let Sequelize = require('sequelize');
+
 const LongProcess = (sequelize, DataTypes) => {
     const LongProcess = sequelize.define('long_process', {
         id: {
@@ -17,22 +19,26 @@ const LongProcess = (sequelize, DataTypes) => {
         },
         startDate: {
             type: DataTypes.DATE,
+            defaultValue: Sequelize.NOW
         },
         endDate: {
             type: DataTypes.DATE,
         },
         status: { // Current message
             type: DataTypes.STRING,
+            defaultValue: ""
         },
         message: { // All status appended
             type: DataTypes.STRING,
+            defaultValue: ""
         },
         state: {
             type: DataTypes.ENUM,
             values: ['called', 'running', 'complete', 'failed']
         },
         timeout: {
-            type: DataTypes.FLOAT
+            type: DataTypes.FLOAT,
+            defaultValue: 3600
         }
     });
      
