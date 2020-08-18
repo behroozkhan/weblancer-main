@@ -15,13 +15,13 @@ router.post('/update', async function (req, res) {
 
         if (!longProcess) {
             res.status(404).json(
-                new Response(false, {}, "LongProcess not found").json()
+                new Response(false, {}, "LongProcess not found 1").json()
             );
             return;
         }
-    } catch (e) {
+    } catch (error) {
         res.status(404).json(
-            new Response(false, {}, "LongProcess not found").json()
+            new Response(false, {}, "LongProcess not found: ", error).json()
         );
         return;
     }
