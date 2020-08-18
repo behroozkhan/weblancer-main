@@ -646,7 +646,7 @@ router.put('/start', async (req, res) => {
         }
     };
 
-    console.log("NEW long process id: ", longProcessId.id);
+    console.log("NEW long process id: ", longProcess.id);
     axios.post(`${server.url}/worker/start`, input, config).then(axiosRes => {
         if (axiosRes.data.success) {
             console.log("calling publisher server success");
