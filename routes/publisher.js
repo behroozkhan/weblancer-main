@@ -675,11 +675,13 @@ router.put('/start', async (req, res) => {
     let maxTime = 15 * 60 * 1000;
     let updateLongProcessIntervall = setInterval(async () => 
     {
+        await longProcess.reload();
+        console.log("Checking start process", longProcess.state, longProcess.status, 
+            (longProcess.metaData.progress || 0) + '%');
         maxTime -= 1000;
 
         if (maxTime <= 0) clearInterval(updateLongProcessIntervall);
 
-        await longProcess.reload();
         if (longProcess.state === 'failed'){
             clearInterval(updateLongProcessIntervall);
             return;
