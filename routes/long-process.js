@@ -12,7 +12,7 @@ router.post('/update', async function (req, res) {
 
     let longProcess;
     try {
-        longProcess = await models.Publisher.findByPk(longProcessId);
+        longProcess = await models.LongProcess.findByPk(longProcessId);
 
         if (!longProcess) {
             res.status(404).json(
