@@ -635,7 +635,8 @@ router.put('/start', async (req, res) => {
         publisherVersion: publisher.publisherVersion,
         expressPort: publisher.expressPort,
         longProcessId: longProcess.id,
-        longProcessUrl: "https://whitelabel.weblancer.ir/api/long-process/update"
+        longProcessUrl: "https://whitelabel.weblancer.ir/api/long-process/update",
+        longProcessToken: jwt.sign({id: 'longProcessToken'}, process.env.JWT_ACCESS_TOKEN_SECRET)
     };
 
     console.log("calling publisher server: ", `${server.url}/worker/start`, input);
