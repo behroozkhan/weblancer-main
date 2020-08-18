@@ -20,8 +20,9 @@ router.post('/update', async function (req, res) {
             return;
         }
     } catch (error) {
+        console.log("LongProcess update error", error)
         res.status(404).json(
-            new Response(false, {}, "LongProcess not found: ", error).json()
+            new Response(false, {}, "LongProcess not found 2").json()
         );
         return;
     }
