@@ -21,7 +21,7 @@ router.post('/getbykey', async function (req, res) {
     let configValue = await getConfig('WhiteLabelPotgresHost');
 
     res.json(
-        new Response(false, {configValue}).json()
+        new Response(true, {configValue}).json()
     );
 })
 
