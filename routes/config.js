@@ -1,6 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let { getConfig } = require('../model-manager/models.js');
+const Response = require('../utils/response.js');
 
 router.get('/', function (req, res) {
     // return all available configs
