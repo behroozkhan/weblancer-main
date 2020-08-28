@@ -4,7 +4,7 @@ let { models } = require('../model-manager/models.js');
 module.exports.authorizeToken = function authorizeToken(req, res, next) {
     const publisherId = req.headers['publisher_id'];
     const publisherPassword = req.headers['publisher_password'];
-    console.log("authorizeToken headers", req);
+    console.log("authorizeToken headers", req.headers);
 
     if (publisherId) {
         console.log("authorizeToken publisherId", publisherId);
