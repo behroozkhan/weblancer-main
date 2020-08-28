@@ -6,7 +6,7 @@ router.get('/', function (req, res) {
     // return all available configs
 })
 
-router.post('/getbykey', function (req, res) {
+router.post('/getbykey', async function (req, res) {
     let {key} = req.body;
 
     if (!key) {
