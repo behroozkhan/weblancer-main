@@ -6,12 +6,10 @@ module.exports.authorizeToken = function authorizeToken(req, res, next) {
     const publisherPassword = req.headers['publisher_password'];
 
     if (publisherId) {
-        try {
-            let publisher = await models.Publisher.findOne({
-                where: { id: publisherId, password: publisherPassword},
-                attributes: ['id', 'role']
-            });
-    
+        models.Publisher.findOne({
+            where: { id: publisherId, password: publisherPassword},
+            attributes: ['id', 'role']
+        }).then(publisher => {
             if (!publisher) {
                 res.status(401).json(
                     new Response(false, {}, "id and password are not match").json()
@@ -21,12 +19,12 @@ module.exports.authorizeToken = function authorizeToken(req, res, next) {
                 req.user = publisher.toJSON();
                 next();
             }
-        } catch (error) {
+        }).catch(error => {
             console.log("authorizeToken Error", error);
             res.status(500).json(
                 new Response(false, {error}, "Error on authorizing publisher").json()
             );
-        }
+        });
     } else {
         const authHeader = req.headers['authorization'];
         const token = authHeader && authHeader.split(' ')[1];
