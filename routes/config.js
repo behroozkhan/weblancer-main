@@ -7,6 +7,7 @@ router.get('/', function (req, res) {
 })
 
 router.post('/getbykey', async function (req, res) {
+    console.log('/getbykey');
     let {key} = req.body;
 
     if (!key) {
