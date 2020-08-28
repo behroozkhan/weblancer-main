@@ -6,6 +6,7 @@ module.exports.authorizeToken = function authorizeToken(req, res, next) {
     const publisherPassword = req.headers['publisher_password'];
 
     if (publisherId) {
+        console.log("authorizeToken publisherId", publisherId);
         models.Publisher.findOne({
             where: { id: publisherId, password: publisherPassword},
             attributes: ['id', 'role']
@@ -27,6 +28,7 @@ module.exports.authorizeToken = function authorizeToken(req, res, next) {
         });
     } else {
         const authHeader = req.headers['authorization'];
+        console.log("authorizeToken authHeader", authHeader);
         const token = authHeader && authHeader.split(' ')[1];
     
         if (token == null) res.sendStatus(401);
