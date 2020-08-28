@@ -4,6 +4,7 @@ let { unlessRoute } = require('./utils/utils.js');
 let express = require('express');
 let cors = require('cors');
 
+let config = require('./routes/config.js');
 let payment = require('./routes/payment.js');
 let editor = require('./routes/editor.js');
 let hosting = require('./routes/hosting.js');
@@ -30,6 +31,7 @@ app.use(unlessRoute([
 ], authorizeToken));
 
 app.use(appBaseRoute + '/long-process', longProcess);
+app.use(appBaseRoute + '/config', config);
 app.use(appBaseRoute + '/payment', payment);
 app.use(appBaseRoute + '/editor', editor);
 app.use(appBaseRoute + '/hosting', hosting);

@@ -1,8 +1,26 @@
 let express = require('express');
 let router = express.Router();
+let { getConfig } = require('../model-manager/models.js');
 
 router.get('/', function (req, res) {
     // return all available configs
+})
+
+router.post('/getbykey', function (req, res) {
+    let {key} = req.body;
+
+    if (!key) {
+        res.status(400).json(
+            new Response(false, {}, "Must send key in body").json()
+        );
+        return;
+    }
+
+    let configValue = await getConfig('WhiteLabelPotgresHost');
+
+    res.json(
+        new Response(false, {configValue}).json()
+    );
 })
 
 router.get('/:id', function (req, res) {
