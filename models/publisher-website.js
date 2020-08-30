@@ -57,7 +57,17 @@ const PublisherWebsite = (sequelize, DataTypes) => {
         },
         totalPayment: {
             type: DataTypes.FLOAT,
+        },
+        publisherId: {
+            type: DataTypes.BIGINT,
         }
+    }, {
+        indexes: [
+            {
+                unique: true,
+                fields: ['name', 'endUserId', 'publisherId']
+            }
+        ]
     });
      
     return PublisherWebsite;
