@@ -1,6 +1,7 @@
 let { models } = require('../model-manager/models.js');
 let Sequelize = require('sequelize');
 let moment = require('moment');
+const { forEach } = require('lodash');
 
 const Op = Sequelize.Op;
 
@@ -89,6 +90,20 @@ WeblancerUtils.getTotalPriceOfPlan = (websitePlan, planTime, hasOwnHostServer) =
             websitePlan.basePriceMonthly :
             websitePlan.basePriceMonthly * 12);
     }
+}
+
+WeblancerUtils.getTotalPriceOfPlanFromProducts = (productsDetail, planTime) => {
+    if (planTime === 'trial')
+        return 0;
+
+    let sum = 0;
+    (productsDetail || []).forEach(product => {
+        sum += (planTime === 'monthly' ?
+            product.priceMonthly :
+            product.priceYearly);
+    });
+
+    return sum;
 }
 
 WeblancerUtils.getCreditNeed = (websitePlan, planTime, hasOwnHostServer) => {

@@ -589,17 +589,6 @@
                     "field": "totalPayment",
                     "seqType": "Sequelize.FLOAT"
                 },
-                "publisherId": {
-                    "field": "publisherId",
-                    "allowNull": true,
-                    "references": {
-                        "model": "publishers",
-                        "key": "id"
-                    },
-                    "onDelete": "CASCADE",
-                    "onUpdate": "CASCADE",
-                    "seqType": "Sequelize.BIGINT"
-                },
                 "createdAt": {
                     "allowNull": false,
                     "field": "createdAt",
@@ -609,6 +598,17 @@
                     "allowNull": false,
                     "field": "updatedAt",
                     "seqType": "Sequelize.DATE"
+                },
+                "publisherId": {
+                    "allowNull": true,
+                    "references": {
+                        "model": "publishers",
+                        "key": "id"
+                    },
+                    "onDelete": "SET NULL",
+                    "onUpdate": "CASCADE",
+                    "field": "publisherId",
+                    "seqType": "Sequelize.BIGINT"
                 }
             },
             "indexes": {
@@ -852,5 +852,5 @@
             "indexes": []
         }
     },
-    "revision": 12
+    "revision": 13
 }

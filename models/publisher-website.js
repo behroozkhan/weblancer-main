@@ -9,8 +9,17 @@ const PublisherWebsite = (sequelize, DataTypes) => {
         name: {
             type: DataTypes.STRING,
         },
+        displayName: {
+            type: DataTypes.STRING
+        },
         description: {
             type: DataTypes.JSON,
+        },
+        serverIpAddress: {
+            type: DataTypes.STRING
+        },
+        url: {
+            type: DataTypes.STRING
         },
         boughtDate: {
             type: DataTypes.DATE,
