@@ -811,7 +811,7 @@
                     "field": "updatedAt",
                     "seqType": "Sequelize.DATE"
                 },
-                "mainServerId": {
+                "mainServerOfPublisherId": {
                     "allowNull": true,
                     "references": {
                         "model": "publishers",
@@ -819,7 +819,7 @@
                     },
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
-                    "field": "mainServerId",
+                    "field": "mainServerOfPublisherId",
                     "seqType": "Sequelize.BIGINT"
                 },
                 "publisherId": {
@@ -837,5 +837,5 @@
             "indexes": []
         }
     },
-    "revision": 9
+    "revision": 10
 }

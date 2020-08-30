@@ -8,7 +8,6 @@ const PublisherWebsite = (sequelize, DataTypes) => {
         },
         name: {
             type: DataTypes.STRING,
-            unique: true,
         },
         description: {
             type: DataTypes.JSON,

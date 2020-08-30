@@ -522,7 +522,6 @@
                     "seqType": "Sequelize.BIGINT"
                 },
                 "name": {
-                    "unique": true,
                     "field": "name",
                     "seqType": "Sequelize.STRING"
                 },
@@ -837,5 +836,5 @@
             "indexes": []
         }
     },
-    "revision": 10
+    "revision": 11
 }
