@@ -7,7 +7,6 @@ let Config = require('../models/config.js');
 let Server = require('../models/server.js');
 let PublisherPlan = require('../models/publisher-plan.js');
 let CreditTransaction = require('../models/credit-transaction.js');
-let Website = require('../models/website.js');
 let PublisherWebsite = require('../models/publisher-website.js');
 let PaymentSource = require('../models/payment-source.js');
 const Response = require('../utils/response.js');
@@ -37,11 +36,20 @@ const models = {
     Config: Config(sequelize, DataTypes),
     PublisherPlan: PublisherPlan(sequelize, DataTypes),
     CreditTransaction: CreditTransaction(sequelize, DataTypes),
-    Website: Website(sequelize, DataTypes),
     PublisherWebSite: PublisherWebsite(sequelize, DataTypes),
     PaymentSource: PaymentSource(sequelize, DataTypes),
     LongProcess: LongProcess(sequelize, DataTypes),
 };
+
+let allModels = {};
+Object.values(models).forEach(model => {
+    allModels[model.name] = model;
+});
+
+Object.values(models).forEach(model => {
+    if (model.associate)
+        model.associate(allModels);
+});
 
 let findAndCountAll = (req, res, model) => {
     let pageNumber = req.query.pageNumber || 1;

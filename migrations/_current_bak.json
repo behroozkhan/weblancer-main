@@ -589,6 +589,17 @@
                     "field": "totalPayment",
                     "seqType": "Sequelize.FLOAT"
                 },
+                "publisherId": {
+                    "field": "publisherId",
+                    "allowNull": true,
+                    "references": {
+                        "model": "publishers",
+                        "key": "id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.BIGINT"
+                },
                 "createdAt": {
                     "allowNull": false,
                     "field": "createdAt",
@@ -598,20 +609,25 @@
                     "allowNull": false,
                     "field": "updatedAt",
                     "seqType": "Sequelize.DATE"
-                },
-                "publisherId": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "publishers",
-                        "key": "id"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "publisherId",
-                    "seqType": "Sequelize.BIGINT"
                 }
             },
-            "indexes": []
+            "indexes": {
+                "42cbff3d28a3d696cc64c00ab1aaf6195f659fb5": {
+                    "unique": true,
+                    "fields": [
+                        "name",
+                        "endUserId",
+                        "publisherId"
+                    ],
+                    "name": "publisher_websites_name_end_user_id_publisher_id",
+                    "options": {
+                        "indexName": "publisher_websites_name_end_user_id_publisher_id",
+                        "name": "publisher_websites_name_end_user_id_publisher_id",
+                        "indicesType": "UNIQUE",
+                        "type": "UNIQUE"
+                    }
+                }
+            }
         },
         "publishers": {
             "tableName": "publishers",
@@ -836,5 +852,5 @@
             "indexes": []
         }
     },
-    "revision": 11
+    "revision": 12
 }

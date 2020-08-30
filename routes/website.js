@@ -13,8 +13,6 @@ router.post('/createoradd', function (req, res) {
     // creat or update new website
     let {endUserId, endWebsiteId, resourcePlanId, permissionPlansId, planType, planOrder, metaData} =
         req.body;
-
-    
 })
 
 router.post('/', function (req, res) {
