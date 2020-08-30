@@ -370,6 +370,82 @@
             },
             "indexes": []
         },
+        "products": {
+            "tableName": "products",
+            "schema": {
+                "id": {
+                    "unique": true,
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "field": "id",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "order": {
+                    "field": "order",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "name": {
+                    "unique": true,
+                    "field": "name",
+                    "seqType": "Sequelize.STRING"
+                },
+                "description": {
+                    "field": "description",
+                    "seqType": "Sequelize.TEXT"
+                },
+                "help": {
+                    "field": "help",
+                    "seqType": "Sequelize.TEXT"
+                },
+                "priceMonthly": {
+                    "field": "priceMonthly",
+                    "seqType": "Sequelize.FLOAT"
+                },
+                "priceYearly": {
+                    "field": "priceYearly",
+                    "seqType": "Sequelize.FLOAT"
+                },
+                "offPriceMonthly": {
+                    "field": "offPriceMonthly",
+                    "seqType": "Sequelize.FLOAT"
+                },
+                "offpriceYearly": {
+                    "field": "offpriceYearly",
+                    "seqType": "Sequelize.FLOAT"
+                },
+                "type": {
+                    "field": "type",
+                    "seqType": "Sequelize.ENUM('resource', 'service', 'limitation', 'app', 'component', 'vps')"
+                },
+                "bindType": {
+                    "field": "bindType",
+                    "seqType": "Sequelize.ENUM('acount', 'good', 'website')"
+                },
+                "max": {
+                    "field": "max",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "requiredProductId": {
+                    "field": "requiredProductId",
+                    "seqType": "Sequelize.ARRAY(Sequelize.INTEGER)"
+                },
+                "requiredWebsiteType": {
+                    "field": "requiredWebsiteType",
+                    "seqType": "Sequelize.ARRAY(Sequelize.STRING)"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
         "publisher_plans": {
             "tableName": "publisher_plans",
             "schema": {
@@ -445,37 +521,38 @@
                     "field": "id",
                     "seqType": "Sequelize.BIGINT"
                 },
+                "name": {
+                    "unique": true,
+                    "field": "name",
+                    "seqType": "Sequelize.STRING"
+                },
+                "description": {
+                    "field": "description",
+                    "seqType": "Sequelize.JSON"
+                },
                 "boughtDate": {
                     "field": "boughtDate",
+                    "seqType": "Sequelize.DATE"
+                },
+                "planOrder": {
+                    "field": "planOrder",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "planStartDate": {
+                    "field": "planStartDate",
                     "seqType": "Sequelize.DATE"
                 },
                 "expireTime": {
                     "field": "expireTime",
                     "seqType": "Sequelize.DATE"
                 },
-                "totalPriceOfPlan": {
-                    "field": "totalPriceOfPlan",
-                    "seqType": "Sequelize.FLOAT"
-                },
-                "totalPayForPlan": {
-                    "field": "totalPayForPlan",
-                    "seqType": "Sequelize.FLOAT"
-                },
-                "upgradedToUpperPlan": {
-                    "field": "upgradedToUpperPlan",
-                    "seqType": "Sequelize.BOOLEAN"
-                },
-                "extended": {
-                    "field": "extended",
-                    "seqType": "Sequelize.BOOLEAN"
-                },
-                "planOrder": {
-                    "field": "planOrder",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "resource": {
-                    "field": "resource",
+                "metadata": {
+                    "field": "metadata",
                     "seqType": "Sequelize.JSON"
+                },
+                "type": {
+                    "field": "type",
+                    "seqType": "Sequelize.ENUM('website', 'service', 'app', 'component')"
                 },
                 "endUserId": {
                     "field": "endUserId",
@@ -485,13 +562,33 @@
                     "field": "endWebsiteId",
                     "seqType": "Sequelize.STRING"
                 },
-                "metadata": {
-                    "field": "metadata",
+                "totalPriceOfPlan": {
+                    "field": "totalPriceOfPlan",
+                    "seqType": "Sequelize.FLOAT"
+                },
+                "totalPayForPlan": {
+                    "field": "totalPayForPlan",
+                    "seqType": "Sequelize.FLOAT"
+                },
+                "productsDetail": {
+                    "field": "productsDetail",
                     "seqType": "Sequelize.JSON"
                 },
-                "type": {
-                    "field": "type",
-                    "seqType": "Sequelize.ENUM('website', 'service', 'app', 'component')"
+                "addedProducts": {
+                    "field": "addedProducts",
+                    "seqType": "Sequelize.JSON"
+                },
+                "addedPrice": {
+                    "field": "addedPrice",
+                    "seqType": "Sequelize.FLOAT"
+                },
+                "totalPrice": {
+                    "field": "totalPrice",
+                    "seqType": "Sequelize.FLOAT"
+                },
+                "totalPayment": {
+                    "field": "totalPayment",
+                    "seqType": "Sequelize.FLOAT"
                 },
                 "createdAt": {
                     "allowNull": false,
@@ -714,7 +811,7 @@
                     "field": "updatedAt",
                     "seqType": "Sequelize.DATE"
                 },
-                "mainServerId": {
+                "mainServerOfPublisherId": {
                     "allowNull": true,
                     "references": {
                         "model": "publishers",
@@ -722,7 +819,7 @@
                     },
                     "onDelete": "SET NULL",
                     "onUpdate": "CASCADE",
-                    "field": "mainServerId",
+                    "field": "mainServerOfPublisherId",
                     "seqType": "Sequelize.BIGINT"
                 },
                 "publisherId": {
@@ -738,98 +835,7 @@
                 }
             },
             "indexes": []
-        },
-        "websites": {
-            "tableName": "websites",
-            "schema": {
-                "id": {
-                    "unique": true,
-                    "autoIncrement": true,
-                    "primaryKey": true,
-                    "field": "id",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "order": {
-                    "field": "order",
-                    "seqType": "Sequelize.INTEGER"
-                },
-                "name": {
-                    "unique": true,
-                    "field": "name",
-                    "seqType": "Sequelize.STRING"
-                },
-                "basePriceMonthly": {
-                    "field": "basePriceMonthly",
-                    "seqType": "Sequelize.FLOAT"
-                },
-                "basePriceYearly": {
-                    "field": "basePriceYearly",
-                    "seqType": "Sequelize.FLOAT"
-                },
-                "baseOffPriceMonthly": {
-                    "field": "baseOffPriceMonthly",
-                    "seqType": "Sequelize.FLOAT"
-                },
-                "baseOffPriceYearly": {
-                    "field": "baseOffPriceYearly",
-                    "seqType": "Sequelize.FLOAT"
-                },
-                "priceMonthly": {
-                    "field": "priceMonthly",
-                    "seqType": "Sequelize.FLOAT"
-                },
-                "priceYearly": {
-                    "field": "priceYearly",
-                    "seqType": "Sequelize.FLOAT"
-                },
-                "offPriceMonthly": {
-                    "field": "offPriceMonthly",
-                    "seqType": "Sequelize.FLOAT"
-                },
-                "offpriceYearly": {
-                    "field": "offpriceYearly",
-                    "seqType": "Sequelize.FLOAT"
-                },
-                "description": {
-                    "field": "description",
-                    "seqType": "Sequelize.JSON"
-                },
-                "summery": {
-                    "field": "summery",
-                    "seqType": "Sequelize.STRING"
-                },
-                "resourceMax": {
-                    "field": "resourceMax",
-                    "seqType": "Sequelize.JSON"
-                },
-                "planType": {
-                    "field": "planType",
-                    "seqType": "Sequelize.ENUM('resource', 'permission')"
-                },
-                "createdAt": {
-                    "allowNull": false,
-                    "field": "createdAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "updatedAt": {
-                    "allowNull": false,
-                    "field": "updatedAt",
-                    "seqType": "Sequelize.DATE"
-                },
-                "publisherWebsiteId": {
-                    "allowNull": true,
-                    "references": {
-                        "model": "publisher_websites",
-                        "key": "id"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE",
-                    "field": "publisherWebsiteId",
-                    "seqType": "Sequelize.BIGINT"
-                }
-            },
-            "indexes": []
         }
     },
-    "revision": 8
+    "revision": 10
 }

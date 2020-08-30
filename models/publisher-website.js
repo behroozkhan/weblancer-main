@@ -6,35 +6,24 @@ const PublisherWebsite = (sequelize, DataTypes) => {
             autoIncrement: true,
             primaryKey: true
         },
+        name: {
+            type: DataTypes.STRING,
+            unique: true,
+        },
+        description: {
+            type: DataTypes.JSON,
+        },
         boughtDate: {
             type: DataTypes.DATE,
-        },
-        expireTime: {
-            type: DataTypes.DATE,
-        },
-        totalPriceOfPlan: {
-            type: DataTypes.FLOAT,
-        },
-        totalPayForPlan: {
-            type: DataTypes.FLOAT,
-        },
-        upgradedToUpperPlan: {
-            type: DataTypes.BOOLEAN,
-        },
-        extended: {
-            type: DataTypes.BOOLEAN,
         },
         planOrder: {
             type: DataTypes.INTEGER,
         },
-        resource: {
-            type: DataTypes.JSON,
+        planStartDate: {
+            type: DataTypes.DATE,
         },
-        endUserId: {
-            type: DataTypes.STRING
-        },
-        endWebsiteId: {
-            type: DataTypes.STRING
+        expireTime: {
+            type: DataTypes.DATE,
         },
         metadata: {
             type: DataTypes.JSON,
@@ -43,11 +32,34 @@ const PublisherWebsite = (sequelize, DataTypes) => {
             type:   DataTypes.ENUM,
             values: ['website', 'service', 'app', 'component'],
         },
+        endUserId: {
+            type: DataTypes.STRING
+        },
+        endWebsiteId: {
+            type: DataTypes.STRING
+        },
+        totalPriceOfPlan: { // base on products
+            type: DataTypes.FLOAT,
+        },
+        totalPayForPlan: { // publisher get from end user
+            type: DataTypes.FLOAT,
+        },
+        productsDetail: { // base plan products
+            type: DataTypes.JSON,
+        },
+        addedProducts: { // upgraded or added products with in plan priod
+            type: DataTypes.JSON,
+        },
+        addedPrice: { // upgraded or added products price with in plan priod
+            type: DataTypes.FLOAT,
+        },
+        totalPrice: {
+            type: DataTypes.FLOAT,
+        },
+        totalPayment: {
+            type: DataTypes.FLOAT,
+        }
     });
-
-    PublisherWebsite.associate = function(models) {
-        models.publisher_website.hasMany(models.website);
-    };
      
     return PublisherWebsite;
 };

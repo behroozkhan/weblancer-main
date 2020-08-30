@@ -87,18 +87,30 @@ const Publisher = (sequelize, DataTypes) => {
 
     Publisher.associate = function(models) {
         models.publisher.hasMany(models.payment_transaction);
+        models.payment_transaction.belongsTo(models.publisher);
+
         models.publisher.hasMany(models.credit_transaction);
+        models.credit_transaction.belongsTo(models.publisher);
+        
+        models.publisher.hasOne(models.publisher_plan);
         models.publisher_plan.belongsTo(models.publisher);
+        
         models.publisher.hasMany(models.publisher_website);
-        models.publisher.hasOne(models.server, {as: 'mainServer', foreignKey: 'mainServerId'});
+        models.publisher_website.belongsTo(models.publisher);
+
+        models.publisher.hasOne(models.server, {as: 'mainServer', foreignKey: 'mainServerOfPublisherId'});
         models.publisher.hasMany(models.server, {as: 'hostServers'});
+        models.server.belongsTo(models.publisher);
+
         models.publisher.hasMany(models.payment_source);
         models.payment_source.belongsTo(models.publisher);
+
         models.publisher.hasMany(models.long_process, { as: "longProcesses" });
         models.long_process.belongsTo(models.publisher, {
             foreignKey: "publisherId",
             as: "publisher",
         });
+
     };
     
     return Publisher;

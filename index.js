@@ -14,6 +14,7 @@ let plan = require('./routes/plan.js');
 let server = require('./routes/server.js');
 let middle = require('./routes/middle.js');
 let longProcess = require('./routes/long-process.js');
+let website = require('./routes/website.js');
 const Response = require('./utils/response.js');
 const appBaseRoute = '/api';
 
@@ -40,6 +41,7 @@ app.use(appBaseRoute + '/transaction', transaction);
 app.use(appBaseRoute + '/plan', plan);
 app.use(appBaseRoute + '/server', server);
 app.use(appBaseRoute + '/middle', middle);
+app.use(appBaseRoute + '/website', website);
 
 app.get(appBaseRoute + '/test', function (req, res) {
     res.json(
