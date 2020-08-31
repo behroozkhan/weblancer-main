@@ -11,7 +11,7 @@ router.get('/:id', function (req, res) {
     // return website by id
 })
 
-router.post('/createorupdate', function (req, res) {
+router.post('/createorupdate', async function (req, res) {
     // creat or update new website
 
     let publisherId = req.user.id;
