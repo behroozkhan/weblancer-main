@@ -37,7 +37,7 @@ const Product = (sequelize, DataTypes) => {
         },
         bindType: {
             type: DataTypes.ENUM,
-            values: ['acount', 'good', 'website']
+            values: ['acount', 'product', 'website']
         },
         max: {
             type: DataTypes.INTEGER,
@@ -47,6 +47,9 @@ const Product = (sequelize, DataTypes) => {
         },
         requiredWebsiteType: {
             type: DataTypes.ARRAY(DataTypes.STRING),
+        },
+        metadata: {
+            type: DataTypes.JSON
         },
     });
      

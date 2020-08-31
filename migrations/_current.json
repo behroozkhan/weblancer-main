@@ -433,6 +433,10 @@
                     "field": "requiredWebsiteType",
                     "seqType": "Sequelize.ARRAY(Sequelize.STRING)"
                 },
+                "metadata": {
+                    "field": "metadata",
+                    "seqType": "Sequelize.JSON"
+                },
                 "createdAt": {
                     "allowNull": false,
                     "field": "createdAt",
@@ -864,5 +868,5 @@
             "indexes": []
         }
     },
-    "revision": 14
+    "revision": 15
 }

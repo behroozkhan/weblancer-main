@@ -72,13 +72,13 @@ router.post('/createorupdate', async function (req, res) {
         type: type,
         endUserId: website.userId,
         endWebsiteId: website.id,
-        totalPriceOfPlan: websiwebsitePlante.totalPriceOfPlan,
+        totalPriceOfPlan: websitePlan.totalPriceOfPlan,
         totalPayForPlan: websitePlan.totalPayForPlan,
         productsDetail: plan.productsDetail,
         addedProducts: websitePlan.addedProducts,
         addedPrice: websitePlan.addedPrice,
         totalPrice: website.totalPrice,
-        totalPayment: website.totalPayForPlan
+        totalPayment: website.totalPayment
     }
     if (!publisherWebsite) {
         // New website

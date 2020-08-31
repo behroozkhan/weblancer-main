@@ -525,9 +525,21 @@
                     "field": "name",
                     "seqType": "Sequelize.STRING"
                 },
+                "displayName": {
+                    "field": "displayName",
+                    "seqType": "Sequelize.STRING"
+                },
                 "description": {
                     "field": "description",
                     "seqType": "Sequelize.JSON"
+                },
+                "serverIpAddress": {
+                    "field": "serverIpAddress",
+                    "seqType": "Sequelize.STRING"
+                },
+                "url": {
+                    "field": "url",
+                    "seqType": "Sequelize.STRING"
                 },
                 "boughtDate": {
                     "field": "boughtDate",
@@ -852,5 +864,5 @@
             "indexes": []
         }
     },
-    "revision": 13
+    "revision": 14
 }
