@@ -68,7 +68,7 @@ router.post('/createorupdate', async function (req, res) {
         boughtDate: websitePlan.boughtDate,
         planOrder: websitePlan.planOrder,
         planStartDate: websitePlan.boughtDate,
-        expireTime: websitePlan.expireTime,
+        expireDate: websitePlan.expireDate,
         metadata: {...website.metadata},
         type: type,
         endUserId: website.userId,

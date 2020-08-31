@@ -553,8 +553,8 @@
                     "field": "planStartDate",
                     "seqType": "Sequelize.DATE"
                 },
-                "expireTime": {
-                    "field": "expireTime",
+                "expireDate": {
+                    "field": "expireDate",
                     "seqType": "Sequelize.DATE"
                 },
                 "metadata": {
@@ -864,5 +864,5 @@
             "indexes": []
         }
     },
-    "revision": 19
+    "revision": 20
 }

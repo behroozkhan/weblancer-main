@@ -27,7 +27,7 @@ const PublisherWebsite = (sequelize, DataTypes) => {
         planStartDate: {
             type: DataTypes.DATE,
         },
-        expireTime: {
+        expireDate: {
             type: DataTypes.DATE,
         },
         metadata: {

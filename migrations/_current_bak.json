@@ -417,8 +417,8 @@
                     "field": "type",
                     "seqType": "Sequelize.ENUM('resource', 'service', 'limitation', 'app', 'component', 'vps')"
                 },
-                "bindType": {
-                    "field": "bindType",
+                "bindTo": {
+                    "field": "bindTo",
                     "seqType": "Sequelize.ENUM('acount', 'product', 'website')"
                 },
                 "max": {
@@ -864,5 +864,5 @@
             "indexes": []
         }
     },
-    "revision": 18
+    "revision": 19
 }
