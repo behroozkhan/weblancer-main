@@ -35,7 +35,7 @@ const Product = (sequelize, DataTypes) => {
             type: DataTypes.ENUM,
             values: ['resource', 'service', 'limitation', 'app', 'component', 'vps']
         },
-        bindType: {
+        bindTo: {
             type: DataTypes.ENUM,
             values: ['acount', 'product', 'website']
         },

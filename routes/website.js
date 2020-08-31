@@ -79,12 +79,13 @@ router.post('/createorupdate', async function (req, res) {
         addedProducts: websitePlan.addedProducts,
         addedPrice: websitePlan.addedPrice,
         totalPrice: website.totalPrice,
-        totalPayment: website.totalPayment
+        totalPayment: website.totalPayment,
+        publisherId: publisherId
     }
     if (!publisherWebsite) {
         // New website
         try{
-            await models.PublisherWebSite.create(publisherWebsiteTemp);
+            let newPW = await models.PublisherWebSite.create(publisherWebsiteTemp);
             
             res.json(
                 new Response(true, {}).json()

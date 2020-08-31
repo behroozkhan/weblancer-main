@@ -419,7 +419,7 @@
                 },
                 "bindType": {
                     "field": "bindType",
-                    "seqType": "Sequelize.ENUM('acount', 'good', 'website')"
+                    "seqType": "Sequelize.ENUM('acount', 'product', 'website')"
                 },
                 "max": {
                     "field": "max",
@@ -432,6 +432,10 @@
                 "requiredWebsiteType": {
                     "field": "requiredWebsiteType",
                     "seqType": "Sequelize.ARRAY(Sequelize.STRING)"
+                },
+                "metadata": {
+                    "field": "metadata",
+                    "seqType": "Sequelize.JSON"
                 },
                 "createdAt": {
                     "allowNull": false,
@@ -544,10 +548,6 @@
                 "boughtDate": {
                     "field": "boughtDate",
                     "seqType": "Sequelize.DATE"
-                },
-                "planOrder": {
-                    "field": "planOrder",
-                    "seqType": "Sequelize.INTEGER"
                 },
                 "planStartDate": {
                     "field": "planStartDate",
@@ -864,5 +864,5 @@
             "indexes": []
         }
     },
-    "revision": 14
+    "revision": 18
 }

@@ -24,9 +24,6 @@ const PublisherWebsite = (sequelize, DataTypes) => {
         boughtDate: {
             type: DataTypes.DATE,
         },
-        planOrder: {
-            type: DataTypes.INTEGER,
-        },
         planStartDate: {
             type: DataTypes.DATE,
         },

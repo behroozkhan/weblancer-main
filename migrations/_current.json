@@ -417,9 +417,9 @@
                     "field": "type",
                     "seqType": "Sequelize.ENUM('resource', 'service', 'limitation', 'app', 'component', 'vps')"
                 },
-                "bindType": {
-                    "field": "bindType",
-                    "seqType": "Sequelize.ENUM('acount', 'good', 'website')"
+                "bindTo": {
+                    "field": "bindTo",
+                    "seqType": "Sequelize.ENUM('acount', 'product', 'website')"
                 },
                 "max": {
                     "field": "max",
@@ -548,10 +548,6 @@
                 "boughtDate": {
                     "field": "boughtDate",
                     "seqType": "Sequelize.DATE"
-                },
-                "planOrder": {
-                    "field": "planOrder",
-                    "seqType": "Sequelize.INTEGER"
                 },
                 "planStartDate": {
                     "field": "planStartDate",
@@ -868,5 +864,5 @@
             "indexes": []
         }
     },
-    "revision": 15
+    "revision": 19
 }
