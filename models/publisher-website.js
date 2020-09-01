@@ -21,15 +21,6 @@ const PublisherWebsite = (sequelize, DataTypes) => {
         url: {
             type: DataTypes.STRING
         },
-        boughtDate: {
-            type: DataTypes.DATE,
-        },
-        planStartDate: {
-            type: DataTypes.DATE,
-        },
-        expireDate: {
-            type: DataTypes.DATE,
-        },
         metadata: {
             type: DataTypes.JSON,
         },
@@ -42,27 +33,6 @@ const PublisherWebsite = (sequelize, DataTypes) => {
         },
         endWebsiteId: {
             type: DataTypes.STRING
-        },
-        totalPriceOfPlan: { // base on products
-            type: DataTypes.FLOAT,
-        },
-        totalPayForPlan: { // publisher get from end user
-            type: DataTypes.FLOAT,
-        },
-        productsDetail: { // base plan products
-            type: DataTypes.JSON,
-        },
-        addedProducts: { // upgraded or added products with in plan priod
-            type: DataTypes.JSON,
-        },
-        addedPrice: { // upgraded or added products price with in plan priod
-            type: DataTypes.FLOAT,
-        },
-        totalPrice: {
-            type: DataTypes.FLOAT,
-        },
-        totalPayment: {
-            type: DataTypes.FLOAT,
         }
     }, {
         indexes: [

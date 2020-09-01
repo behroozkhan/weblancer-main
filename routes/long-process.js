@@ -5,7 +5,6 @@ const Response = require('../utils/response');
 const { models } = require('../model-manager/models');
 
 router.post('/update', async function (req, res) {
-    console.log("long process update", req.body)
     let {
         longProcessId, status, state, metaData
     } = req.body;
@@ -15,7 +14,7 @@ router.post('/update', async function (req, res) {
         longProcess = await models.LongProcess.findByPk(longProcessId);
 
         if (!longProcess) {
-            res.status(404).json(
+            res.status(410).json(
                 new Response(false, {}, "LongProcess not found 1").json()
             );
             return;
@@ -108,7 +107,7 @@ router.get('/getlaststartprocess', async function (req, res) {
                 return;
             }
         } catch (error) {
-            res.status(404).json(
+            res.status(410).json(
                 new Response(false, {}, error).json()
             );
             return;

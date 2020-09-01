@@ -16,29 +16,9 @@ router.post('/createorupdate', async function (req, res) {
     // creat or update new website
 
     let publisherId = req.user.id;
+
+    // plan and websitePlan and type just need for creating new website and not for updating
     let {website, plan, websitePlan, type} = req.body;
-
-    let publisher;
-    try {
-        publisher = await models.Publisher.findOne({
-            where: {
-                id: publisherId
-            }
-        });
-
-        if (!publisher) {
-            res.status(401).json(
-                new Response(false, {}, "Username or password is wrong").json()
-            );
-            return;
-        }
-    } catch (e) {
-        console.log(e);
-        res.status(401).json(
-            new Response(false, {}, "Username or password is wrong").json()
-        );
-        return;
-    }
 
     let publisherWebsite;
 
@@ -64,34 +44,37 @@ router.post('/createorupdate', async function (req, res) {
         description: website.description,
         serverIpAddress: website.serverIpAddress,
         url: website.url,
-        metadata: website.metadata,
-        boughtDate: websitePlan.boughtDate,
-        planOrder: websitePlan.planOrder,
-        planStartDate: websitePlan.boughtDate,
-        expireDate: websitePlan.expireDate,
         metadata: {...website.metadata},
         type: type,
         endUserId: website.userId,
         endWebsiteId: website.id,
-        totalPriceOfPlan: websitePlan.totalPriceOfPlan,
-        totalPayForPlan: websitePlan.totalPayForPlan,
-        productsDetail: plan.productsDetail,
-        addedProducts: websitePlan.addedProducts,
-        addedPrice: websitePlan.addedPrice,
-        totalPrice: website.totalPrice,
-        totalPayment: website.totalPayment,
         publisherId: publisherId
     }
+
     if (!publisherWebsite) {
         // New website
+        let transaction;
         try{
-            let newPW = await models.PublisherWebSite.create(publisherWebsiteTemp);
+            // get transaction
+            transaction = await sequelize.transaction();
+
+            let newPublisherWebsite = await models.PublisherWebSite.create(publisherWebsiteTemp, 
+                {transaction});
+
+            await WeblancerUtils.createPlanSellAndSells(
+                plan, websitePlan, newPublisherWebsite, publisherId, plan.hasTrial, transaction
+            );
             
+            await transaction.commit();
+
             res.json(
                 new Response(true, {}).json()
             );
         } catch (e) {
             console.log(e);
+            
+            if (transaction) await transaction.rollback();
+
             res.status(500).json(
                 new Response(false, {e}, "Can't create publisher website").json()
             );
@@ -107,6 +90,126 @@ router.post('/createorupdate', async function (req, res) {
             );
         } catch (e) {
             console.log(e);
+            res.status(500).json(
+                new Response(false, {e}, "Can't update publisher website").json()
+            );
+            return;
+        }
+    }
+})
+
+router.post('/plan', async function (req, res) {
+    // update a website to an specific plan
+    let publisherId = req.user.id;
+    let {website, oldPlan, plan, websitePlan, type, breakPlan} = req.body;
+
+    let publisherWebsite;
+
+    try {
+        publisherWebsite = await models.PublisherWebSite.findOne({
+            where: {
+                name: website.name,
+                endUserId: website.userId,
+                publisherId: publisherId
+            }
+        });
+
+        if (!publisherWebsite) {
+            res.status(410).json(
+                new Response(false, {}, "Publisher website not found").json()
+            );
+            return;
+        }
+    } catch (e) {
+        console.log(e);
+        res.status(500).json(
+            new Response(false, {e}, "Server error").json()
+        );
+        return;
+    }
+
+    let oldPlanSell = await publisherWebsite.getPlan_sells({
+        order: ['boughtDate', 'DESC'],
+        limit: 1
+    })[0];
+
+    if (!oldPlanSell) {
+        res.status(500).json(
+            new Response(false, {}, "Old plan sell not found").json()
+        );
+        return;
+    }
+
+    if (oldPlan.order > plan.order) {
+        res.status(500).json(
+            new Response(false, {}, "Can't upgrade website to lower plan").json()
+        );
+        return;
+    }
+
+    if (oldPlanSell.isTrial) {
+        let transaction;
+        try{
+            // get transaction
+            transaction = await sequelize.transaction();
+
+            await oldPlanSell.update({
+                upgradeDate: moment(websitePlan.boughtDate).toDate()
+            }, {transaction});
+
+            await WeblancerUtils.createPlanSellAndSells(
+                plan, websitePlan, publisherWebsite, publisherId, false, transaction
+            );
+            
+            await transaction.commit();
+
+            res.json(
+                new Response(true, {}).json()
+            );
+        } catch (e) {
+            console.log(e);
+            
+            if (transaction) await transaction.rollback();
+
+            res.status(500).json(
+                new Response(false, {e}, "Can't update publisher website").json()
+            );
+            return;
+        }
+    } 
+    else 
+    {
+        let transaction;
+        try{
+            // get transaction
+            transaction = await sequelize.transaction();
+
+            if (breakPlan) {
+                await oldPlanSell.update({
+                    upgradeDate: moment(websitePlan.boughtDate).toDate()
+                }, {transaction});
+            }
+            else
+            {
+                await oldPlanSell.update({
+                    upgradeDate: oldPlanSell.expireDate
+                }, {transaction});
+            }
+
+            await WeblancerUtils.createPlanSellAndSells(
+                plan, websitePlan, publisherWebsite, publisherId, false, transaction
+            );
+            
+            await transaction.commit();
+
+            res.json(
+                new Response(true, {}).json()
+            );
+        } catch (e) {
+            console.log(e);
+            
+            if (transaction) await transaction.rollback();
+
             res.status(500).json(
                 new Response(false, {e}, "Can't update publisher website").json()
             );

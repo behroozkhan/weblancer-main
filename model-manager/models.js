@@ -9,6 +9,8 @@ let PublisherPlan = require('../models/publisher-plan.js');
 let CreditTransaction = require('../models/credit-transaction.js');
 let PublisherWebsite = require('../models/publisher-website.js');
 let PaymentSource = require('../models/payment-source.js');
+let ProductSell = require('../models/product-sell.js');
+let PlanSell = require('../models/plan-sell.js');
 const Response = require('../utils/response.js');
 const LongProcess = require('../models/long-process.js');
 
@@ -39,6 +41,8 @@ const models = {
     PublisherWebSite: PublisherWebsite(sequelize, DataTypes),
     PaymentSource: PaymentSource(sequelize, DataTypes),
     LongProcess: LongProcess(sequelize, DataTypes),
+    ProductSell: ProductSell(sequelize, DataTypes),
+    PlanSell: PlanSell(sequelize, DataTypes),
 };
 
 let allModels = {};

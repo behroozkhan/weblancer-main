@@ -25,7 +25,7 @@ router.get('/:id', async (req, res) => {
         }
     }).then(function(publisher) {
         if (!publisher) {
-            res.status(404).json(
+            res.status(410).json(
                 new Response(false, {}, 
                     "Publisher not found"
                 ).json()
@@ -187,7 +187,7 @@ router.post('/plan/:id', async (req, res) => {
             include: [models.PublisherPlan, models.CreditTransaction]
         });
     } catch (e) {
-        res.status(404).json(
+        res.status(410).json(
             new Response(false, {}, "Publisher not found").json()
         );
         return;
@@ -201,7 +201,7 @@ router.post('/plan/:id', async (req, res) => {
             }
         });
     } catch (e) {
-        res.status(404).json(
+        res.status(410).json(
             new Response(false, {}, "Plan not found").json()
         );
         return;
@@ -267,11 +267,11 @@ router.post('/plan/:id', async (req, res) => {
         publisher.creditTransactions.push(creditTransaction);
 
         let oldPublisherPlan = publisher.publisherPlan;
-        if (oldPublisherPlan && oldPublisherPlan.expireTime > moment.utc()) 
+        if (oldPublisherPlan && oldPublisherPlan.expireDate > moment.utc()) 
         {
             oldPublisherPlan.upgradedToUpperPlan = true;
-            oldPublisherPlan.expireTime = moment.utc();
-            await oldPublisherPlan.save({ fields: ['upgradedToUpperPlan', 'expireTime'], transaction});
+            oldPublisherPlan.expireDate = moment.utc();
+            await oldPublisherPlan.save({ fields: ['upgradedToUpperPlan', 'expireDate'], transaction});
         }
 
         publisher.publisherPlan = publisherPlan;
@@ -315,7 +315,7 @@ router.post('/createwebsite', async (req, res) => {
             include: [models.PublisherWebsite, models.CreditTransaction]
         });
     } catch (e) {
-        res.status(404).json(
+        res.status(410).json(
             new Response(false, {}, "Publisher not found").json()
         );
         return;
@@ -324,7 +324,7 @@ router.post('/createwebsite', async (req, res) => {
     let {resourcePlan, permissionPlans} = WeblancerUtils.resolveWebsitePlans(resourcePlanId, permissionPlansId);
 
     if (!resourcePlan) {
-        res.status(404).json(
+        res.status(410).json(
             new Response(false, {}, "Website plans not found").json()
         );
         return;
@@ -421,10 +421,10 @@ router.post('/createwebsite', async (req, res) => {
         if (currentPublisherWebsite) 
         {
             currentPublisherWebsite.extended = true;
-            if (currentPublisherWebsite.expireTime > moment.utc()) {
+            if (currentPublisherWebsite.expireDate > moment.utc()) {
                 currentPublisherWebsite.upgradedToUpperPlan = true;
-                currentPublisherWebsite.expireTime = moment.utc();
-                await currentPublisherWebsite.save({ fields: ['upgradedToUpperPlan', 'expireTime'], transaction});
+                currentPublisherWebsite.expireDate = moment.utc();
+                await currentPublisherWebsite.save({ fields: ['upgradedToUpperPlan', 'expireDate'], transaction});
             }
         }
 
@@ -474,7 +474,7 @@ router.get('/transactions/:type', async (req, res) => {
                 }
             });
     } catch (e) {
-        res.status(404).json(
+        res.status(410).json(
             new Response(false, {}, "Publisher not found").json()
         );
         return;
@@ -508,7 +508,7 @@ router.post('/login', async (req, res) => {
         }
     } catch (e) {
         console.log(e);
-        res.status(401).json(
+        res.status(500).json(
             new Response(false, {}, "Username or password is wrong").json()
         );
         return;
@@ -572,13 +572,13 @@ router.put('/start', async (req, res) => {
         });
 
         if (!publisher) {
-            res.status(404).json(
+            res.status(410).json(
                 new Response(false, {}, "Publisher not found 1").json()
             );
             return;
         }
     } catch (e) {
-        res.status(404).json(
+        res.status(410).json(
             new Response(false, {}, "Publisher not found 2").json()
         );
         return;
@@ -603,7 +603,7 @@ router.put('/start', async (req, res) => {
             });
 
             if (!server) {
-                res.status(404).json(
+                res.status(410).json(
                     new Response(false, {}, "Server not found").json()
                 );
                 return;
@@ -611,7 +611,7 @@ router.put('/start', async (req, res) => {
         }
     } catch (e) {
         console.log("error", e);
-        res.status(404).json(
+        res.status(410).json(
             new Response(false, {}, "Server not found").json()
         );
         return;
@@ -662,7 +662,7 @@ router.put('/start', async (req, res) => {
         longProcess.message += '\n' + longProcess.status;
         longProcess.status = `calling publisher server error`;
         longProcess.state = 'failed';
-        longProcess.metaData.error = error;
+        longProcess.metaData = {...longProcess.metaData, error};
         longProcess.endDate = moment().toDate();
 
         await longProcess.save();
@@ -713,7 +713,7 @@ router.put('/:id', async (req, res) => {
             }
         });
     } catch (e) {
-        res.status(404).json(
+        res.status(410).json(
             new Response(false, {}, "Publisher not found").json()
         );
         return;

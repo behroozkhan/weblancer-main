@@ -7,19 +7,19 @@ const Op = Sequelize.Op;
 
 let WeblancerUtils = {};
 
-WeblancerUtils.getBackMoney = (oldPlan) => {
-    if (!oldPlan)
+WeblancerUtils.getBackMoney = (oldPlanSell) => {
+    if (!oldPlanSell)
         return 0;
         
-    let totalDays =  moment.utc(oldPlan.boughtDate).diff(moment.utc(oldPlan.expireTime), 'days');
-    let remainDays = moment.utc().diff(moment.utc(oldPlan.expireTime), 'days');
+    let totalDays =  moment.utc(oldPlanSell.boughtDate).diff(moment.utc(oldPlanSell.expireDate), 'days');
+    let remainDays = moment.utc().diff(moment.utc(oldPlanSell.expireDate), 'days');
 
     if (remainDays < 0) remainDays = 0;
     
     let usingDays = totalDays - remainDays;
 
-    let usingMoney = (usingDays / totalDays) * oldPlan.totalPriceOfPlan;
-    let backMoney = oldPlan.totalPayForPlan - usingMoney;
+    let usingMoney = (usingDays / totalDays) * oldPlanSell.websitePlanObject.totalPriceOfPlan;
+    let backMoney = oldPlanSell.websitePlanObject.totalPayForPlan - usingMoney;
 
     return Math.max(0, backMoney);
 }
@@ -106,6 +106,12 @@ WeblancerUtils.getTotalPriceOfPlanFromProducts = (productsDetail, planTime) => {
     return sum;
 }
 
+WeblancerUtils.getPriceOfProduct = (product, planTime) => {
+    return (planTime === 'monthly' || planTime === 'trial' ?
+        product.priceMonthly :
+        product.priceYearly);
+}
+
 WeblancerUtils.getCreditNeed = (websitePlan, planTime, hasOwnHostServer) => {
     if (!hasOwnHostServer) {
         return (planTime === 'monthly' ? 
@@ -135,6 +141,57 @@ WeblancerUtils.getLowUsageServer = async (type, ownerType, publisherId, whereNot
     }).catch(error => {
         return;
     });
+}
+
+WeblancerUtils.createPlanSellAndSells = async (plan, websitePlan, publisherWebsite, publisherId, isTrial, transaction) => 
+{
+    let allProductsId = plan.productsDetail.map(productData => {
+        return productData.id;
+    });
+
+    let dbProducts = await models.Product.findAll({
+        where: {
+            id: allProductsId
+        }
+    });
+
+    for (let i = 0; i < plan.productsDetail.lenght; i++) {
+        let productData = plan.productsDetail[i];
+
+        let dbProduct = dbProducts.find(p => {
+            return p.id === productData.id;
+        });
+
+        if (!dbProduct)
+            continue;
+
+        let productSell = await models.ProductSell.create({
+            isTrial: isTrial,
+            sellPrice: WeblancerUtils.getPriceOfProduct(dbProduct, websitePlan.planTime),
+            boughtDate: moment(websitePlan.boughtDate).toDate(),
+            startDate: moment(websitePlan.startDate).toDate(),
+            planTime: websitePlan.planTime,
+            planId: plan.id,
+            dayString: moment(websitePlan.boughtDate).format('YYYY-MM-DD'),
+            metadata: {},
+            productId: dbProduct.id,
+            publisherId: publisherId,
+            publisherWebsiteId: publisherWebsite.id
+        }, {transaction});
+    }
+
+    let planSell = await models.PlanSell.create({
+        planObject: plan,
+        websitePlanObject: websitePlan,
+        isTrial: isTrial,
+        planId: plan.id,
+        boughtDate: moment(websitePlan.boughtDate).toDate(),
+        startDate: moment(websitePlan.startDate).toDate(),
+        expireDate: moment(websitePlan.expireDate).toDate(),
+        dayString: moment(websitePlan.boughtDate).format('YYYY-MM-DD'),
+        publisherId: publisherId,
+        publisherWebsiteId: publisherWebsite.id
+    }, {transaction});
 }
 
 module.exports = WeblancerUtils;

@@ -9,7 +9,7 @@ const PublisherPlan = (sequelize, DataTypes) => {
         boughtDate: {
             type: DataTypes.DATE,
         },
-        expireTime: {
+        expireDate: {
             type: DataTypes.DATE,
         },
         totalPriceOfPlan: {

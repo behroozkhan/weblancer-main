@@ -29,7 +29,7 @@ module.exports.paymentInit = async function paymentInit (publisherId, amount, ga
         sourceData = (await getConfig("WeblancerSourceData")).value;
     
         if (!sourceData){
-            onError(404, new Response(false, {}, "Can't get configs from db").json());
+            onError(410, new Response(false, {}, "Can't get configs from db").json());
             return;
         }
     }
@@ -101,7 +101,7 @@ module.exports.paymentVerfiy = async function paymentVerfiy (paymentResponse, on
             }
         });
     } catch (e) {
-        onError(404, new Response(false, {}, "Can't find paymentTransaction").json());
+        onError(410, new Response(false, {}, "Can't find paymentTransaction").json());
         return;
     }
 
@@ -117,7 +117,7 @@ module.exports.paymentVerfiy = async function paymentVerfiy (paymentResponse, on
     let paymentServiceUrl = (await getConfig("PaymentServiceUrl")).value;
 
     if (!paymentServiceUrl){
-        onError(404, new Response(false, {}, "Can't get configs from db").json());
+        onError(410, new Response(false, {}, "Can't get configs from db").json());
         return;
     }
 

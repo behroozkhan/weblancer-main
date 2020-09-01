@@ -314,6 +314,92 @@
             },
             "indexes": []
         },
+        "plan_sells": {
+            "tableName": "plan_sells",
+            "schema": {
+                "id": {
+                    "unique": true,
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "field": "id",
+                    "seqType": "Sequelize.BIGINT"
+                },
+                "planObject": {
+                    "field": "planObject",
+                    "seqType": "Sequelize.JSON"
+                },
+                "websitePlanObject": {
+                    "field": "websitePlanObject",
+                    "seqType": "Sequelize.JSON"
+                },
+                "planId": {
+                    "unique": "IX_publisherId_publisherWebsiteId_planId_dayString_isTrial",
+                    "field": "planId",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "boughtDate": {
+                    "field": "boughtDate",
+                    "seqType": "Sequelize.DATE"
+                },
+                "startDate": {
+                    "field": "startDate",
+                    "seqType": "Sequelize.DATE"
+                },
+                "expireDate": {
+                    "field": "expireDate",
+                    "seqType": "Sequelize.DATE"
+                },
+                "upgradeDate": {
+                    "field": "upgradeDate",
+                    "seqType": "Sequelize.DATE"
+                },
+                "dayString": {
+                    "unique": "IX_publisherId_publisherWebsiteId_planId_dayString_isTrial",
+                    "field": "dayString",
+                    "seqType": "Sequelize.STRING"
+                },
+                "isTrial": {
+                    "unique": "IX_publisherId_publisherWebsiteId_planId_dayString_isTrial",
+                    "field": "isTrial",
+                    "seqType": "Sequelize.BOOLEAN"
+                },
+                "publisherId": {
+                    "unique": "IX_publisherId_publisherWebsiteId_planId_dayString_isTrial",
+                    "field": "publisherId",
+                    "allowNull": true,
+                    "references": {
+                        "model": "publishers",
+                        "key": "id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.BIGINT"
+                },
+                "publisherWebsiteId": {
+                    "unique": "IX_publisherId_publisherWebsiteId_planId_dayString_isTrial",
+                    "field": "publisherWebsiteId",
+                    "allowNull": true,
+                    "references": {
+                        "model": "publisher_websites",
+                        "key": "id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.BIGINT"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
         "plans": {
             "tableName": "plans",
             "schema": {
@@ -356,6 +442,109 @@
                 "summery": {
                     "field": "summery",
                     "seqType": "Sequelize.STRING"
+                },
+                "createdAt": {
+                    "allowNull": false,
+                    "field": "createdAt",
+                    "seqType": "Sequelize.DATE"
+                },
+                "updatedAt": {
+                    "allowNull": false,
+                    "field": "updatedAt",
+                    "seqType": "Sequelize.DATE"
+                }
+            },
+            "indexes": []
+        },
+        "product_sells": {
+            "tableName": "product_sells",
+            "schema": {
+                "id": {
+                    "unique": true,
+                    "autoIncrement": true,
+                    "primaryKey": true,
+                    "field": "id",
+                    "seqType": "Sequelize.BIGINT"
+                },
+                "productId": {
+                    "unique": "IX_productId_publisherId_publisherWebsiteId_planId_dayString",
+                    "field": "productId",
+                    "allowNull": true,
+                    "references": {
+                        "model": "products",
+                        "key": "id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "isTrial": {
+                    "field": "isTrial",
+                    "seqType": "Sequelize.BOOLEAN"
+                },
+                "sellPrice": {
+                    "field": "sellPrice",
+                    "seqType": "Sequelize.FLOAT"
+                },
+                "publisherId": {
+                    "unique": "IX_productId_publisherId_publisherWebsiteId_planId_dayString",
+                    "field": "publisherId",
+                    "allowNull": true,
+                    "references": {
+                        "model": "publishers",
+                        "key": "id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.BIGINT"
+                },
+                "planId": {
+                    "unique": "IX_productId_publisherId_publisherWebsiteId_planId_dayString",
+                    "field": "planId",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "dayString": {
+                    "unique": "IX_productId_publisherId_publisherWebsiteId_planId_dayString",
+                    "field": "dayString",
+                    "seqType": "Sequelize.STRING"
+                },
+                "publisherWebsiteId": {
+                    "unique": "IX_productId_publisherId_publisherWebsiteId_planId_dayString",
+                    "field": "publisherWebsiteId",
+                    "allowNull": true,
+                    "references": {
+                        "model": "publisher_websites",
+                        "key": "id"
+                    },
+                    "onDelete": "CASCADE",
+                    "onUpdate": "CASCADE",
+                    "seqType": "Sequelize.BIGINT"
+                },
+                "boughtDate": {
+                    "field": "boughtDate",
+                    "seqType": "Sequelize.DATE"
+                },
+                "moneyBackDays": {
+                    "defaultValue": {
+                        "value": 14
+                    },
+                    "field": "moneyBackDays",
+                    "seqType": "Sequelize.INTEGER"
+                },
+                "moneyBacked": {
+                    "defaultValue": {
+                        "value": false
+                    },
+                    "field": "moneyBacked",
+                    "seqType": "Sequelize.BOOLEAN"
+                },
+                "planTime": {
+                    "field": "planTime",
+                    "seqType": "Sequelize.STRING"
+                },
+                "metadata": {
+                    "field": "metadata",
+                    "seqType": "Sequelize.JSON"
                 },
                 "createdAt": {
                     "allowNull": false,
@@ -464,8 +653,8 @@
                     "field": "boughtDate",
                     "seqType": "Sequelize.DATE"
                 },
-                "expireTime": {
-                    "field": "expireTime",
+                "expireDate": {
+                    "field": "expireDate",
                     "seqType": "Sequelize.DATE"
                 },
                 "totalPriceOfPlan": {
@@ -545,18 +734,6 @@
                     "field": "url",
                     "seqType": "Sequelize.STRING"
                 },
-                "boughtDate": {
-                    "field": "boughtDate",
-                    "seqType": "Sequelize.DATE"
-                },
-                "planStartDate": {
-                    "field": "planStartDate",
-                    "seqType": "Sequelize.DATE"
-                },
-                "expireDate": {
-                    "field": "expireDate",
-                    "seqType": "Sequelize.DATE"
-                },
                 "metadata": {
                     "field": "metadata",
                     "seqType": "Sequelize.JSON"
@@ -572,34 +749,6 @@
                 "endWebsiteId": {
                     "field": "endWebsiteId",
                     "seqType": "Sequelize.STRING"
-                },
-                "totalPriceOfPlan": {
-                    "field": "totalPriceOfPlan",
-                    "seqType": "Sequelize.FLOAT"
-                },
-                "totalPayForPlan": {
-                    "field": "totalPayForPlan",
-                    "seqType": "Sequelize.FLOAT"
-                },
-                "productsDetail": {
-                    "field": "productsDetail",
-                    "seqType": "Sequelize.JSON"
-                },
-                "addedProducts": {
-                    "field": "addedProducts",
-                    "seqType": "Sequelize.JSON"
-                },
-                "addedPrice": {
-                    "field": "addedPrice",
-                    "seqType": "Sequelize.FLOAT"
-                },
-                "totalPrice": {
-                    "field": "totalPrice",
-                    "seqType": "Sequelize.FLOAT"
-                },
-                "totalPayment": {
-                    "field": "totalPayment",
-                    "seqType": "Sequelize.FLOAT"
                 },
                 "createdAt": {
                     "allowNull": false,
@@ -864,5 +1013,5 @@
             "indexes": []
         }
     },
-    "revision": 20
+    "revision": 21
 }
