@@ -96,6 +96,10 @@ router.post('/request', async function (req, res) {
         limit: 1
     });
 
+
+    console.log("activePlanSellArray", activePlanSell);
+    activePlanSell = activePlanSell[0];
+
     console.log("activePlanSell", activePlanSell);
 
     if (!activePlanSell) {
