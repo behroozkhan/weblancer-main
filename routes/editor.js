@@ -80,11 +80,13 @@ router.post('/request', async function (req, res) {
         where: {
             [Op.and]: [
                 { 
-                    [Op.lte]: {
-                        startDate: moment().utc().toDate()
+                    startDate: {
+                        [Op.lte]: moment().utc().toDate()
                     },
-                    [Op.gte]: {
-                        expireDate: moment().utc().toDate()
+                },
+                {
+                    expireDate: {
+                        [Op.gte]: moment().utc().toDate()
                     }
                 },
             ]
