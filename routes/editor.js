@@ -77,24 +77,7 @@ router.post('/request', async function (req, res) {
     }
 
     console.log("moment().utc().toDate()", moment().utc().toDate())
-    let activePlanSell = await publisherWebsite.getPlan_sells({
-        // where: {
-        //     [Op.and]: [
-        //         { 
-        //             startDate: {
-        //                 [Op.lte]: moment().utc().toDate()
-        //             },
-        //         },
-        //         {
-        //             expireDate: {
-        //                 [Op.gte]: moment().utc().toDate()
-        //             }
-        //         },
-        //     ]
-        // },
-        order: [['boughtDate', 'DESC']],
-        limit: 1
-    })[0];
+    let activePlanSell = await publisherWebsite.getPlan_sells();
 
     console.log("activePlanSell", activePlanSell);
 
