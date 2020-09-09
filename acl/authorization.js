@@ -6,10 +6,8 @@ module.exports.authorizeToken = function authorizeToken(req, res, next) {
     const publisherId = req.headers['publisher-id'];
     const publisherPassword = req.headers['publisher-password'];
     const publisherApiKey = req.headers['publisher-api-key'];
-    console.log("authorizeToken headers", req.headers);
 
     if (publisherId) {
-        console.log("authorizeToken publisherId", publisherId);
         models.Publisher.findOne({
             where: { id: publisherId, password: publisherPassword},
             attributes: ['id', 'role']
