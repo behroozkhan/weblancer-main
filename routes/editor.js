@@ -90,15 +90,15 @@ router.post('/request', async function (req, res) {
             [Op.and]: [
                 { 
                     [Op.lte]: {
-                        'startDate': moment().utc().toDate()
+                        startDate: moment().utc().toDate()
                     },
                     [Op.gte]: {
-                        'expireDate': moment().utc().toDate()
+                        expireDate: moment().utc().toDate()
                     }
                 },
             ]
         },
-        order: ['boughtDate', 'DESC'],
+        order: [['boughtDate', 'DESC']],
         limit: 1
     })[0];
 
