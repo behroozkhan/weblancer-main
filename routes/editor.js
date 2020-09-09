@@ -5,6 +5,7 @@ const Response = require('../utils/response.js');
 const { Op } = require("sequelize");
 const { models } = require('../model-manager/models.js');
 const axios = require('axios');
+let jwt = require('jsonwebtoken');
 
 router.post('/request', async function (req, res) {
     // from publisher server to editor servers
