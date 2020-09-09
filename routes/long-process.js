@@ -49,12 +49,12 @@ router.post('/update', async function (req, res) {
 })
 
 router.post('/delete', async function (req, res) {
-    let {id} = req.body;
+    let {longProcessId} = req.body;
 
     try {
         await models.LongProcess.destroy({
             where: {
-                id: id
+                id: longProcessId
             }
         })
     } catch (error) {
