@@ -57,6 +57,9 @@ router.post('/delete', async function (req, res) {
                 id: longProcessId
             }
         })
+        res.json(
+            new Response(true, {}, "delete successfully").json()
+        );
     } catch (error) {
         console.log("LongProcess delete error", error)
         res.status(500).json(
