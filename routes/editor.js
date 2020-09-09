@@ -3,6 +3,7 @@ let router = express.Router();
 let moment = require('moment');
 const Response = require('../utils/response.js');
 const { Op } = require("sequelize");
+const { models } = require('../model-manager/models.js');
 
 router.post('/request', async function (req, res) {
     // from publisher server to editor servers
@@ -31,6 +32,34 @@ router.post('/request', async function (req, res) {
             new Response(false, {}, "Publisher website not found").json()
         );
         return;
+    }
+
+    let oldLongProcess = await models.LongProcess.findOne({
+        where: {
+            name: 'Rewwquesting Editor',
+            [Op.or]: [
+                {state: 'called'},
+                {state: 'running'}
+            ],
+            refId: `${publisherId}_${publisherWebsite.endUserId}_${websiteId}`
+        },
+        order: ['startDate', 'DESC'],
+    });
+
+    if (oldLongProcess) {
+        let now = moment().utc()
+        if (now.diff(oldLongProcess.startDate, 'seconds') <= oldLongProcess.timeout) {
+            res.json(
+                new Response(true, {longProcessId: oldLongProcess.id}).json()
+            );
+            return;
+        } else {
+            oldLongProcess.state = 'failed';
+            oldLongProcess.message += oldLongProcess.status;
+            oldLongProcess.status = 'Timeout !!!';
+
+            await oldLongProcess.save();
+        }
     }
 
     let editorServer = await models.Server.findOne({
@@ -94,6 +123,7 @@ router.post('/request', async function (req, res) {
         }
     })
     .then(function (response) {
+        response.data.data.longProcessId = longProcess.id;
         res.json(
             response.data
         );
