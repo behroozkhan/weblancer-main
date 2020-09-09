@@ -1,6 +1,6 @@
 let express = require('express');
 let router = express.Router();
-let { models } = require('../model-manager/models.js');
+let { models, sequelize } = require('../model-manager/models.js');
 const WeblancerUtils = require('../utils/weblancerUtils.js');
 const Response = require('../utils/response.js');
 
