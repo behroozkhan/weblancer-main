@@ -78,23 +78,25 @@ router.post('/request', async function (req, res) {
 
     console.log("moment().utc().toDate()", moment().utc().toDate())
     let activePlanSell = await publisherWebsite.getPlan_sells({
-        where: {
-            [Op.and]: [
-                { 
-                    startDate: {
-                        [Op.lte]: moment().utc().toDate()
-                    },
-                },
-                {
-                    expireDate: {
-                        [Op.gte]: moment().utc().toDate()
-                    }
-                },
-            ]
-        },
+        // where: {
+        //     [Op.and]: [
+        //         { 
+        //             startDate: {
+        //                 [Op.lte]: moment().utc().toDate()
+        //             },
+        //         },
+        //         {
+        //             expireDate: {
+        //                 [Op.gte]: moment().utc().toDate()
+        //             }
+        //         },
+        //     ]
+        // },
         order: [['boughtDate', 'DESC']],
         limit: 1
     })[0];
+
+    console.log("activePlanSell", activePlanSell);
 
     if (!activePlanSell) {
         res.status(402).json(
@@ -102,6 +104,12 @@ router.post('/request', async function (req, res) {
         );
         return;
     }
+
+    
+    res.status(402).json(
+        new Response(false, {}, "Plan expired").json()
+    );
+    return;
 
     // TODO create long-process and handle all availables
     let longProcess = await models.LongProcess.create({
