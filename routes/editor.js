@@ -93,7 +93,7 @@ router.post('/request', async function (req, res) {
             ]
         },
         order: [['boughtDate', 'DESC']],
-        // limit: 1
+        limit: 1
     });
 
     console.log("activePlanSell", activePlanSell);
