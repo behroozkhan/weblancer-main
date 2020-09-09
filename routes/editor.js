@@ -98,7 +98,7 @@ router.post('/request', async function (req, res) {
             response.data
         );
     })
-    .catch(function (error) {
+    .catch(async function (error) {
         longProcess.message += '\n' + longProcess.status;
         longProcess.status = `calling publisher server error`;
         longProcess.state = 'failed';
