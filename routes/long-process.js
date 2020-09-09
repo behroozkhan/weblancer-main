@@ -48,8 +48,8 @@ router.post('/update', async function (req, res) {
     );
 })
 
-router.get('/delete/:id', async function (req, res) {
-    let {id} = req.params;
+router.post('/delete', async function (req, res) {
+    let {id} = req.body;
 
     try {
         await models.LongProcess.destroy({
