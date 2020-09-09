@@ -92,7 +92,7 @@ router.post('/request', async function (req, res) {
                 },
             ]
         },
-        // order: [['boughtDate', 'DESC']],
+        order: [['boughtDate', 'DESC']],
         // limit: 1
     });
 
