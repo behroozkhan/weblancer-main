@@ -76,6 +76,7 @@ router.post('/request', async function (req, res) {
         return;
     }
 
+    console.log("moment().utc().toDate()", moment().utc().toDate())
     let activePlanSell = await publisherWebsite.getPlan_sells({
         where: {
             [Op.and]: [
