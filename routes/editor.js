@@ -107,6 +107,8 @@ router.post('/request', async function (req, res) {
 
         await longProcess.save();
 
+        console.log('/editor/request error', error);
+
         res.status(error.response.status).json(
             error.response.data
         );
