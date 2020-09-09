@@ -76,15 +76,6 @@ router.post('/request', async function (req, res) {
         return;
     }
 
-    // TODO create long-process and handle all availables
-    let longProcess = await models.LongProcess.create({
-        name: 'Rewwquesting Editor',
-        refId: `${publisherId}_${publisherWebsite.endUserId}_${websiteId}`,
-        status: 'Calling editor express server ...',
-        state: 'called',
-        timeout: 10 * 60
-    });
-
     let activePlanSell = await publisherWebsite.getPlan_sells({
         where: {
             [Op.and]: [
@@ -108,6 +99,15 @@ router.post('/request', async function (req, res) {
         );
         return;
     }
+
+    // TODO create long-process and handle all availables
+    let longProcess = await models.LongProcess.create({
+        name: 'Rewwquesting Editor',
+        refId: `${publisherId}_${publisherWebsite.endUserId}_${websiteId}`,
+        status: 'Calling editor express server ...',
+        state: 'called',
+        timeout: 10 * 60
+    });
 
     let productDetails = activePlanSell.planObject.productDetails;
     let addedProducts = activePlanSell.websitePlanObject.addedProducts;
