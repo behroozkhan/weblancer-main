@@ -96,11 +96,7 @@ router.post('/request', async function (req, res) {
         limit: 1
     });
 
-
-    console.log("activePlanSellArray", activePlanSell);
     activePlanSell = activePlanSell[0];
-
-    console.log("activePlanSell", activePlanSell);
 
     if (!activePlanSell) {
         res.status(402).json(
@@ -108,12 +104,6 @@ router.post('/request', async function (req, res) {
         );
         return;
     }
-
-    
-    res.status(402).json(
-        new Response(false, {}, "Plan expired").json()
-    );
-    return;
 
     // TODO create long-process and handle all availables
     let longProcess = await models.LongProcess.create({
