@@ -48,6 +48,24 @@ router.post('/update', async function (req, res) {
     );
 })
 
+router.get('/delete/:id', async function (req, res) {
+    let {id} = req.params;
+
+    try {
+        await models.LongProcess.destroy({
+            where: {
+                id: id
+            }
+        })
+    } catch (error) {
+        console.log("LongProcess delete error", error)
+        res.status(500).json(
+            new Response(false, {}, "LongProcess not found 2").json()
+        );
+        return;
+    }
+})
+
 router.get('/:id', async function (req, res) {
     let {id} = req.params;
 
