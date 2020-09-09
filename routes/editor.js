@@ -43,7 +43,7 @@ router.post('/request', async function (req, res) {
             ],
             refId: `${publisherId}_${publisherWebsite.endUserId}_${websiteId}`
         },
-        order: ['startDate', 'DESC'],
+        order: [['startDate', 'DESC']],
     });
 
     if (oldLongProcess) {
