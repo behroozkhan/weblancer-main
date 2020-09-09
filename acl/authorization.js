@@ -28,7 +28,6 @@ module.exports.authorizeToken = function authorizeToken(req, res, next) {
         });
     } else {
         const authHeader = req.headers['authorization'];
-        console.log("authorizeToken authHeader", authHeader);
         const token = authHeader && authHeader.split(' ')[1];
     
         if (token == null) {
