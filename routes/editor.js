@@ -41,7 +41,8 @@ router.post('/request', async function (req, res) {
             name: 'Rewwquesting Editor',
             [Op.or]: [
                 {state: 'called'},
-                {state: 'running'}
+                {state: 'running'},
+                {state: 'complete'}
             ],
             refId: `${publisherId}_${publisherWebsite.endUserId}_${websiteId}`
         },
@@ -50,6 +51,15 @@ router.post('/request', async function (req, res) {
 
     if (oldLongProcess) {
         let now = moment().utc()
+        if (oldLongProcess.state === 'complete' &&
+            now.diff(oldLongProcess.startDate, 'seconds') <= oldLongProcess.metaData.longProcessTimeout) 
+        {
+            res.json(
+                new Response(true, {longProcessId: oldLongProcess.id}).json()
+            );
+            return;
+        }
+        
         if (now.diff(oldLongProcess.startDate, 'seconds') <= oldLongProcess.timeout) {
             res.json(
                 new Response(true, {longProcessId: oldLongProcess.id}).json()
