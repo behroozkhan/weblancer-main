@@ -38,7 +38,7 @@ router.post('/request', async function (req, res) {
 
     let oldLongProcess = await models.LongProcess.findOne({
         where: {
-            name: 'Rewwquesting Editor',
+            name: 'Requesting Editor',
             [Op.or]: [
                 {state: 'called'},
                 {state: 'running'},
@@ -50,7 +50,8 @@ router.post('/request', async function (req, res) {
     });
 
     if (oldLongProcess) {
-        let now = moment().utc()
+        let now = moment().utc();
+        console.log("oldLongProcess", oldLongProcess.metaData, oldLongProcess.metaData.longProcessTimeout);
         if (oldLongProcess.state === 'complete' &&
             now.diff(oldLongProcess.startDate, 'seconds') <= oldLongProcess.metaData.longProcessTimeout) 
         {
@@ -119,7 +120,7 @@ router.post('/request', async function (req, res) {
 
     // TODO create long-process and handle all availables
     let longProcess = await models.LongProcess.create({
-        name: 'Rewwquesting Editor',
+        name: 'Requesting Editor',
         refId: `${publisherId}_${publisherWebsite.endUserId}_${websiteId}`,
         status: 'Calling editor express server ...',
         state: 'called',
