@@ -14,7 +14,7 @@ router.post('/request', async function (req, res) {
 
     let publisherWebsite;
     try {
-        publisherWebsite = await models.publisherWebsite.findOne({
+        publisherWebsite = await models.PublisherWebSite.findOne({
             where: {
                 endWebsiteId: websiteId
             }
