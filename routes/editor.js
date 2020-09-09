@@ -114,6 +114,7 @@ router.post('/request', async function (req, res) {
 
     delete publisherWebsite.metadata.siteData;
     
+    console.log("Calling editor server ...", `${editorServer.url}/api/request`);
     axios.post(`${editorServer.url}/api/request`, {
         publisherId, websiteId, publisherWebsite, productDetails, addedProducts,
         longProcessData: {
@@ -123,6 +124,7 @@ router.post('/request', async function (req, res) {
         }
     })
     .then(function (response) {
+        console.log("response", response);
         response.data.data.longProcessId = longProcess.id;
         res.json(
             response.data
