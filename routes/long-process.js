@@ -48,6 +48,46 @@ router.post('/update', async function (req, res) {
     );
 })
 
+router.get('/:id', async function (req, res) {
+    let {id} = req.params;
+
+    let longProcess;
+    try {
+        longProcess = await models.LongProcess.findByPk(id);
+
+        if (!longProcess) {
+            res.status(410).json(
+                new Response(false, {}, "LongProcess not found 1").json()
+            );
+            return;
+        }
+    } catch (error) {
+        console.log("LongProcess update error", error)
+        res.status(500).json(
+            new Response(false, {}, "LongProcess not found 2").json()
+        );
+        return;
+    }
+
+    let now = moment().utc()
+    if (longProcess.state === 'complete' || longProcess.state === 'failed' || 
+        now.diff(longProcess.startDate, 'seconds') <= longProcess.timeout) {
+        res.json(
+            new Response(true, {longProcess}).json()
+        );
+    } else {
+        longProcess.state = 'failed';
+        longProcess.message += longProcess.status;
+        longProcess.status = 'Timeout !!!';
+
+        await longProcess.save();
+
+        res.json(
+            new Response(true, {longProcess}).json()
+        );
+    }
+})
+
 router.get('/getlaststartprocess', async function (req, res) {
     let {
         name

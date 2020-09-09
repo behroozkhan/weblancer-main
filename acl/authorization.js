@@ -1,7 +1,6 @@
 let jwt = require('jsonwebtoken');
 let { models } = require('../model-manager/models.js');
 const Response = require('../utils/response.js');
-const axios = require('axios');
 
 module.exports.authorizeToken = function authorizeToken(req, res, next) {
     const publisherId = req.headers['publisher-id'];
