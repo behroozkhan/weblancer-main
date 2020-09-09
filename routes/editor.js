@@ -1,14 +1,15 @@
 let express = require('express');
 let router = express.Router();
-let { getConfig } = require('../model-manager/models.js');
 let moment = require('moment');
 const Response = require('../utils/response.js');
+const { Op } = require("sequelize");
 
-router.post('/request', function (req, res) {
+router.post('/request', async function (req, res) {
     // from publisher server to editor servers
     // set and return access token for a user in editor server
-    let websiteId = req.body.websiteId;
     let publisherId = req.user.id;
+
+    let {websiteId} = req.body;
 
     let publisherWebsite;
     try {
@@ -25,16 +26,11 @@ router.post('/request', function (req, res) {
             return;
         }
     } catch (e) {
+        console.log(e);
         res.status(500).json(
             new Response(false, {}, "Publisher website not found").json()
         );
         return;
-    }
-
-    if (publisherWebsite.expireDate <= moment.utc()) {
-        res.status(402).json(
-            new Response(false, {}, "Plan expired").json()
-        );
     }
 
     let editorServer = await models.Server.findOne({
@@ -48,24 +44,54 @@ router.post('/request', function (req, res) {
         res.status(410).json(
             new Response(false, {}, "Editor server not found").json()
         );
+        return;
     }
-
-    // let editorRequestQuery = (await getConfig('EditorRequestQuery')).value;
 
     // TODO create long-process and handle all availables
     let longProcess = await models.LongProcess.create({
-        name: 'Requesting Editor',
+        name: 'Rewwquesting Editor',
         refId: `${publisherId}_${publisherWebsite.endUserId}_${websiteId}`,
         status: 'Calling editor express server ...',
         state: 'called',
         timeout: 10 * 60
     });
 
+    let activePlanSell = await publisherWebsite.getPlan_sells({
+        where: {
+            [Op.and]: [
+                { 
+                    [Op.lte]: {
+                        'startDate': moment().utc()
+                    },
+                    [Op.gte]: {
+                        'expireDate': moment().utc()
+                    }
+                },
+            ]
+        },
+        order: ['boughtDate', 'DESC'],
+        limit: 1
+    })[0];
+
+    if (!activePlanSell) {
+        res.status(402).json(
+            new Response(false, {}, "Plan expired").json()
+        );
+        return;
+    }
+
+    let productDetails = activePlanSell.planObject.productDetails;
+    let addedProducts = activePlanSell.websitePlanObject.addedProducts;
+
+    delete publisherWebsite.metadata.siteData;
+    
     axios.post(`${editorServer.url}/api/request`, {
-        publisherId, websiteId, publisherWebsite,
-        longProcessId: longProcess.id,
-        longProcessUrl: "https://whitelabel.weblancer.ir/api/long-process/update",
-        longProcessToken: jwt.sign({id: 'longProcessToken'}, process.env.JWT_ACCESS_TOKEN_SECRET)
+        publisherId, websiteId, publisherWebsite, productDetails, addedProducts,
+        longProcessData: {
+            longProcessId: longProcess.id,
+            longProcessUrl: "https://whitelabel.weblancer.ir/api/long-process/update",
+            longProcessToken: jwt.sign({id: 'longProcessToken'}, process.env.JWT_ACCESS_TOKEN_SECRET)
+        }
     })
     .then(function (response) {
         res.json(

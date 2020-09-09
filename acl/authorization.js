@@ -5,6 +5,7 @@ const Response = require('../utils/response.js');
 module.exports.authorizeToken = function authorizeToken(req, res, next) {
     const publisherId = req.headers['publisher-id'];
     const publisherPassword = req.headers['publisher-password'];
+    const publisherApiKey = req.headers['publisher-api-key'];
     console.log("authorizeToken headers", req.headers);
 
     if (publisherId) {
