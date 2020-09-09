@@ -22,7 +22,7 @@ router.post('/request', async function (req, res) {
 
         if (!publisherWebsite) {
             res.status(410).json(
-                new Response(false, {}, "Publisher website not found").json()
+                new Response(false, {websiteId}, "Publisher website not found").json()
             );
             return;
         }
