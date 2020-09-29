@@ -430,7 +430,6 @@ router.post('/publishProcess', async function (req, res) {
     
         res.json(
             new Response(true, {
-                oldPublishProcess
             }).json()
         );
     } catch (error) {
