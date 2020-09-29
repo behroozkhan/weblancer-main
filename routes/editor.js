@@ -339,4 +339,107 @@ router.post('/publish', async function (req, res) {
     });
 })
 
+router.post('/publishProcess', async function (req, res) {
+    // from publisher server to editor servers
+    // set and return access token for a user in editor server
+    let publisherId = req.user.id;
+
+    let {websiteId, username} = req.body;
+
+    let publisher;
+    try {
+        publisher = await models.Publisher.findOne({
+            where: {
+                id: publisherId
+            }
+        });
+
+        if (!publisher) {
+            res.status(410).json(
+                new Response(false, {}, "Publisher not found").json()
+            );
+            return;
+        }
+    } catch (error) {
+        res.status(500).json(
+            new Response(false, {}, error).json()
+        );
+        return;
+    }
+
+    let publisherWebsite;
+    try {
+        publisherWebsite = await models.PublisherWebSite.findOne({
+            where: {
+                endWebsiteId: websiteId
+            }
+        });
+
+        if (!publisherWebsite) {
+            res.status(410).json(
+                new Response(false, {websiteId}, "Publisher website not found").json()
+            );
+            return;
+        }
+    } catch (e) {
+        console.log(e);
+        res.status(500).json(
+            new Response(false, {}, "Publisher website not found").json()
+        );
+        return;
+    }
+
+    try{
+        let oldPublishProcess = await models.LongProcess.findOne({
+            where: {
+                name: 'Publish Website',
+                [Op.or]: [
+                    {state: 'called'},
+                    {state: 'running'}
+                ],
+                refId: `${publisherId}_${publisherWebsite.endUserId}_${websiteId}`
+            },
+            order: [['startDate', 'DESC']],
+        });
+    
+        if (oldPublishProcess) {
+            let now = moment().utc();
+            console.log("oldPublishProcess", oldPublishProcess.metaData, oldPublishProcess.metaData.longProcessTimeout);
+            if (oldPublishProcess.state === 'complete' &&
+                now.diff(oldPublishProcess.startDate, 'seconds') <= oldPublishProcess.metaData.longProcessTimeout) 
+            {
+                res.json(
+                    new Response(true, {longProcessId: oldPublishProcess.id}).json()
+                );
+                return;
+            }
+            
+            if (now.diff(oldPublishProcess.startDate, 'seconds') <= oldPublishProcess.timeout) {
+                res.json(
+                    new Response(true, {longProcessId: oldPublishProcess.id}).json()
+                );
+                return;
+            } else {
+                oldPublishProcess.state = 'failed';
+                oldPublishProcess.message += oldPublishProcess.status;
+                oldPublishProcess.status = 'Timeout !!!';
+    
+                await oldPublishProcess.save();
+            }
+        }
+    
+        res.json(
+            new Response(true, {
+                oldPublishProcess
+            }).json()
+        );
+    } catch (error) {
+        console.log("publishProcess", error);
+        res.status(500).json(
+            new Response(false, {}, "Error on publishProcess").json()
+        );
+        return;
+    }
+})
+
 module.exports = router;
