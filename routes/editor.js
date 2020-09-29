@@ -289,7 +289,30 @@ router.post('/publish', async function (req, res) {
     if (publisherWebsite.targetUrl)
         targetUrl = publisherWebsite.targetUrl;
     else {
-        // TODO find best hoster server
+        // TODO find best hoster server based on website has free plan or paid planed
+        try {
+            let hosterServer = await models.Server.findOne({
+                where: {
+                    type: 'hoster'
+                },
+                order: [['cpuUsage', 'ASC'], ['memoryUsage', 'ASC'], ['storageUsage', 'ASC']],
+            });
+
+            if (!hosterServer) {
+                res.status(410).json(
+                    new Response(false, {}, "Hoster server not found").json()
+                );
+                return;
+            }
+
+            targetUrl = `http://${hosterServer.ipAddress}`;
+        } catch (e) {
+            console.log(e);
+            res.status(500).json(
+                new Response(false, {}, "Can't get hoster from db").json()
+            );
+            return;
+        }
     }
 
     let longProcess = await models.LongProcess.create({

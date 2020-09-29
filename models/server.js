@@ -42,6 +42,10 @@ const Server = (sequelize, DataTypes) => {
         timezone: {
             type: DataTypes.TIME
         },
+        metadata: {
+            type: DataTypes.JSON,
+            defaultValue: {}
+        },
     });
      
     return Server;

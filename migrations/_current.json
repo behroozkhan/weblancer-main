@@ -981,6 +981,14 @@
                     "field": "timezone",
                     "seqType": "Sequelize.TIME"
                 },
+                "metadata": {
+                    "defaultValue": {
+                        "internal": true,
+                        "value": "Sequelize.Object"
+                    },
+                    "field": "metadata",
+                    "seqType": "Sequelize.JSON"
+                },
                 "createdAt": {
                     "allowNull": false,
                     "field": "createdAt",
@@ -1017,5 +1025,5 @@
             "indexes": []
         }
     },
-    "revision": 22
+    "revision": 23
 }
