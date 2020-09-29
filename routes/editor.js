@@ -285,7 +285,6 @@ router.post('/publish', async function (req, res) {
         return;
     }
 
-    // TODO calculate targetUrl
     let targetUrl;
     if (publisherWebsite.targetUrl)
         targetUrl = publisherWebsite.targetUrl;
@@ -306,7 +305,7 @@ router.post('/publish', async function (req, res) {
                 return;
             }
 
-            targetUrl = `http://${hosterServer.ipAddress}`;
+            targetUrl = `http://${hosterServer.ipAddress}/${hosterServer.metadata.hostUri}`;
         } catch (e) {
             console.log(e);
             res.status(500).json(
