@@ -173,6 +173,7 @@ router.post('/publish', async function (req, res) {
     let publisherId = req.user.id;
 
     let {websiteId, username} = req.body;
+    console.log("editor/publish", websiteId, username);
 
     let publisher;
     try {
