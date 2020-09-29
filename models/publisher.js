@@ -68,6 +68,9 @@ const Publisher = (sequelize, DataTypes) => {
             type: DataTypes.JSON,
             defaultValue: []
         },
+        publisherWebsiteDomain: {
+            type: DataTypes.STRING,
+        },
         hasOwnHostServer: {
             type: DataTypes.BOOLEAN,
         },

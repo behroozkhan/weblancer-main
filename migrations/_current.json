@@ -892,6 +892,10 @@
                     "field": "customDomains",
                     "seqType": "Sequelize.JSON"
                 },
+                "publisherWebsiteDomain": {
+                    "field": "publisherWebsiteDomain",
+                    "seqType": "Sequelize.STRING"
+                },
                 "hasOwnHostServer": {
                     "field": "hasOwnHostServer",
                     "seqType": "Sequelize.BOOLEAN"
@@ -1013,5 +1017,5 @@
             "indexes": []
         }
     },
-    "revision": 21
+    "revision": 22
 }

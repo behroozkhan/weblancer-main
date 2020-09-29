@@ -118,7 +118,7 @@ router.get('/getlaststartprocess', async function (req, res) {
 
     let longProcess;
     try {
-        longProcess = await models.Publisher.findOne({
+        longProcess = await models.LongProcess.findOne({
             where: {
                 refId: publisherId,
                 name: 'Starting Publisher'
@@ -180,6 +180,32 @@ router.get('/getlaststartprocess', async function (req, res) {
 
     res.json(
         new Response(false, {longProcess: longProcess.toJSON()}).json()
+    );
+})
+
+router.get('/getActiveEditorData', async function (req, res) {
+    let publisherId = req.user.id;
+
+    let {websiteId, endUserId} = req.body;
+    
+    let oldLongProcess = await models.LongProcess.findOne({
+        where: {
+            name: 'Requesting Editor',
+            state: 'complete',
+            refId: `${publisherId}_${endUserId}_${websiteId}`
+        },
+        order: [['startDate', 'DESC']],
+    });
+
+    if (!oldLongProcess) {
+        res.status(410).json(
+            new Response(false, {}, "Editor not found").json()
+        );
+        return;
+    }
+
+    res.json(
+        new Response(true, oldLongProcess.toJSON()).json()
     );
 })
 
