@@ -3,10 +3,11 @@ let router = express.Router();
 let moment = require('moment');
 const Response = require('../utils/response');
 const { models } = require('../model-manager/models');
+const WeblancerUtils = require('../utils/weblancerUtils');
 
 router.post('/update', async function (req, res) {
     let {
-        longProcessId, status, state, metaData
+        longProcessId, status, state, metaData, force
     } = req.body;
 
     let longProcess;
@@ -29,7 +30,10 @@ router.post('/update', async function (req, res) {
 
     longProcess.message += '\n' + longProcess.status;
     longProcess.status = status;
-    longProcess.state = state;
+    if (force)
+        longProcess.state = state;
+    else
+        WeblancerUtils.setLongProcessState(longProcess, state);
 
     if (state === 'complete' || state === 'failed')
         longProcess.endDate = moment().toDate();
