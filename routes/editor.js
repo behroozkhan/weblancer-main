@@ -10,6 +10,7 @@ let jwt = require('jsonwebtoken');
 router.post('/request', async function (req, res) {
     // from publisher server to editor servers
     // set and return access token for a user in editor server
+    console.log("editor/request 1 ...");
     let publisherId = req.user.id;
 
     let {websiteId} = req.body;
@@ -36,6 +37,7 @@ router.post('/request', async function (req, res) {
         return;
     }
 
+    console.log("editor/request 2 ...");
     let oldLongProcess = await models.LongProcess.findOne({
         where: {
             name: 'Requesting Editor',
