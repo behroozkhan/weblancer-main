@@ -315,7 +315,7 @@ router.post('/publish', async function (req, res) {
             }
 
             targetUrl = `http://${hosterServer.ipAddress}:${
-                editorServer.metadata.port || 80
+                hosterServer.metadata.port || 80
             }/${hosterServer.metadata.hostUri}`;
         } catch (e) {
             console.log(e);
