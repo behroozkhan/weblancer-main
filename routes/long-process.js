@@ -30,10 +30,7 @@ router.post('/update', async function (req, res) {
 
     longProcess.message += '\n' + longProcess.status;
     longProcess.status = status;
-    if (force)
-        longProcess.state = state;
-    else
-        WeblancerUtils.setLongProcessState(longProcess, state);
+    longProcess.state = state;
 
     if (state === 'complete' || state === 'failed')
         longProcess.endDate = moment().toDate();
