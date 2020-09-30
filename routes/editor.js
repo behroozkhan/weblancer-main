@@ -172,6 +172,7 @@ router.post('/request', async function (req, res) {
 router.post('/publish', async function (req, res) {
     // from publisher server to editor servers
     // set and return access token for a user in editor server
+    console.log("/publish 1");
     let publisherId = req.user.id;
 
     let {websiteId, username} = req.body;
@@ -197,6 +198,7 @@ router.post('/publish', async function (req, res) {
         );
         return;
     }
+    console.log("/publish 2");
 
     let publisherWebsite;
     try {
@@ -219,6 +221,7 @@ router.post('/publish', async function (req, res) {
         );
         return;
     }
+    console.log("/publish 3");
 
     let oldLongProcess = await models.LongProcess.findOne({
         where: {
@@ -235,6 +238,7 @@ router.post('/publish', async function (req, res) {
         );
         return;
     }
+    console.log("/publish 4");
 
     let oldPublishProcess = await models.LongProcess.findOne({
         where: {
@@ -248,6 +252,7 @@ router.post('/publish', async function (req, res) {
         order: [['startDate', 'DESC']],
     });
 
+    console.log("/publish 5");
     if (oldPublishProcess) {
         let now = moment().utc();
         console.log("oldPublishProcess", oldPublishProcess.metaData, oldPublishProcess.metaData.longProcessTimeout);
@@ -273,6 +278,7 @@ router.post('/publish', async function (req, res) {
             await oldPublishProcess.save();
         }
     }
+    console.log("/publish 6");
 
     let editorServer = await models.Server.findOne({
         where: {
@@ -286,6 +292,7 @@ router.post('/publish', async function (req, res) {
         );
         return;
     }
+    console.log("/publish 7");
 
     let targetUrl;
     if (publisherWebsite.targetUrl)
@@ -316,6 +323,7 @@ router.post('/publish', async function (req, res) {
             return;
         }
     }
+    console.log("/publish 8");
 
     let longProcess = await models.LongProcess.create({
         name: 'Publish Website',
@@ -328,6 +336,7 @@ router.post('/publish', async function (req, res) {
         }
     });
     
+    console.log("/publish 9");
     console.log("Calling editor server ...", `${editorServer.url}/api/publish`);
     axios.post(`${editorServer.url}/api/publish`, {
         targetUrl, publisherWebsite: publisherWebsite.toJSON(), username,
@@ -342,12 +351,14 @@ router.post('/publish', async function (req, res) {
         }
     })
     .then(function (response) {
+        console.log("/publish 10");
         response.data.data.longProcessId = longProcess.id;
         res.json(
             response.data
         );
     })
     .catch(async function (error) {
+        console.log("/publish 11");
         longProcess.message += '\n' + longProcess.status;
         longProcess.status = `publishing webite error`;
         longProcess.state = 'failed';
