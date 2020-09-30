@@ -194,4 +194,27 @@ WeblancerUtils.createPlanSellAndSells = async (plan, websitePlan, publisherWebsi
     }, {transaction});
 }
 
+WeblancerUtils.setLongProcessState = (longProcess, state) => {
+    if (longProcess.state === 'called') {
+        longProcess.state = state;
+    } else if (longProcess.state === 'running') {
+        if (longProcess.state === 'complete' || longProcess.state === 'failed')
+            longProcess.state = state;
+        else
+            return false;
+    } else if (longProcess.state === 'complete') {
+        if (longProcess.state === 'failed')
+            longProcess.state = state;
+        else
+            return false;
+    } else if (longProcess.state === 'failed') {
+        if (longProcess.state === 'failed')
+            longProcess.state = state;
+        else
+            return false;
+    }
+
+    return true;
+}
+
 module.exports = WeblancerUtils;

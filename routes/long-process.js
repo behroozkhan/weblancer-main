@@ -28,21 +28,26 @@ router.post('/update', async function (req, res) {
         return;
     }
 
-    longProcess.message += '\n' + longProcess.status;
-    longProcess.status = status;
-    longProcess.state = state;
+    if (force)
+        longProcess.state = state;
+    else {
+        if (WeblancerUtils.setLongProcessState(longProcess, state)) {
+            longProcess.message += '\n' + longProcess.status;
+            longProcess.status = status;
 
-    if (state === 'complete' || state === 'failed')
-        longProcess.endDate = moment().toDate();
+            if (state === 'complete' || state === 'failed')
+                longProcess.endDate = moment().toDate();
+        
+            Object.keys(metaData || {}).forEach(key => {
+                longProcess.metaData[key] = metaData[key];
+            });
 
-    Object.keys(metaData || {}).forEach(key => {
-        longProcess.metaData[key] = metaData[key];
-    });
+            if (metaData)
+                longProcess.metaData = {...longProcess.metaData};
 
-    if (metaData)
-        longProcess.metaData = {...longProcess.metaData};
-
-    await longProcess.save();
+                await longProcess.save();
+        }
+    }
     
     res.json(
         new Response(true).json()
