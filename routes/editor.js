@@ -295,8 +295,8 @@ router.post('/publish', async function (req, res) {
     console.log("/publish 7");
 
     let targetUrl;
-    if (publisherWebsite.targetUrl)
-        targetUrl = publisherWebsite.targetUrl;
+    if (publisherWebsite.metadata && publisherWebsite.metadata.targetUrl)
+        targetUrl = publisherWebsite.metadata.targetUrl;
     else {
         // TODO find best hoster server based on website has free plan or paid planed
         try {
@@ -314,7 +314,9 @@ router.post('/publish', async function (req, res) {
                 return;
             }
 
-            targetUrl = `http://${hosterServer.ipAddress}/${hosterServer.metadata.hostUri}`;
+            targetUrl = `http://${hosterServer.ipAddress}:${
+                editorServer.metadata.port || 80
+            }/${hosterServer.metadata.hostUri}`;
         } catch (e) {
             console.log(e);
             res.status(500).json(
