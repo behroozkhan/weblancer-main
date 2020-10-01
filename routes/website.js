@@ -22,7 +22,7 @@ router.post('/createorupdate', async function (req, res) {
 
     let publisherWebsite;
 
-    console.log("createorupdate", website.name, website.userId, publisherId)
+    console.log("createorupdate", website)
     try {
         publisherWebsite = await models.PublisherWebSite.findOne({
             where: {
