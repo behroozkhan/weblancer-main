@@ -23,7 +23,7 @@ const sequelize = new Sequelize(
     process.env.DATABASE_PASSWORD,
     {
         dialect: 'postgres',
-        host: "185.239.107.18",
+        host: process.env.DATABASE_ADDRESS,
         dialectOptions: {
             supportBigNumbers: true
         },
