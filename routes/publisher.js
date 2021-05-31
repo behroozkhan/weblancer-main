@@ -627,6 +627,7 @@ router.put('/start', async (req, res) => {
 
     let input = {
         publisherId: publisherId, 
+        publisherPassword: publisher.password,
         publisherUserName: publisher.username,
         publisherDomains: publisher.customDomains, 
         sudoPassword: server.sudoPassword,

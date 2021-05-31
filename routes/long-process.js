@@ -28,8 +28,11 @@ router.post('/update', async function (req, res) {
         return;
     }
 
-    if (force)
+    if (force) {
         longProcess.state = state;
+        
+        await longProcess.save();
+    }
     else {
         if (WeblancerUtils.setLongProcessState(longProcess, state)) {
             longProcess.message += '\n' + longProcess.status;
@@ -45,7 +48,7 @@ router.post('/update', async function (req, res) {
             if (metaData)
                 longProcess.metaData = {...longProcess.metaData};
 
-                await longProcess.save();
+            await longProcess.save();
         }
     }
     
