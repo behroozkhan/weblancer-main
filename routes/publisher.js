@@ -620,13 +620,14 @@ router.put('/start', async (req, res) => {
     let longProcess = await models.LongProcess.create({
         name: 'Starting Publisher',
         refId: publisherId.toString(),
-        status: 'Calling worker server by address: `${server.url}/worker/start`',
+        status: `Calling worker server by address: '${server.url}/worker/start'`,
         state: 'called',
         timeout: 15 * 60
     });
 
     let input = {
         publisherId: publisherId, 
+        publisherUserName: publisher.username,
         publisherDomains: publisher.customDomains, 
         sudoPassword: server.sudoPassword,
         postgresHost: (await getConfig('WhiteLabelPotgresHost')).value,
