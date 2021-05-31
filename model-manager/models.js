@@ -94,6 +94,8 @@ module.exports.getConfig = async function getConfig (key) {
         });
 
         if (data) {
+
+            console.log("Config: ", data.toJSON());
             return data.toJSON().value;
         } else {
             return {};
