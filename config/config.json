@@ -3,21 +3,21 @@
     "username": "postgres",
     "password": "Kian880414",
     "database": "WeblancerMain",
-    "host": "185.239.107.18",
+    "host": "45.82.138.54",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
     "password": "Kian880414",
     "database": "WeblancerMain",
-    "host": "185.239.107.18",
+    "host": "45.82.138.54",
     "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
     "password": "Kian880414",
     "database": "WeblancerMain",
-    "host": "185.239.107.18",
+    "host": "45.82.138.54",
     "dialect": "postgres"
   }
 }

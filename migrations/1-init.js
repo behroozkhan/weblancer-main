@@ -7,21 +7,25 @@ var Sequelize = require('sequelize');
  *
  * createTable "configs", deps: []
  * createTable "plans", deps: []
+ * createTable "products", deps: []
  * createTable "publishers", deps: []
  * createTable "credit_transactions", deps: [publishers]
+ * createTable "long_processes", deps: [publishers]
  * createTable "payment_sources", deps: [publishers]
  * createTable "payment_transactions", deps: [publishers]
- * createTable "publisher_plans", deps: [plans, publishers]
  * createTable "publisher_websites", deps: [publishers]
+ * createTable "plan_sells", deps: [publishers, publisher_websites]
+ * createTable "publisher_plans", deps: [plans, publishers]
+ * createTable "product_sells", deps: [products, publishers, publisher_websites]
  * createTable "servers", deps: [publishers, publishers]
- * createTable "websites", deps: [publisher_websites]
+ * addIndex "publisher_websites_name_end_user_id_publisher_id" to table "publisher_websites"
  *
  **/
 
 var info = {
     "revision": 1,
     "name": "init",
-    "created": "2020-08-15T16:46:37.806Z",
+    "created": "2021-05-31T01:53:06.966Z",
     "comment": ""
 };
 
@@ -127,6 +131,91 @@ var migrationCommands = function(transaction) {
         {
             fn: "createTable",
             params: [
+                "products",
+                {
+                    "id": {
+                        "type": Sequelize.INTEGER,
+                        "field": "id",
+                        "primaryKey": true,
+                        "autoIncrement": true,
+                        "unique": true
+                    },
+                    "order": {
+                        "type": Sequelize.INTEGER,
+                        "field": "order"
+                    },
+                    "name": {
+                        "type": Sequelize.STRING,
+                        "field": "name",
+                        "unique": true
+                    },
+                    "description": {
+                        "type": Sequelize.TEXT,
+                        "field": "description"
+                    },
+                    "help": {
+                        "type": Sequelize.TEXT,
+                        "field": "help"
+                    },
+                    "priceMonthly": {
+                        "type": Sequelize.FLOAT,
+                        "field": "priceMonthly"
+                    },
+                    "priceYearly": {
+                        "type": Sequelize.FLOAT,
+                        "field": "priceYearly"
+                    },
+                    "offPriceMonthly": {
+                        "type": Sequelize.FLOAT,
+                        "field": "offPriceMonthly"
+                    },
+                    "offpriceYearly": {
+                        "type": Sequelize.FLOAT,
+                        "field": "offpriceYearly"
+                    },
+                    "type": {
+                        "type": Sequelize.ENUM('resource', 'service', 'limitation', 'app', 'component', 'vps'),
+                        "field": "type"
+                    },
+                    "bindTo": {
+                        "type": Sequelize.ENUM('acount', 'product', 'website'),
+                        "field": "bindTo"
+                    },
+                    "max": {
+                        "type": Sequelize.INTEGER,
+                        "field": "max"
+                    },
+                    "requiredProductId": {
+                        "type": Sequelize.ARRAY(Sequelize.INTEGER),
+                        "field": "requiredProductId"
+                    },
+                    "requiredWebsiteType": {
+                        "type": Sequelize.ARRAY(Sequelize.STRING),
+                        "field": "requiredWebsiteType"
+                    },
+                    "metadata": {
+                        "type": Sequelize.JSON,
+                        "field": "metadata"
+                    },
+                    "createdAt": {
+                        "type": Sequelize.DATE,
+                        "field": "createdAt",
+                        "allowNull": false
+                    },
+                    "updatedAt": {
+                        "type": Sequelize.DATE,
+                        "field": "updatedAt",
+                        "allowNull": false
+                    }
+                },
+                {
+                    "transaction": transaction
+                }
+            ]
+        },
+        {
+            fn: "createTable",
+            params: [
                 "publishers",
                 {
                     "id": {
@@ -141,6 +230,10 @@ var migrationCommands = function(transaction) {
                         "field": "username",
                         "unique": true,
                         "allowNull": false
+                    },
+                    "brandName": {
+                        "type": Sequelize.STRING,
+                        "field": "brandName"
                     },
                     "firstName": {
                         "type": Sequelize.STRING,
@@ -209,10 +302,9 @@ var migrationCommands = function(transaction) {
                         "field": "customDomains",
                         "defaultValue": Sequelize.Array
                     },
-                    "subDomain": {
+                    "publisherWebsiteDomain": {
                         "type": Sequelize.STRING,
-                        "field": "subDomain",
-                        "unique": true
+                        "field": "publisherWebsiteDomain"
                     },
                     "hasOwnHostServer": {
                         "type": Sequelize.BOOLEAN,
@@ -222,6 +314,14 @@ var migrationCommands = function(transaction) {
                         "type": Sequelize.STRING,
                         "field": "publisherApiKey",
                         "unique": true
+                    },
+                    "publisherVersion": {
+                        "type": Sequelize.FLOAT,
+                        "field": "publisherVersion"
+                    },
+                    "expressPort": {
+                        "type": Sequelize.INTEGER,
+                        "field": "expressPort"
                     },
                     "createdAt": {
                         "type": Sequelize.DATE,
@@ -266,6 +366,86 @@ var migrationCommands = function(transaction) {
                     "description": {
                         "type": Sequelize.JSON,
                         "field": "description"
+                    },
+                    "createdAt": {
+                        "type": Sequelize.DATE,
+                        "field": "createdAt",
+                        "allowNull": false
+                    },
+                    "updatedAt": {
+                        "type": Sequelize.DATE,
+                        "field": "updatedAt",
+                        "allowNull": false
+                    },
+                    "publisherId": {
+                        "type": Sequelize.BIGINT,
+                        "field": "publisherId",
+                        "onUpdate": "CASCADE",
+                        "onDelete": "SET NULL",
+                        "references": {
+                            "model": "publishers",
+                            "key": "id"
+                        },
+                        "allowNull": true
+                    }
+                },
+                {
+                    "transaction": transaction
+                }
+            ]
+        },
+        {
+            fn: "createTable",
+            params: [
+                "long_processes",
+                {
+                    "id": {
+                        "type": Sequelize.BIGINT,
+                        "field": "id",
+                        "primaryKey": true,
+                        "autoIncrement": true,
+                        "unique": true
+                    },
+                    "metaData": {
+                        "type": Sequelize.JSON,
+                        "field": "metaData",
+                        "defaultValue": Sequelize.Object
+                    },
+                    "name": {
+                        "type": Sequelize.STRING,
+                        "field": "name"
+                    },
+                    "refId": {
+                        "type": Sequelize.STRING,
+                        "field": "refId"
+                    },
+                    "startDate": {
+                        "type": Sequelize.DATE,
+                        "field": "startDate",
+                        "defaultValue": Sequelize.NOW
+                    },
+                    "endDate": {
+                        "type": Sequelize.DATE,
+                        "field": "endDate"
+                    },
+                    "status": {
+                        "type": Sequelize.STRING,
+                        "field": "status",
+                        "defaultValue": ""
+                    },
+                    "message": {
+                        "type": Sequelize.TEXT,
+                        "field": "message",
+                        "defaultValue": ""
+                    },
+                    "state": {
+                        "type": Sequelize.ENUM('called', 'running', 'complete', 'failed'),
+                        "field": "state"
+                    },
+                    "timeout": {
+                        "type": Sequelize.FLOAT,
+                        "field": "timeout",
+                        "defaultValue": 3600
                     },
                     "createdAt": {
                         "type": Sequelize.DATE,
@@ -452,6 +632,172 @@ var migrationCommands = function(transaction) {
         {
             fn: "createTable",
             params: [
+                "publisher_websites",
+                {
+                    "id": {
+                        "type": Sequelize.BIGINT,
+                        "field": "id",
+                        "primaryKey": true,
+                        "autoIncrement": true,
+                        "unique": true
+                    },
+                    "name": {
+                        "type": Sequelize.STRING,
+                        "field": "name"
+                    },
+                    "displayName": {
+                        "type": Sequelize.STRING,
+                        "field": "displayName"
+                    },
+                    "description": {
+                        "type": Sequelize.JSON,
+                        "field": "description"
+                    },
+                    "serverIpAddress": {
+                        "type": Sequelize.STRING,
+                        "field": "serverIpAddress"
+                    },
+                    "url": {
+                        "type": Sequelize.STRING,
+                        "field": "url"
+                    },
+                    "metadata": {
+                        "type": Sequelize.JSON,
+                        "field": "metadata"
+                    },
+                    "type": {
+                        "type": Sequelize.ENUM('website', 'service', 'app', 'component'),
+                        "field": "type"
+                    },
+                    "endUserId": {
+                        "type": Sequelize.STRING,
+                        "field": "endUserId"
+                    },
+                    "endWebsiteId": {
+                        "type": Sequelize.STRING,
+                        "field": "endWebsiteId"
+                    },
+                    "createdAt": {
+                        "type": Sequelize.DATE,
+                        "field": "createdAt",
+                        "allowNull": false
+                    },
+                    "updatedAt": {
+                        "type": Sequelize.DATE,
+                        "field": "updatedAt",
+                        "allowNull": false
+                    },
+                    "publisherId": {
+                        "type": Sequelize.BIGINT,
+                        "field": "publisherId",
+                        "onUpdate": "CASCADE",
+                        "onDelete": "SET NULL",
+                        "references": {
+                            "model": "publishers",
+                            "key": "id"
+                        },
+                        "allowNull": true
+                    }
+                },
+                {
+                    "transaction": transaction
+                }
+            ]
+        },
+        {
+            fn: "createTable",
+            params: [
+                "plan_sells",
+                {
+                    "id": {
+                        "type": Sequelize.BIGINT,
+                        "field": "id",
+                        "primaryKey": true,
+                        "autoIncrement": true,
+                        "unique": true
+                    },
+                    "planObject": {
+                        "type": Sequelize.JSON,
+                        "field": "planObject"
+                    },
+                    "websitePlanObject": {
+                        "type": Sequelize.JSON,
+                        "field": "websitePlanObject"
+                    },
+                    "planId": {
+                        "type": Sequelize.INTEGER,
+                        "field": "planId",
+                        "unique": "IX_publisherId_publisherWebsiteId_planId_dayString_isTrial"
+                    },
+                    "boughtDate": {
+                        "type": Sequelize.DATE,
+                        "field": "boughtDate"
+                    },
+                    "startDate": {
+                        "type": Sequelize.DATE,
+                        "field": "startDate"
+                    },
+                    "expireDate": {
+                        "type": Sequelize.DATE,
+                        "field": "expireDate"
+                    },
+                    "upgradeDate": {
+                        "type": Sequelize.DATE,
+                        "field": "upgradeDate"
+                    },
+                    "dayString": {
+                        "type": Sequelize.STRING,
+                        "field": "dayString",
+                        "unique": "IX_publisherId_publisherWebsiteId_planId_dayString_isTrial"
+                    },
+                    "isTrial": {
+                        "type": Sequelize.BOOLEAN,
+                        "field": "isTrial",
+                        "unique": "IX_publisherId_publisherWebsiteId_planId_dayString_isTrial"
+                    },
+                    "publisherId": {
+                        "type": Sequelize.BIGINT,
+                        "onUpdate": "CASCADE",
+                        "onDelete": "CASCADE",
+                        "references": {
+                            "model": "publishers",
+                            "key": "id"
+                        },
+                        "allowNull": true,
+                        "field": "publisherId",
+                        "unique": "IX_publisherId_publisherWebsiteId_planId_dayString_isTrial"
+                    },
+                    "publisherWebsiteId": {
+                        "type": Sequelize.BIGINT,
+                        "onUpdate": "CASCADE",
+                        "onDelete": "CASCADE",
+                        "references": {
+                            "model": "publisher_websites",
+                            "key": "id"
+                        },
+                        "allowNull": true,
+                        "field": "publisherWebsiteId",
+                        "unique": "IX_publisherId_publisherWebsiteId_planId_dayString_isTrial"
+                    },
+                    "createdAt": {
+                        "type": Sequelize.DATE,
+                        "field": "createdAt",
+                        "allowNull": false
+                    },
+                    "updatedAt": {
+                        "type": Sequelize.DATE,
+                        "field": "updatedAt",
+                        "allowNull": false
+                    }
+                },
+                {
+                    "transaction": transaction
+                }
+            ]
+        },
+        {
+            fn: "createTable",
+            params: [
                 "publisher_plans",
                 {
                     "id": {
@@ -465,9 +811,9 @@ var migrationCommands = function(transaction) {
                         "type": Sequelize.DATE,
                         "field": "boughtDate"
                     },
-                    "expireTime": {
+                    "expireDate": {
                         "type": Sequelize.DATE,
-                        "field": "expireTime"
+                        "field": "expireDate"
                     },
                     "totalPriceOfPlan": {
                         "type": Sequelize.FLOAT,
@@ -522,7 +868,7 @@ var migrationCommands = function(transaction) {
         {
             fn: "createTable",
             params: [
-                "publisher_websites",
+                "product_sells",
                 {
                     "id": {
                         "type": Sequelize.BIGINT,
@@ -531,53 +877,81 @@ var migrationCommands = function(transaction) {
                         "autoIncrement": true,
                         "unique": true
                     },
+                    "productId": {
+                        "type": Sequelize.INTEGER,
+                        "onUpdate": "CASCADE",
+                        "onDelete": "CASCADE",
+                        "references": {
+                            "model": "products",
+                            "key": "id"
+                        },
+                        "allowNull": true,
+                        "field": "productId",
+                        "unique": "IX_productId_publisherId_publisherWebsiteId_planId_dayString"
+                    },
+                    "isTrial": {
+                        "type": Sequelize.BOOLEAN,
+                        "field": "isTrial"
+                    },
+                    "sellPrice": {
+                        "type": Sequelize.FLOAT,
+                        "field": "sellPrice"
+                    },
+                    "publisherId": {
+                        "type": Sequelize.BIGINT,
+                        "onUpdate": "CASCADE",
+                        "onDelete": "CASCADE",
+                        "references": {
+                            "model": "publishers",
+                            "key": "id"
+                        },
+                        "allowNull": true,
+                        "field": "publisherId",
+                        "unique": "IX_productId_publisherId_publisherWebsiteId_planId_dayString"
+                    },
+                    "planId": {
+                        "type": Sequelize.INTEGER,
+                        "field": "planId",
+                        "unique": "IX_productId_publisherId_publisherWebsiteId_planId_dayString"
+                    },
+                    "dayString": {
+                        "type": Sequelize.STRING,
+                        "field": "dayString",
+                        "unique": "IX_productId_publisherId_publisherWebsiteId_planId_dayString"
+                    },
+                    "publisherWebsiteId": {
+                        "type": Sequelize.BIGINT,
+                        "onUpdate": "CASCADE",
+                        "onDelete": "CASCADE",
+                        "references": {
+                            "model": "publisher_websites",
+                            "key": "id"
+                        },
+                        "allowNull": true,
+                        "field": "publisherWebsiteId",
+                        "unique": "IX_productId_publisherId_publisherWebsiteId_planId_dayString"
+                    },
                     "boughtDate": {
                         "type": Sequelize.DATE,
                         "field": "boughtDate"
                     },
-                    "expireTime": {
-                        "type": Sequelize.DATE,
-                        "field": "expireTime"
-                    },
-                    "totalPriceOfPlan": {
-                        "type": Sequelize.FLOAT,
-                        "field": "totalPriceOfPlan"
-                    },
-                    "totalPayForPlan": {
-                        "type": Sequelize.FLOAT,
-                        "field": "totalPayForPlan"
-                    },
-                    "upgradedToUpperPlan": {
-                        "type": Sequelize.BOOLEAN,
-                        "field": "upgradedToUpperPlan"
-                    },
-                    "extended": {
-                        "type": Sequelize.BOOLEAN,
-                        "field": "extended"
-                    },
-                    "planOrder": {
+                    "moneyBackDays": {
                         "type": Sequelize.INTEGER,
-                        "field": "planOrder"
+                        "field": "moneyBackDays",
+                        "defaultValue": 14
                     },
-                    "resource": {
-                        "type": Sequelize.JSON,
-                        "field": "resource"
+                    "moneyBacked": {
+                        "type": Sequelize.BOOLEAN,
+                        "field": "moneyBacked",
+                        "defaultValue": false
                     },
-                    "endUserId": {
+                    "planTime": {
                         "type": Sequelize.STRING,
-                        "field": "endUserId"
-                    },
-                    "endWebsiteId": {
-                        "type": Sequelize.STRING,
-                        "field": "endWebsiteId"
+                        "field": "planTime"
                     },
                     "metadata": {
                         "type": Sequelize.JSON,
                         "field": "metadata"
-                    },
-                    "type": {
-                        "type": Sequelize.ENUM('website', 'service', 'app', 'component'),
-                        "field": "type"
                     },
                     "createdAt": {
                         "type": Sequelize.DATE,
@@ -588,17 +962,6 @@ var migrationCommands = function(transaction) {
                         "type": Sequelize.DATE,
                         "field": "updatedAt",
                         "allowNull": false
-                    },
-                    "publisherId": {
-                        "type": Sequelize.BIGINT,
-                        "field": "publisherId",
-                        "onUpdate": "CASCADE",
-                        "onDelete": "SET NULL",
-                        "references": {
-                            "model": "publishers",
-                            "key": "id"
-                        },
-                        "allowNull": true
                     }
                 },
                 {
@@ -626,6 +989,10 @@ var migrationCommands = function(transaction) {
                     "ipAddress": {
                         "type": Sequelize.STRING,
                         "field": "ipAddress"
+                    },
+                    "sudoPassword": {
+                        "type": Sequelize.STRING,
+                        "field": "sudoPassword"
                     },
                     "url": {
                         "type": Sequelize.STRING,
@@ -659,6 +1026,11 @@ var migrationCommands = function(transaction) {
                         "type": Sequelize.TIME,
                         "field": "timezone"
                     },
+                    "metadata": {
+                        "type": Sequelize.JSON,
+                        "field": "metadata",
+                        "defaultValue": Sequelize.Object
+                    },
                     "createdAt": {
                         "type": Sequelize.DATE,
                         "field": "createdAt",
@@ -669,9 +1041,9 @@ var migrationCommands = function(transaction) {
                         "field": "updatedAt",
                         "allowNull": false
                     },
-                    "mainServerId": {
+                    "mainServerOfPublisherId": {
                         "type": Sequelize.BIGINT,
-                        "field": "mainServerId",
+                        "field": "mainServerOfPublisherId",
                         "onUpdate": "CASCADE",
                         "onDelete": "SET NULL",
                         "references": {
@@ -698,97 +1070,15 @@ var migrationCommands = function(transaction) {
             ]
         },
         {
-            fn: "createTable",
+            fn: "addIndex",
             params: [
-                "websites",
+                "publisher_websites",
+                ["name", "endUserId", "publisherId"],
                 {
-                    "id": {
-                        "type": Sequelize.INTEGER,
-                        "field": "id",
-                        "primaryKey": true,
-                        "autoIncrement": true,
-                        "unique": true
-                    },
-                    "order": {
-                        "type": Sequelize.INTEGER,
-                        "field": "order"
-                    },
-                    "name": {
-                        "type": Sequelize.STRING,
-                        "field": "name",
-                        "unique": true
-                    },
-                    "basePriceMonthly": {
-                        "type": Sequelize.FLOAT,
-                        "field": "basePriceMonthly"
-                    },
-                    "basePriceYearly": {
-                        "type": Sequelize.FLOAT,
-                        "field": "basePriceYearly"
-                    },
-                    "baseOffPriceMonthly": {
-                        "type": Sequelize.FLOAT,
-                        "field": "baseOffPriceMonthly"
-                    },
-                    "baseOffPriceYearly": {
-                        "type": Sequelize.FLOAT,
-                        "field": "baseOffPriceYearly"
-                    },
-                    "priceMonthly": {
-                        "type": Sequelize.FLOAT,
-                        "field": "priceMonthly"
-                    },
-                    "priceYearly": {
-                        "type": Sequelize.FLOAT,
-                        "field": "priceYearly"
-                    },
-                    "offPriceMonthly": {
-                        "type": Sequelize.FLOAT,
-                        "field": "offPriceMonthly"
-                    },
-                    "offpriceYearly": {
-                        "type": Sequelize.FLOAT,
-                        "field": "offpriceYearly"
-                    },
-                    "description": {
-                        "type": Sequelize.JSON,
-                        "field": "description"
-                    },
-                    "summery": {
-                        "type": Sequelize.STRING,
-                        "field": "summery"
-                    },
-                    "resourceMax": {
-                        "type": Sequelize.JSON,
-                        "field": "resourceMax"
-                    },
-                    "planType": {
-                        "type": Sequelize.ENUM('resource', 'permission'),
-                        "field": "planType"
-                    },
-                    "createdAt": {
-                        "type": Sequelize.DATE,
-                        "field": "createdAt",
-                        "allowNull": false
-                    },
-                    "updatedAt": {
-                        "type": Sequelize.DATE,
-                        "field": "updatedAt",
-                        "allowNull": false
-                    },
-                    "publisherWebsiteId": {
-                        "type": Sequelize.BIGINT,
-                        "field": "publisherWebsiteId",
-                        "onUpdate": "CASCADE",
-                        "onDelete": "SET NULL",
-                        "references": {
-                            "model": "publisher_websites",
-                            "key": "id"
-                        },
-                        "allowNull": true
-                    }
-                },
-                {
+                    "indexName": "publisher_websites_name_end_user_id_publisher_id",
+                    "name": "publisher_websites_name_end_user_id_publisher_id",
+                    "indicesType": "UNIQUE",
+                    "type": "UNIQUE",
                     "transaction": transaction
                 }
             ]
@@ -810,6 +1100,12 @@ var rollbackCommands = function(transaction) {
         },
         {
             fn: "dropTable",
+            params: ["long_processes", {
+                transaction: transaction
+            }]
+        },
+        {
+            fn: "dropTable",
             params: ["payment_sources", {
                 transaction: transaction
             }]
@@ -822,7 +1118,25 @@ var rollbackCommands = function(transaction) {
         },
         {
             fn: "dropTable",
+            params: ["plan_sells", {
+                transaction: transaction
+            }]
+        },
+        {
+            fn: "dropTable",
             params: ["plans", {
+                transaction: transaction
+            }]
+        },
+        {
+            fn: "dropTable",
+            params: ["product_sells", {
+                transaction: transaction
+            }]
+        },
+        {
+            fn: "dropTable",
+            params: ["products", {
                 transaction: transaction
             }]
         },
@@ -847,12 +1161,6 @@ var rollbackCommands = function(transaction) {
         {
             fn: "dropTable",
             params: ["servers", {
-                transaction: transaction
-            }]
-        },
-        {
-            fn: "dropTable",
-            params: ["websites", {
                 transaction: transaction
             }]
         }
