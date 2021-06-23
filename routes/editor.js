@@ -353,7 +353,7 @@ router.post('/publish', async function (req, res) {
         }
     })
     .then(function (response) {
-        console.log("/publish 10");
+        console.log("/publish 10", longProcess.id, response.data);
         response.data.data.longProcessId = longProcess.id;
         res.json(
             response.data
