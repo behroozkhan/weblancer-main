@@ -25,7 +25,7 @@ router.post('/createorupdate', async function (req, res) {
     try {
         publisherWebsite = await models.PublisherWebSite.findOne({
             where: {
-                name: website.name,
+                endWebsiteId: website.id,
                 endUserId: website.userId,
                 publisherId: publisherId
             }
