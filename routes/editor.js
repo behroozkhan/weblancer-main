@@ -349,7 +349,7 @@ router.post('/publish', async function (req, res) {
     axios.post(`${editorServer.url}/api/publish`, {
         targetUrl, publisherWebsite: publisherWebsite.toJSON(), username,
         domainConfig: {
-            domainData: publisherWebsite.domainData,
+            domainData: publisherWebsite.data.domainData,
             publisherWebsiteDomain: publisher.publisherWebsiteDomain
         },
         longProcessData: {
