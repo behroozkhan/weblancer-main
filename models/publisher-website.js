@@ -33,7 +33,11 @@ const PublisherWebsite = (sequelize, DataTypes) => {
         },
         endWebsiteId: {
             type: DataTypes.STRING
-        }
+        },
+        data: {
+            type: DataTypes.JSONB,
+            defaultValue: {}
+        },
     }, {
         indexes: [
             {

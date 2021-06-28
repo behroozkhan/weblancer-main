@@ -45,6 +45,7 @@ router.post('/createorupdate', async function (req, res) {
         serverIpAddress: website.serverIpAddress,
         url: website.url,
         metadata: {...website.metadata},
+        data: {...website.data},
         type: type,
         endUserId: website.userId,
         endWebsiteId: website.id,

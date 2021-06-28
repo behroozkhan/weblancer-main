@@ -295,10 +295,11 @@ router.post('/publish', async function (req, res) {
     console.log("/publish 7");
 
     let targetUrl;
-    if (publisherWebsite.metadata && publisherWebsite.metadata.targetUrl)
-        targetUrl = publisherWebsite.metadata.targetUrl;
+    let hosterData = publisherWebsite.metadata && publisherWebsite.metadata.hosterData;
+    if (hosterData)
+        // TODO Check hosterData.hosterServer health first
+        targetUrl = hosterData.targetUrl;
     else {
-        // TODO find best hoster server based on website has free plan or paid planed
         try {
             let hosterServer = await models.Server.findOne({
                 where: {
@@ -317,6 +318,11 @@ router.post('/publish', async function (req, res) {
             targetUrl = `http://${hosterServer.ipAddress}:${
                 hosterServer.metadata.port || 80
             }/${hosterServer.metadata.hostUri}`;
+
+            hosterData = {
+                targetUrl,
+                hosterServer
+            };
         } catch (e) {
             console.log(e);
             res.status(500).json(
@@ -355,6 +361,7 @@ router.post('/publish', async function (req, res) {
     .then(function (response) {
         console.log("/publish 10", longProcess.id, response.data);
         response.data.data.longProcessId = longProcess.id;
+        response.data.data.hosterData = hosterData;
         res.json(
             response.data
         );

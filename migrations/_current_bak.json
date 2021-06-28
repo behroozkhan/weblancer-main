@@ -750,14 +750,6 @@
                     "field": "endWebsiteId",
                     "seqType": "Sequelize.STRING"
                 },
-                "data": {
-                    "defaultValue": {
-                        "internal": true,
-                        "value": "Sequelize.Object"
-                    },
-                    "field": "data",
-                    "seqType": "Sequelize.JSONB"
-                },
                 "createdAt": {
                     "allowNull": false,
                     "field": "createdAt",
@@ -1033,5 +1025,5 @@
             "indexes": []
         }
     },
-    "revision": 2
+    "revision": 1
 }
