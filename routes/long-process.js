@@ -15,7 +15,7 @@ router.post('/update', async function (req, res) {
         longProcess = await models.LongProcess.findByPk(longProcessId);
 
         if (!longProcess) {
-            res.status(410).json(
+            res.status(404).json(
                 new Response(false, {}, "LongProcess not found 1").json()
             );
             return;
@@ -86,7 +86,7 @@ router.get('/:id', async function (req, res) {
         longProcess = await models.LongProcess.findByPk(id);
 
         if (!longProcess) {
-            res.status(410).json(
+            res.status(404).json(
                 new Response(false, {}, "LongProcess not found 1").json()
             );
             return;
