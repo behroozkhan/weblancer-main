@@ -350,6 +350,7 @@ router.post('/publish', async function (req, res) {
         targetUrl, publisherWebsite: publisherWebsite.toJSON(), username,
         domainConfig: {
             domainData: publisherWebsite.data.domainConfig.domainData,
+            tempDomain: publisherWebsite.data.domainConfig.tempDomain,
             publisherWebsiteDomain: publisher.publisherWebsiteDomain
         },
         longProcessData: {
