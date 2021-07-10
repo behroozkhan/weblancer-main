@@ -221,8 +221,9 @@ router.post('/plan', async function (req, res) {
 })
 
 router.post('/resolvestoragedns', async function (req, res) {
-    // update a website to an specific plan
     let {domainConfig} = req.body;
+    console.log("resolvestoragedns", domainConfig)
+
     try {
         let hosterServer = await models.Server.findOne({
             where: {
