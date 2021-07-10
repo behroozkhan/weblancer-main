@@ -248,6 +248,7 @@ router.post('/resolvestoragedns', async function (req, res) {
             domainConfig
         })
         .then(function (response) {
+            console.log("dns resolved")
             res.json(
                 new Response(true, {}, "dns resolved").json()
             );
