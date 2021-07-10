@@ -240,7 +240,7 @@ router.post('/resolvestoragedns', async function (req, res) {
     
         let targetUrl = `http://${hosterServer.ipAddress}:${
             hosterServer.metadata.port || 80
-        }/${hosterServer.metadata.hostUri}`;
+        }`;
 
         console.log("Calling", `${targetUrl}/cdn/resolvestoragedns`);
         await axios.post(`${targetUrl}/cdn/resolvestoragedns`, {
