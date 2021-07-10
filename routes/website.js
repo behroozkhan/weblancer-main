@@ -3,7 +3,7 @@ let router = express.Router();
 let { models, sequelize } = require('../model-manager/models.js');
 const WeblancerUtils = require('../utils/weblancerUtils.js');
 const Response = require('../utils/response.js');
-const axios = require('axios');
+const fetch = require('node-fetch');
 
 router.get('/', function (req, res) {
     // return all available websites
@@ -243,21 +243,21 @@ router.post('/resolvestoragedns', async function (req, res) {
             hosterServer.metadata.port || 80
         }`;
 
+        let form = new FormData();
+        form.append("domainConfig", JSON.stringify(domainConfig));
+
         console.log("Calling", `${targetUrl}/cdn/resolvestoragedns`);
-        axios.post(`${targetUrl}/cdn/resolvestoragedns`, {
-            domainConfig
-        })
-        .then(function (response) {
-            res.json(
-                new Response(true, {}, "dns resolved").json()
-            );
-        })
-        .catch(async function (error) {
-            console.log("resolvestoragedns error", error);
-            res.status(500).json(
-                new Response(false, {}, "resolvestoragedns error").json()
-            );
+
+        let response = await fetch(`${targetUrl}/cdn/resolvestoragedns`, {
+            method: 'post',
+            body: data
         });
+
+        response = await response.json();
+        
+        res.json(
+            response.data
+        );
     } catch (error) {
         console.log("resolvestoragedns error", error);
         res.status(500).json(
