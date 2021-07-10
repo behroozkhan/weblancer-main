@@ -244,7 +244,7 @@ router.post('/resolvestoragedns', async function (req, res) {
         }`;
 
         console.log("Calling", `${targetUrl}/cdn/resolvestoragedns`);
-        await axios.post(`${targetUrl}/cdn/resolvestoragedns`, {
+        axios.post(`${targetUrl}/cdn/resolvestoragedns`, {
             domainConfig
         })
         .then(function (response) {
