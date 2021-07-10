@@ -251,7 +251,7 @@ router.post('/resolvestoragedns', async function (req, res) {
 
         let response = await fetch(`${targetUrl}/cdn/resolvestoragedns`, {
             method: 'post',
-            body: data
+            body: form
         });
 
         response = await response.json();
