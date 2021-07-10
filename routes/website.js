@@ -5,6 +5,9 @@ const WeblancerUtils = require('../utils/weblancerUtils.js');
 const Response = require('../utils/response.js');
 const fetch = require('node-fetch');
 const FormData = require('form-data');
+let {
+    concatFormData
+} = require('../utils/utils');
 
 router.get('/', function (req, res) {
     // return all available websites
@@ -246,12 +249,14 @@ router.post('/resolvestoragedns', async function (req, res) {
 
         let form = new FormData();
         form.append("domainConfig", JSON.stringify(domainConfig));
+        let {data, headers} = await concatFormData(form);
 
         console.log("Calling", `${targetUrl}/cdn/resolvestoragedns`);
 
         let response = await fetch(`${targetUrl}/cdn/resolvestoragedns`, {
             method: 'post',
-            body: form
+            body: data,
+            headers: headers
         });
 
         response = await response.json();

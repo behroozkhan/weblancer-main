@@ -23,3 +23,9 @@ module.exports.makeResNum = function makeResNum(length) {
     }
     return result;
 }
+
+module.exports.concatFormData = (form) => {
+    return new Promise((resolve) => {
+        form.pipe(concat({ encoding: 'buffer' }, data => resolve({ data, headers: form.getHeaders() })));
+    });
+}
