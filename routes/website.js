@@ -219,6 +219,51 @@ router.post('/plan', async function (req, res) {
     }
 })
 
+router.post('/resolvestoragedns', async function (req, res) {
+    // update a website to an specific plan
+    let {domainConfig} = req.body;
+    try {
+        let hosterServer = await models.Server.findOne({
+            where: {
+                type: 'hoster'
+            },
+            order: [['cpuUsage', 'ASC'], ['memoryUsage', 'ASC'], ['storageUsage', 'ASC']],
+        });
+    
+        if (!hosterServer) {
+            res.status(404).json(
+                new Response(false, {}, "Hoster server not found").json()
+            );
+            return;
+        }
+    
+        let targetUrl = `http://${hosterServer.ipAddress}:${
+            hosterServer.metadata.port || 80
+        }/${hosterServer.metadata.hostUri}`;
+
+        console.log("Calling", `${targetUrl}/cdn/resolvestoragedns`);
+        await axios.post(`${targetUrl}/cdn/resolvestoragedns`, {
+            domainConfig
+        })
+        .then(function (response) {
+            res.json(
+                new Response(true, {}, "dns resolved").json()
+            );
+        })
+        .catch(async function (error) {
+            console.log("resolvestoragedns error", error);
+            res.status(500).json(
+                new Response(false, {}, "resolvestoragedns error").json()
+            );
+        });
+    } catch (error) {
+        console.log("resolvestoragedns error", error);
+        res.status(500).json(
+            new Response(false, {}, "resolvestoragedns error").json()
+        );
+    }
+})
+
 router.post('/', function (req, res) {
     // creat new website
 })
