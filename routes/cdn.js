@@ -5,7 +5,7 @@ const WeblancerUtils = require('../utils/weblancerUtils.js');
 const Response = require('../utils/response.js');
 const axios = require('axios');
 
-router.post('/cdnrecordexist', jsonParser, async (req, res) => {
+router.post('/cdnrecordexist', async (req, res) => {
     let {domain, subdomain} = req.body;
 
     try {
