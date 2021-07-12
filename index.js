@@ -15,6 +15,7 @@ let server = require('./routes/server.js');
 let middle = require('./routes/middle.js');
 let longProcess = require('./routes/long-process.js');
 let website = require('./routes/website.js');
+let cdn = require('./routes/cdn.js');
 const Response = require('./utils/response.js');
 const appBaseRoute = '/api';
 
@@ -42,6 +43,7 @@ app.use(appBaseRoute + '/plan', plan);
 app.use(appBaseRoute + '/server', server);
 app.use(appBaseRoute + '/middle', middle);
 app.use(appBaseRoute + '/website', website);
+app.use(appBaseRoute + '/cdn', cdn);
 
 app.get(appBaseRoute + '/test', function (req, res) {
     res.json(
