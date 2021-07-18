@@ -175,7 +175,7 @@ router.post('/publish', async function (req, res) {
     console.log("/publish 1");
     let publisherId = req.user.id;
 
-    let {websiteId, username} = req.body;
+    let {websiteId, username, webhooks} = req.body;
     console.log("editor/publish", websiteId, username);
 
     let publisher;
@@ -357,7 +357,8 @@ router.post('/publish', async function (req, res) {
             longProcessId: longProcess.id,
             longProcessUrl: "https://whitelabel.weblancer.ir/api/long-process/update",
             longProcessToken: jwt.sign({id: 'longProcessToken'}, process.env.JWT_ACCESS_TOKEN_SECRET)
-        }
+        },
+        webhooks
     })
     .then(function (response) {
         console.log("/publish 10", longProcess.id, response.data);
